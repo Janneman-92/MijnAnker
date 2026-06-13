@@ -490,9 +490,12 @@ function showScreen(name){
 }
 function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-home').classList.add('active');document.getElementById('header').style.display='none';currentQ=0;scores=[];lastScreen='home';window.scrollTo(0,0);}
 function goBack(){
-  if(lastScreen==='gereedschappen'){
+  const currentScreen = document.querySelector('.screen.active')?.id.replace('screen-', '');
+  if(currentScreen === 'gereedschappen'){
+    goHome();
+  } else if(currentScreen !== 'home'){
     showScreen('gereedschappen');
-  }else{
+  } else {
     goHome();
   }
 }
