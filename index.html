@@ -459,7 +459,7 @@ const defaultPlan={signalen:["Slaapproblemen","Terugtrekken uit sociale contacte
 const oefeningen=[{titel:"4-7-8 Ademhaling",duur:"3 min",icon:"🌬️",stappen:["Ga comfortabel zitten en sluit je ogen","Adem in via je neus — tel langzaam tot 4","Houd je adem vast — tel tot 7","Adem langzaam uit via je mond — tel tot 8","Herhaal dit nog 3 keer. Goed gedaan 💙"]},{titel:"5-4-3-2-1 Grounding",duur:"5 min",icon:"🌿",stappen:["Kijk om je heen. Noem 5 dingen die je kunt zien","Noem 4 dingen die je fysiek kunt voelen","Luister. Noem 3 dingen die je kunt horen","Noem 2 dingen die je kunt ruiken","Noem 1 ding dat je kunt proeven. Je bent hier, je bent veilig 💙"]},{titel:"Koude water techniek",duur:"1 min",icon:"💧",stappen:["Ga naar de kraan of pak een ijsblokje","Houd je polsen onder koud stromend water of houd het ijsblokje vast","Focus volledig op het koude gevoel in je handen","Adem rustig door. Je lichaam kalmeert vanzelf 💙"]},{titel:"Veilige plek visualisatie",duur:"5 min",icon:"🏡",stappen:["Sluit je ogen en adem een paar keer rustig in en uit","Stel je een plek voor waar je je volkomen veilig voelt","Kijk goed rond. Wat zie je? Wat hoor je? Wat ruik je?","Voel hoe je lichaam ontspant terwijl je hier bent","Blijf hier zo lang als je wilt. Je kunt hier altijd naartoe 💙"]}];
 const vragen=[{tekst:"Hoe gespannen voel je je op dit moment?",opties:[{label:"Licht gespannen",score:1},{label:"Behoorlijk gespannen",score:2},{label:"Heel gespannen",score:3},{label:"Ondraaglijk gespannen",score:4}]},{tekst:"Heb je controle over je gedachten?",opties:[{label:"Ja, redelijk goed",score:1},{label:"Een beetje moeilijk",score:2},{label:"Nauwelijks",score:3},{label:"Nee, helemaal niet",score:4}]},{tekst:"Heb je gedachten aan jezelf iets aandoen?",opties:[{label:"Nee",score:1},{label:"Lichte gedachten, geen plannen",score:2},{label:"Sterke gedachten",score:3},{label:"Ik heb een plan of sterke drang",score:4}]}];
 const moodScore={'😊':4,'😐':3,'😟':2,'😰':1};const moodLabel={4:'Goed',3:'Oké',2:'Moeilijk',1:'Zwaar'};const moodColor={4:'#10b981',3:'#f59e0b',2:'#f97316',1:'#ef4444'};
-let currentQ=0,scores=[],activeOef=null,activeStep=0,selectedMood=null,deferredPrompt=null,lastScreen='home';let editPlan=null,editingEntryIndex=null,activeRange='week',dagboekTab='invoer';
+let currentQ=0,scores=[],activeOef=null,activeStep=0,selectedMood=null,deferredPrompt=null,lastScreen='home',parentScreen='home';let editPlan=null,editingEntryIndex=null,activeRange='week',dagboekTab='invoer';
 let weekOffset=0,selectedDayKey=null,selectedCat=null,taakFormOpen=false;
 function loadPlan(){try{const s=localStorage.getItem('mijnAnker_plan');return s?JSON.parse(s):defaultPlan;}catch{return defaultPlan;}}
 function loadEntries(){try{return JSON.parse(localStorage.getItem('mijnAnker_dagboek')||'[]');}catch{return[];}}
@@ -478,8 +478,16 @@ function saveCheckState(s){localStorage.setItem('mijnAnker_med_check_'+todayKey(
 function loadTaken(dayKey){try{return JSON.parse(localStorage.getItem('mijnAnker_taken_'+dayKey)||'[]');}catch{return[];}}
 function saveTaken(dayKey,taken){localStorage.setItem('mijnAnker_taken_'+dayKey,JSON.stringify(taken));}
 function showScreen(name){
-  if(name==='gereedschappen')lastScreen='gereedschappen';
-  else if(name!=='home' && lastScreen==='home')lastScreen='gereedschappen';
+  if(name==='gereedschappen'){
+    parentScreen='home';
+    lastScreen='gereedschappen';
+  } else if(name!=='home' && lastScreen==='home'){
+    parentScreen='home';
+    lastScreen=name;
+  } else if(name!=='home' && lastScreen==='gereedschappen'){
+    parentScreen='gereedschappen';
+    lastScreen=name;
+  }
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
   document.getElementById('header').style.display='flex';
@@ -493,7 +501,9 @@ function goBack(){
   const currentScreen = document.querySelector('.screen.active')?.id.replace('screen-', '');
   if(currentScreen === 'gereedschappen'){
     goHome();
-  } else if(currentScreen !== 'home'){
+  } else if(currentScreen === 'home'){
+    goHome();
+  } else if(parentScreen === 'gereedschappen'){
     showScreen('gereedschappen');
   } else {
     goHome();
