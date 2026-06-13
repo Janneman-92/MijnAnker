@@ -239,6 +239,9 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
     <div class="grid" style="margin-top:-4px">
       <button class="card" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);grid-column:1/-1;width:100%" onclick="showScreen('gereedschappen')"><span class="card-icon">🧰</span><span class="card-label">Gereedschappen</span><span class="card-sub">Oefeningen, hulp & meer</span></button>
     </div>
+    <div class="grid" style="margin-top:-4px">
+      <button class="card" style="background:linear-gradient(135deg,#ef4444,#dc2626);grid-column:1/-1;width:100%" onclick="showScreen('acuut')"><span class="card-icon">🆘</span><span class="card-label">Acuut</span><span class="card-sub">Directe hulp nodig?</span></button>
+    </div>
     <p class="greeting">Hoe voel je je vandaag?</p>
   </div>
 
@@ -297,7 +300,7 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
       <button class="card card-blue" onclick="showScreen('plan')"><span class="card-icon">📋</span><span class="card-label">Mijn Plan</span><span class="card-sub">Signaleringsplan</span></button>
     </div>
     <div class="grid" style="margin-top:-4px">
-      <button class="card card-red" style="grid-column:1/-1;width:100%" onclick="showScreen('acuut')"><span class="card-icon">🆘</span><span class="card-label">Acuut</span><span class="card-sub">Directe hulp</span></button>
+      <button class="card card-blue" style="grid-column:1/-1;width:100%" onclick="showScreen('contacten')"><span class="card-icon">☎️</span><span class="card-label">Contacten</span><span class="card-sub">Nummers uit je plan</span></button>
     </div>
   </div>
 
@@ -306,6 +309,13 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
   <div class="screen" id="screen-oefening-detail">
     <h2 class="section-title" id="oef-detail-title"></h2>
     <div class="step-card"><div class="step-num" id="step-num"></div><p class="step-tekst" id="step-tekst"></p><div class="step-btns" id="step-btns"></div></div>
+  </div>
+
+  <!-- CONTACTEN -->
+  <div class="screen" id="screen-contacten">
+    <h2 class="section-title">Contacten uit je plan</h2>
+    <div id="contacten-lijst" style="display:flex;flex-direction:column;gap:12px;margin-top:16px"></div>
+    <p id="contacten-empty" style="color:var(--muted);text-align:center;margin-top:20px;font-size:14px">Nog geen contacten toegevoegd</p>
   </div>
 
   <!-- ACUUT -->
@@ -491,7 +501,7 @@ function showScreen(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
   document.getElementById('header').style.display='flex';
-  if(name==='checkin')initCheckin();if(name==='plan')renderPlan();if(name==='oefeningen')renderOefeningen();if(name==='acuut')renderAcuut();
+  if(name==='checkin')initCheckin();if(name==='plan')renderPlan();if(name==='oefeningen')renderOefeningen();if(name==='acuut')renderAcuut();if(name==='contacten')renderContacten();
   if(name==='dagboek')renderDagboek();if(name==='goedmoment'){renderGoedMomenten();switchGMTab('lezen');}
   if(name==='agenda')renderAgenda();if(name==='medicatie'){renderMedVandaag();switchMedTab('vandaag');}if(name==='gereedschappen'){} if(name==='weekplanning')initWeekplanning();
   window.scrollTo(0,0);
@@ -533,6 +543,7 @@ function startOefening(i){activeOef=oefeningen[i];activeStep=0;document.getEleme
 function renderStep(){document.getElementById('step-num').textContent=`Stap ${activeStep+1} van ${activeOef.stappen.length}`;document.getElementById('step-tekst').textContent=activeOef.stappen[activeStep];let h='';if(activeStep>0)h+=`<button class="nav-btn" onclick="prevStep()">← Terug</button>`;if(activeStep<activeOef.stappen.length-1)h+=`<button class="nav-btn primary" onclick="nextStep()">Volgende →</button>`;else h+=`<button class="nav-btn done" onclick="showScreen('oefeningen')">✓ Klaar</button>`;document.getElementById('step-btns').innerHTML=h;}
 function nextStep(){activeStep++;renderStep();}function prevStep(){activeStep--;renderStep();}
 function renderAcuut(){const p=loadPlan();document.getElementById('acuut-contacten').innerHTML=p.contacten.map((c,i)=>`<a class="acuut-btn" href="tel:${c.tel}" style="background:${i===p.contacten.length-1?'#ef4444':'#1e293b'}">📞 ${escHtml(c.naam)} — ${c.tel}</a>`).join('');}
+function renderContacten(){const p=loadPlan();const lijst=document.getElementById('contacten-lijst');const empty=document.getElementById('contacten-empty');if(p.contacten.length===0){lijst.innerHTML='';empty.style.display='block';}else{empty.style.display='none';lijst.innerHTML=p.contacten.map(c=>`<a href="tel:${c.tel}" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px 14px;display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--text);transition:background 0.2s"><div style="display:flex;flex-direction:column;gap:4px"><div style="font-weight:bold">${escHtml(c.naam)}</div><div style="font-size:13px;color:var(--muted)">${c.tel}</div></div><div style="font-size:18px">📞</div></a>`).join('');}}
 function switchDagboekTab(tab){dagboekTab=tab;['invoer','grafiek','lijst'].forEach(t=>{document.getElementById('dag-'+t).style.display='none';document.getElementById('dag-tab-'+t).classList.remove('active');});document.getElementById('dag-'+tab).style.display='flex';document.getElementById('dag-'+tab).style.flexDirection='column';document.getElementById('dag-tab-'+tab).classList.add('active');if(tab==='grafiek')renderGrafiek();if(tab==='lijst')renderEntries();}
 function switchRange(range){activeRange=range;['week','maand','jaar'].forEach(r=>document.getElementById('range-'+r).classList.toggle('active',r===range));renderGrafiek();}
 function selectMood(btn){document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedMood=btn.dataset.mood;}
