@@ -478,7 +478,8 @@ function saveCheckState(s){localStorage.setItem('mijnAnker_med_check_'+todayKey(
 function loadTaken(dayKey){try{return JSON.parse(localStorage.getItem('mijnAnker_taken_'+dayKey)||'[]');}catch{return[];}}
 function saveTaken(dayKey,taken){localStorage.setItem('mijnAnker_taken_'+dayKey,JSON.stringify(taken));}
 function showScreen(name){
-  if(name!=='home' && lastScreen==='home')lastScreen='gereedschappen';
+  if(name==='gereedschappen')lastScreen='gereedschappen';
+  else if(name!=='home' && lastScreen==='home')lastScreen='gereedschappen';
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
   document.getElementById('header').style.display='flex';
@@ -488,7 +489,13 @@ function showScreen(name){
   window.scrollTo(0,0);
 }
 function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-home').classList.add('active');document.getElementById('header').style.display='none';currentQ=0;scores=[];lastScreen='home';window.scrollTo(0,0);}
-function goBack(){if(lastScreen==='gereedschappen'){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-gereedschappen').classList.add('active');document.getElementById('header').style.display='flex';}else{goHome();}}
+function goBack(){
+  if(lastScreen==='gereedschappen'){
+    showScreen('gereedschappen');
+  }else{
+    goHome();
+  }
+}
 function initCheckin(){currentQ=0;scores=[];renderQuestion();}
 function renderQuestion(){const q=vragen[currentQ];document.getElementById('progress').innerHTML=vragen.map((_,i)=>`<div class="dot ${i<=currentQ?'active':''}"></div>`).join('');document.getElementById('q-title').textContent=q.tekst;document.getElementById('q-options').innerHTML=q.opties.map(o=>`<button class="opt-btn" onclick="handleAnswer(${o.score})">${o.label}</button>`).join('');}
 function handleAnswer(score){scores.push(score);if(currentQ<vragen.length-1){currentQ++;renderQuestion();}else showResult();}
