@@ -66,7 +66,7 @@ body{background:linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%);min-height:
 .nav-btn.done{background:var(--green);border-color:var(--green);color:#fff;}
 .acuut-banner{text-align:center;padding:20px 0 10px;}
 .acuut-icon{font-size:48px;}.acuut-titel{font-size:26px;font-weight:normal;margin:10px 0 4px;}.acuut-sub{color:var(--muted);font-size:14px;}
-.acuut-btn{display:block;color:#fff;text-decoration:none;padding:18px 16px;border-radius:16px;font-size:15px;text-align:center;transition:opacity .2s;font-family:Georgia,serif;}
+.acuut-btn{display:block;color:#fff;text-decoration:none;padding:18px 16px;border-radius:16px;font-size:15px;text-align:center;transition:opacity .2s;font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-bottom:12px;}
 .acuut-btn:active{opacity:.8;}
 .acuut-note{color:var(--dim);font-size:12px;text-align:center;margin-top:4px;}
 .mood-row{display:flex;justify-content:space-between;gap:8px;}
@@ -114,7 +114,7 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
 .week-nav{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border-radius:14px;padding:10px 14px;}
 .week-nav-btn{background:none;border:none;color:var(--purple);font-size:22px;cursor:pointer;padding:4px 10px;}
 .week-label{color:var(--text);font-size:14px;font-weight:bold;}
-.week-days{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;}
+.week-days{display:flex;gap:6px;justify-content:center;overflow-x:auto;padding-bottom:4px;}
 .week-day-btn{flex-shrink:0;width:44px;padding:8px 4px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:11px;cursor:pointer;font-family:Georgia,serif;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all .2s;}
 .week-day-btn .day-num{font-size:16px;font-weight:bold;color:var(--text);}
 .week-day-btn.active{background:var(--purple);border-color:var(--purple);color:#fff;}
@@ -145,7 +145,7 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
 .week-leeg{color:var(--dim);font-size:13px;text-align:center;padding:16px 0;}
 
 /* INSTALL */
-.install-screen{display:none;position:fixed;inset:0;z-index:999;background:linear-gradient(160deg,#0f172a 0%,#1e1b4b 100%);flex-direction:column;align-items:center;justify-content:flex-start;padding:40px 24px 32px;overflow-y:auto;}
+.install-screen{display:none;position:fixed;inset:0;z-index:999;background:linear-gradient(135deg,rgba(15,15,30,0.8),rgba(26,26,45,0.8));backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:flex-start;padding:40px 24px 32px;overflow-y:auto;}
 .install-screen.active{display:flex;}
 .install-logo{font-size:52px;margin-bottom:8px;}
 .install-title{font-size:28px;letter-spacing:2px;margin-bottom:6px;font-weight:normal;}
@@ -169,13 +169,11 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
 .disclaimer-modal{display:none;position:fixed;inset:0;z-index:9998;background:linear-gradient(135deg,rgba(15,15,30,0.8),rgba(26,26,45,0.8));backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:center;padding:20px;}
 .disclaimer-modal.active{display:flex;}
 .disclaimer-box{background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);backdrop-filter:blur(20px);border-radius:24px;padding:40px 30px;max-width:420px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.3);}
-.disclaimer-box h2{font-size:28px;margin-bottom:20px;color:#fff;font-weight:700;}
-.disclaimer-box p{color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:10px;text-align:left;}
+.disclaimer-box h2{font-size:22px;margin-bottom:14px;color:#fff;}
+.disclaimer-box p{color:#94a3b8;font-size:13px;line-height:1.7;margin-bottom:10px;text-align:left;}
 .disclaimer-box strong{color:#fff;}
-.disclaimer-btn{width:100%;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:12px;color:#fff;padding:14px;font-size:14px;cursor:pointer;margin-top:16px;font-family:inherit;font-weight:700;box-shadow:0 4px 15px rgba(124,58,237,0.4);}
+.disclaimer-btn{width:100%;background:#6366f1;border:none;border-radius:12px;color:#fff;padding:12px;font-size:14px;cursor:pointer;margin-top:16px;font-family:Georgia,serif;}
 .disclaimer-btn:active{opacity:0.8;}
-.naam-modal{display:none;position:fixed;inset:0;z-index:9997;background:linear-gradient(135deg,rgba(15,15,30,0.8),rgba(26,26,45,0.8));backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:center;padding:20px;}
-.naam-modal.active{display:flex;}
 </style>
 </head>
 <body>
@@ -216,18 +214,6 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
   <span class="install-skip" onclick="enterApp()">Overslaan, gewoon in de browser gebruiken</span>
 </div>
 
-<!-- NAAM MODAL -->
-<div class="naam-modal" id="naam-modal">
-  <div class="disclaimer-box">
-    <div style="font-size:56px;margin-bottom:20px">👋</div>
-    <h2>Hoe heet je?</h2>
-    <p style="color:var(--muted);margin:0 0 28px;font-size:14px">Je naam verschijnt bovenaan in de app</p>
-    <input id="naam-input-modal" type="text" placeholder="Vul je naam in" style="width:100%;padding:14px;margin:20px 0;border-radius:12px;border:1px solid rgba(124,58,237,0.4);background:rgba(255,255,255,0.05);color:#fff;font-size:16px;box-sizing:border-box;font-family:inherit">
-    <p style="color:var(--muted);font-size:12px;margin:10px 0">(Dit kun je later wijzigen)</p>
-    <button onclick="saveNaamAndEnter()" style="width:100%;padding:15px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(124,58,237,0.4);margin-top:20px">App starten! 🚀</button>
-  </div>
-</div>
-
 <div id="app">
   <div class="header" id="header" style="display:none">
     <button class="back-btn" onclick="goBack()">←</button>
@@ -247,21 +233,15 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
               <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
             </linearGradient>
           </defs>
-          <!-- Head outline -->
           <path d="M 15 25 Q 15 15 30 12 Q 45 15 45 25 L 45 45 Q 45 52 30 52 Q 15 52 15 45 Z" fill="none" stroke="url(#mindGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- Brain left hemisphere -->
           <path d="M 22 28 Q 20 32 22 36 Q 24 38 26 36 Q 28 32 26 28 Q 24 26 22 28" fill="url(#mindGrad)" opacity="0.8"/>
-          <!-- Brain center -->
           <circle cx="30" cy="32" r="5" fill="url(#mindGrad)" opacity="0.9"/>
-          <!-- Brain right hemisphere -->
           <path d="M 38 28 Q 36 26 34 28 Q 32 32 34 36 Q 36 38 38 36 Q 40 32 38 28" fill="url(#mindGrad)" opacity="0.8"/>
-          <!-- Brain waves/thoughts -->
           <path d="M 48 30 Q 52 30 54 32" stroke="url(#mindGrad)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
           <path d="M 48 38 Q 52 38 54 36" stroke="url(#mindGrad)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-          <!-- Heart accent at bottom -->
           <path d="M 26 44 Q 26 42 28 42 Q 30 44 30 44 Q 30 44 32 42 Q 34 42 34 44 Q 34 46 30 48 Q 26 46 26 44" fill="url(#mindGrad)" opacity="0.7"/>
         </svg>
-        <div style="flex:1"></div>
+        <button onclick="showScreen('instellingen')" style="background:none;border:none;font-size:24px;cursor:pointer;flex:1;text-align:right">⚙️</button>
       </div>
       <h2 id="welcome-text" style="font-size:28px;font-weight:600;margin-bottom:6px;color:#fff">Welkom!</h2>
       <p class="app-sub">Jouw veilige plek in moeilijke momenten</p>
@@ -359,7 +339,7 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
   <!-- ACUUT -->
   <div class="screen" id="screen-acuut">
     <div class="acuut-banner"><div class="acuut-icon">🆘</div><h2 class="acuut-titel">Directe hulp</h2><p class="acuut-sub">Je hoeft dit niet alleen te doen</p></div>
-    <div id="acuut-contacten"></div>
+    <div id="acuut-contacten" style="display:flex;flex-direction:column"></div>
     <p class="acuut-note">113 is 24/7 bereikbaar · Ook chatten via 113.nl</p>
   </div>
 
@@ -423,11 +403,13 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
     <h2 class="section-title">Agenda</h2>
     <div class="plan-block">
       <div class="plan-head">➕ Afspraak toevoegen</div>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;width:100%">
-        <input class="edit-input" id="agenda-titel" placeholder="Omschrijving bijv. Afspraak behandelaar"/>
-        <input class="edit-input" id="agenda-datum" type="date"/>
-        <input class="edit-input" id="agenda-tijd" type="time"/>
-        <button class="save-btn" onclick="saveAfspraak()" style="margin:0">💾 Opslaan</button>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;width:100%;align-items:center;max-width:380px;margin-left:auto;margin-right:auto">
+        <input class="edit-input" id="agenda-titel" placeholder="Omschrijving bijv. Afspraak behandelaar" style="width:100%"/>
+        <div style="display:flex;gap:8px;width:100%">
+          <input class="edit-input" id="agenda-datum" type="date" style="flex:1"/>
+          <input class="edit-input" id="agenda-tijd" type="time" style="flex:1"/>
+        </div>
+        <button class="save-btn" onclick="saveAfspraak()" style="margin:0;width:100%">💾 Opslaan</button>
       </div>
     </div>
     <div id="agenda-lijst" style="display:flex;flex-direction:column;gap:10px"></div>
@@ -627,8 +609,7 @@ function toggleTaak(dayKey,i){const taken=loadTaken(dayKey);taken[i].gedaan=!tak
 function deleteTaak(dayKey,i){const taken=loadTaken(dayKey);taken.splice(i,1);saveTaken(dayKey,taken);renderWeekDay(dayKey);initWeekplanning();showToast('Taak verwijderd');}
 function deleteAfspraakFromWeek(id){if(!confirm('Afspraak verwijderen?'))return;saveAfsprakenToStorage(loadAfspraken().filter(a=>a.id!==id));renderWeekDay(selectedDayKey);initWeekplanning();showToast('Verwijderd');}
 function selectOS(os){document.getElementById('os-iphone').classList.toggle('active',os==='iphone');document.getElementById('os-android').classList.toggle('active',os==='android');document.getElementById('steps-iphone').style.display=os==='iphone'?'flex':'none';document.getElementById('steps-android').style.display=os==='android'?'flex':'none';}
-function enterApp(){document.getElementById('install-screen').classList.remove('active');document.getElementById('naam-modal').classList.add('active');localStorage.setItem('mijnAnker_seen_install','1');}
-function saveNaamAndEnter(){const naam=document.getElementById('naam-input-modal').value.trim();if(!naam){alert('Vul alsjeblieft je naam in');return;}localStorage.setItem('mijnAnker_username',naam);document.getElementById('naam-modal').classList.remove('active');goHome();updateWelcomeText();}
+function enterApp(){document.getElementById('install-screen').classList.remove('active');localStorage.setItem('mijnAnker_seen_install','1');}
 function checkInstallScreen(){const seen=localStorage.getItem('mijnAnker_seen_install');const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;if(isStandalone)return;if(!seen){document.getElementById('install-screen').classList.add('active');if(/android/i.test(navigator.userAgent))selectOS('android');}}
 
 let disclaimerShown = false;
