@@ -145,7 +145,7 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
 .week-leeg{color:var(--dim);font-size:13px;text-align:center;padding:16px 0;}
 
 /* INSTALL */
-.install-screen{display:none;position:fixed;inset:0;z-index:999;background:linear-gradient(160deg,#0f172a 0%,#1e1b4b 100%);flex-direction:column;align-items:center;justify-content:flex-start;padding:40px 24px 32px;overflow-y:auto;}
+.install-screen{display:none;position:fixed;inset:0;z-index:999;background:linear-gradient(135deg,rgba(15,15,30,0.8),rgba(26,26,45,0.8));backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:flex-start;padding:40px 24px 32px;overflow-y:auto;}
 .install-screen.active{display:flex;}
 .install-logo{font-size:52px;margin-bottom:8px;}
 .install-title{font-size:28px;letter-spacing:2px;margin-bottom:6px;font-weight:normal;}
@@ -166,10 +166,10 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
 .toast.show{opacity:1;}
 
 /* DISCLAIMER */
-.disclaimer-modal{display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.7);flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+.disclaimer-modal{display:none;position:fixed;inset:0;z-index:9998;background:linear-gradient(135deg,rgba(15,15,30,0.8),rgba(26,26,45,0.8));backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:center;padding:20px;}
 .disclaimer-modal.active{display:flex;}
-.disclaimer-box{background:linear-gradient(160deg,#0f172a,#1e1b4b);border-radius:20px;padding:28px 20px;max-width:420px;text-align:center;}
-.disclaimer-box h2{font-size:22px;margin-bottom:14px;color:#fff;}
+.disclaimer-box{background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);backdrop-filter:blur(20px);border-radius:24px;padding:40px 30px;max-width:420px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.3);}
+.disclaimer-box h2{font-size:28px;margin-bottom:20px;color:#fff;font-weight:700;}
 .disclaimer-box p{color:#94a3b8;font-size:13px;line-height:1.7;margin-bottom:10px;text-align:left;}
 .disclaimer-box strong{color:#fff;}
 .disclaimer-btn{width:100%;background:#6366f1;border:none;border-radius:12px;color:#fff;padding:12px;font-size:14px;cursor:pointer;margin-top:16px;font-family:Georgia,serif;}
