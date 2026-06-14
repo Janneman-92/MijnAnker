@@ -214,6 +214,18 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
   <span class="install-skip" onclick="enterApp()">Overslaan, gewoon in de browser gebruiken</span>
 </div>
 
+<!-- NAAM MODAL -->
+<div class="disclaimer-modal" id="naam-modal">
+  <div class="disclaimer-box">
+    <div style="font-size:56px;margin-bottom:20px">👋</div>
+    <h2 style="font-size:28px;margin-bottom:20px;color:#fff;font-weight:700">Hoe heet je?</h2>
+    <p style="color:var(--muted);margin-bottom:28px;font-size:14px">Je naam verschijnt bovenaan in de app</p>
+    <input id="naam-input-modal" type="text" placeholder="Vul je naam in" style="width:100%;padding:12px;margin:20px 0;border-radius:12px;border:1px solid rgba(124,58,237,0.4);background:rgba(255,255,255,0.05);color:#fff;font-size:16px;box-sizing:border-box;font-family:inherit">
+    <p style="color:var(--muted);font-size:12px;margin:10px 0">(Dit kun je later wijzigen)</p>
+    <button onclick="saveNaamAndContinue()" style="width:100%;padding:15px;background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(124,58,237,0.4);margin-top:20px">App starten! 🚀</button>
+  </div>
+</div>
+
 <div id="app">
   <div class="header" id="header" style="display:none">
     <button class="back-btn" onclick="goBack()">←</button>
@@ -241,7 +253,7 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
           <path d="M 48 38 Q 52 38 54 36" stroke="url(#mindGrad)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
           <path d="M 26 44 Q 26 42 28 42 Q 30 44 30 44 Q 30 44 32 42 Q 34 42 34 44 Q 34 46 30 48 Q 26 46 26 44" fill="url(#mindGrad)" opacity="0.7"/>
         </svg>
-        <button onclick="showScreen('instellingen')" style="background:none;border:none;font-size:24px;cursor:pointer;flex:1;text-align:right">⚙️</button>
+        <div style="flex:1"></div>
       </div>
       <h2 id="welcome-text" style="font-size:28px;font-weight:600;margin-bottom:6px;color:#fff">Welkom!</h2>
       <p class="app-sub">Jouw veilige plek in moeilijke momenten</p>
@@ -613,8 +625,10 @@ function enterApp(){document.getElementById('install-screen').classList.remove('
 function checkInstallScreen(){const seen=localStorage.getItem('mijnAnker_seen_install');const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;if(isStandalone)return;if(!seen){document.getElementById('install-screen').classList.add('active');if(/android/i.test(navigator.userAgent))selectOS('android');}}
 
 let disclaimerShown = false;
-function acceptDisclaimer(){localStorage.setItem('mijnAnker_disclaimer_accepted','1');document.getElementById('disclaimer-modal').classList.remove('active');}
-function checkDisclaimer(){if(!localStorage.getItem('mijnAnker_disclaimer_accepted') && !disclaimerShown){document.getElementById('disclaimer-modal').classList.add('active');disclaimerShown=true;}}
+function acceptDisclaimer(){localStorage.setItem('mijnAnker_disclaimer_accepted','1');document.getElementById('disclaimer-modal').classList.remove('active');checkNaam()?goHome():checkDisclaimer();}
+function saveNaamAndContinue(){const naam=document.getElementById('naam-input-modal').value.trim();if(!naam){alert('Vul alsjeblieft je naam in');return;}localStorage.setItem('mijnAnker_username',naam);document.getElementById('naam-modal').classList.remove('active');goHome();updateWelcomeText();}
+function checkNaam(){if(!localStorage.getItem('mijnAnker_username')){return false;}return true;}
+function checkDisclaimer(){if(!localStorage.getItem('mijnAnker_disclaimer_accepted') && !disclaimerShown){document.getElementById('disclaimer-modal').classList.add('active');disclaimerShown=true;}else if(!checkNaam()){document.getElementById('naam-modal').classList.add('active');}}
 
 
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});window.addEventListener('appinstalled',()=>showToast('MijnAnker toegevoegd 🎉'));checkInstallScreen();
