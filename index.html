@@ -214,6 +214,19 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
   <span class="install-skip" onclick="enterApp()">Overslaan, gewoon in de browser gebruiken</span>
 </div>
 
+<!-- ONBOARDING -->
+<div id="onboarding" style="position:fixed;inset:0;background:linear-gradient(135deg,rgba(15,15,30,0.8),rgba(26,26,45,0.8));backdrop-filter:blur(10px);z-index:10000;display:none;overflow-y:auto">
+  <div id="step1" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;text-align:center;color:#fff">
+    <div style="max-width:420px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);backdrop-filter:blur(20px);padding:40px 30px;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.3)"><div style="font-size:64px;margin:20px">⚓</div><h1 style="font-size:32px;margin:30px 0 10px;font-weight:700">MijnAnker</h1><p style="color:#b0b9c6;margin:0 0 30px;font-size:15px">Jouw veilige plek</p><div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:24px;border-radius:16px;text-align:left;margin:30px 0"><p style="margin:12px 0;font-size:14px"><strong>⚠️ Disclaimer</strong></p><p style="margin:10px 0;font-size:13px;line-height:1.6"><strong>MijnAnker is geen officieel medisch hulpmiddel.</strong> De app kan helpen, maar vervangt geen professionele hulp.</p><p style="margin:10px 0;font-size:13px"><strong>Bij acute nood: Bel 113</strong></p></div><button onclick="nextStep()" style="width:100%;padding:15px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(124,58,237,0.4)">Ik begrijp dit</button></div>
+  </div>
+  <div id="step2" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;text-align:center;color:#fff">
+    <div style="max-width:420px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);backdrop-filter:blur(20px);padding:40px 30px;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.3)"><div style="font-size:64px;margin:20px">📱</div><h1 style="font-size:32px;margin:30px 0;font-weight:700">Installeer MijnAnker</h1><div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:24px;border-radius:16px;margin:30px 0;text-align:left"><p style="margin:12px 0;font-size:14px"><strong>🍎 iPhone:</strong></p><p style="margin:8px 0;font-size:13px;color:#b0b9c6">Safari → deel-icoon → "Zet op beginscherm"</p><p style="margin:16px 0 12px;font-size:14px"><strong>🤖 Android:</strong></p><p style="margin:8px 0;font-size:13px;color:#b0b9c6">Chrome → drie puntjes → "Startscherm"</p></div><button onclick="nextStep()" style="width:100%;padding:15px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(124,58,237,0.4)">Volgende →</button></div>
+  </div>
+  <div id="step3" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;text-align:center;color:#fff">
+    <div style="max-width:420px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);backdrop-filter:blur(20px);padding:40px 30px;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.3)"><div style="font-size:64px;margin:20px">👋</div><h1 style="font-size:32px;margin:30px 0;font-weight:700">Hoe heet je?</h1><p style="color:#b0b9c6;margin:0 0 30px;font-size:14px">Je naam verschijnt bovenaan in de app</p><input id="naam-input" type="text" placeholder="Vul je naam in" style="width:100%;padding:14px;margin:20px 0;border-radius:12px;border:1px solid rgba(124,58,237,0.4);background:rgba(255,255,255,0.05);color:#fff;font-size:16px;box-sizing:border-box"><p style="color:#b0b9c6;font-size:12px;margin:10px 0">(Dit kun je later wijzigen)</p><button onclick="finishOnboard()" style="width:100%;padding:15px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(124,58,237,0.4);margin-top:20px">App starten! 🚀</button></div>
+  </div>
+</div>
+
 <div id="app">
   <div class="header" id="header" style="display:none">
     <button class="back-btn" onclick="goBack()">←</button>
@@ -224,8 +237,12 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
   <!-- HOME -->
   <div class="screen active" id="screen-home">
     <div class="logo-wrap">
-      <div class="logo">⚓</div>
-      <h1 class="app-title">MijnAnker</h1>
+      <div style="display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:16px">
+        <div style="flex:1"></div>
+        <div class="logo">⚓</div>
+        <button onclick="showScreen('instellingen')" style="background:none;border:none;font-size:24px;cursor:pointer;flex:1;text-align:right">⚙️</button>
+      </div>
+      <h2 id="welcome-text" style="font-size:28px;font-weight:600;margin-bottom:6px;color:#fff">Welkom!</h2>
       <p class="app-sub">Jouw veilige plek in moeilijke momenten</p>
     </div>
     <div class="grid">
@@ -506,7 +523,8 @@ function showScreen(name){
   if(name==='agenda')renderAgenda();if(name==='medicatie'){renderMedVandaag();switchMedTab('vandaag');}if(name==='gereedschappen'){} if(name==='weekplanning')initWeekplanning();
   window.scrollTo(0,0);
 }
-function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-home').classList.add('active');document.getElementById('header').style.display='none';currentQ=0;scores=[];lastScreen='home';window.scrollTo(0,0);}
+function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-home').classList.add('active');document.getElementById('header').style.display='none';currentQ=0;scores=[];lastScreen='home';updateWelcomeText();window.scrollTo(0,0);}
+function updateWelcomeText(){const naam=localStorage.getItem('mijnAnker_username')||'';if(naam){document.getElementById('welcome-text').textContent='Welkom '+naam+'!';}}
 function goBack(){
   const currentScreen = document.querySelector('.screen.active')?.id.replace('screen-', '');
   if(currentScreen === 'gereedschappen'){
@@ -597,7 +615,32 @@ function checkDisclaimer(){if(!localStorage.getItem('mijnAnker_disclaimer_accept
 
 
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});window.addEventListener('appinstalled',()=>showToast('MijnAnker toegevoegd 🎉'));checkInstallScreen();
-checkDisclaimer();if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+checkDisclaimer();updateWelcomeText();if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
 </html>
+<script style="display:none">
+// Placeholder for extra functions
+window.currentOnboardStep = 1;
+function nextStep(){
+  document.getElementById('step'+window.currentOnboardStep).style.display = 'none';
+  window.currentOnboardStep++;
+  document.getElementById('step'+window.currentOnboardStep).style.display = 'flex';
+}
+function finishOnboard(){
+  const naam = document.getElementById('naam-input').value.trim();
+  if(!naam) return alert('Vul je naam in');
+  localStorage.setItem('mijnAnker_username', naam);
+  localStorage.setItem('mijnAnker_onboard_done', '1');
+  document.getElementById('onboarding').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  location.reload();
+}
+function checkOnboard(){
+  if(!localStorage.getItem('mijnAnker_onboard_done')){
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('onboarding').style.display = 'flex';
+  }
+}
+checkOnboard();
+</script>
