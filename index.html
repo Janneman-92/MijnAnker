@@ -145,7 +145,7 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
 .week-leeg{color:var(--dim);font-size:13px;text-align:center;padding:16px 0;}
 
 /* INSTALL */
-.install-screen{display:none;position:fixed;inset:0;z-index:999;background:linear-gradient(135deg,rgba(15,15,30,0.8),rgba(26,26,45,0.8));backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:flex-start;padding:40px 24px 32px;overflow-y:auto;}
+.install-screen{display:none;position:fixed;inset:0;z-index:999;background:linear-gradient(160deg,#0f172a 0%,#1e1b4b 100%);flex-direction:column;align-items:center;justify-content:flex-start;padding:40px 24px 32px;overflow-y:auto;}
 .install-screen.active{display:flex;}
 .install-logo{font-size:52px;margin-bottom:8px;}
 .install-title{font-size:28px;letter-spacing:2px;margin-bottom:6px;font-weight:normal;}
@@ -170,10 +170,12 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
 .disclaimer-modal.active{display:flex;}
 .disclaimer-box{background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);backdrop-filter:blur(20px);border-radius:24px;padding:40px 30px;max-width:420px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.3);}
 .disclaimer-box h2{font-size:28px;margin-bottom:20px;color:#fff;font-weight:700;}
-.disclaimer-box p{color:#94a3b8;font-size:13px;line-height:1.7;margin-bottom:10px;text-align:left;}
+.disclaimer-box p{color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:10px;text-align:left;}
 .disclaimer-box strong{color:#fff;}
-.disclaimer-btn{width:100%;background:#6366f1;border:none;border-radius:12px;color:#fff;padding:12px;font-size:14px;cursor:pointer;margin-top:16px;font-family:Georgia,serif;}
+.disclaimer-btn{width:100%;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:12px;color:#fff;padding:14px;font-size:14px;cursor:pointer;margin-top:16px;font-family:inherit;font-weight:700;box-shadow:0 4px 15px rgba(124,58,237,0.4);}
 .disclaimer-btn:active{opacity:0.8;}
+.naam-modal{display:none;position:fixed;inset:0;z-index:9997;background:linear-gradient(135deg,rgba(15,15,30,0.8),rgba(26,26,45,0.8));backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+.naam-modal.active{display:flex;}
 </style>
 </head>
 <body>
@@ -214,16 +216,15 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
   <span class="install-skip" onclick="enterApp()">Overslaan, gewoon in de browser gebruiken</span>
 </div>
 
-<!-- ONBOARDING -->
-<div id="onboarding" style="position:fixed;inset:0;background:linear-gradient(135deg,rgba(15,15,30,0.8),rgba(26,26,45,0.8));backdrop-filter:blur(10px);z-index:10000;display:none;overflow-y:auto">
-  <div id="step1" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;text-align:center;color:#fff">
-    <div style="max-width:420px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);backdrop-filter:blur(20px);padding:40px 30px;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.3)"><div style="font-size:64px;margin:20px">⚓</div><h1 style="font-size:32px;margin:30px 0 10px;font-weight:700">MijnAnker</h1><p style="color:#b0b9c6;margin:0 0 30px;font-size:15px">Jouw veilige plek</p><div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:24px;border-radius:16px;text-align:left;margin:30px 0"><p style="margin:12px 0;font-size:14px"><strong>⚠️ Disclaimer</strong></p><p style="margin:10px 0;font-size:13px;line-height:1.6"><strong>MijnAnker is geen officieel medisch hulpmiddel.</strong> De app kan helpen, maar vervangt geen professionele hulp.</p><p style="margin:10px 0;font-size:13px"><strong>Bij acute nood: Bel 113</strong></p></div><button onclick="nextStep()" style="width:100%;padding:15px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(124,58,237,0.4)">Ik begrijp dit</button></div>
-  </div>
-  <div id="step2" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;text-align:center;color:#fff">
-    <div style="max-width:420px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);backdrop-filter:blur(20px);padding:40px 30px;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.3)"><div style="font-size:64px;margin:20px">📱</div><h1 style="font-size:32px;margin:30px 0;font-weight:700">Installeer MijnAnker</h1><div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:24px;border-radius:16px;margin:30px 0;text-align:left"><p style="margin:12px 0;font-size:14px"><strong>🍎 iPhone:</strong></p><p style="margin:8px 0;font-size:13px;color:#b0b9c6">Safari → deel-icoon → "Zet op beginscherm"</p><p style="margin:16px 0 12px;font-size:14px"><strong>🤖 Android:</strong></p><p style="margin:8px 0;font-size:13px;color:#b0b9c6">Chrome → drie puntjes → "Startscherm"</p></div><button onclick="nextStep()" style="width:100%;padding:15px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(124,58,237,0.4)">Volgende →</button></div>
-  </div>
-  <div id="step3" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;text-align:center;color:#fff">
-    <div style="max-width:420px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);backdrop-filter:blur(20px);padding:40px 30px;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.3)"><div style="font-size:64px;margin:20px">👋</div><h1 style="font-size:32px;margin:30px 0;font-weight:700">Hoe heet je?</h1><p style="color:#b0b9c6;margin:0 0 30px;font-size:14px">Je naam verschijnt bovenaan in de app</p><input id="naam-input" type="text" placeholder="Vul je naam in" style="width:100%;padding:14px;margin:20px 0;border-radius:12px;border:1px solid rgba(124,58,237,0.4);background:rgba(255,255,255,0.05);color:#fff;font-size:16px;box-sizing:border-box"><p style="color:#b0b9c6;font-size:12px;margin:10px 0">(Dit kun je later wijzigen)</p><button onclick="finishOnboard()" style="width:100%;padding:15px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(124,58,237,0.4);margin-top:20px">App starten! 🚀</button></div>
+<!-- NAAM MODAL -->
+<div class="naam-modal" id="naam-modal">
+  <div class="disclaimer-box">
+    <div style="font-size:56px;margin-bottom:20px">👋</div>
+    <h2>Hoe heet je?</h2>
+    <p style="color:var(--muted);margin:0 0 28px;font-size:14px">Je naam verschijnt bovenaan in de app</p>
+    <input id="naam-input-modal" type="text" placeholder="Vul je naam in" style="width:100%;padding:14px;margin:20px 0;border-radius:12px;border:1px solid rgba(124,58,237,0.4);background:rgba(255,255,255,0.05);color:#fff;font-size:16px;box-sizing:border-box;font-family:inherit">
+    <p style="color:var(--muted);font-size:12px;margin:10px 0">(Dit kun je later wijzigen)</p>
+    <button onclick="saveNaamAndEnter()" style="width:100%;padding:15px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(124,58,237,0.4);margin-top:20px">App starten! 🚀</button>
   </div>
 </div>
 
@@ -606,7 +607,8 @@ function toggleTaak(dayKey,i){const taken=loadTaken(dayKey);taken[i].gedaan=!tak
 function deleteTaak(dayKey,i){const taken=loadTaken(dayKey);taken.splice(i,1);saveTaken(dayKey,taken);renderWeekDay(dayKey);initWeekplanning();showToast('Taak verwijderd');}
 function deleteAfspraakFromWeek(id){if(!confirm('Afspraak verwijderen?'))return;saveAfsprakenToStorage(loadAfspraken().filter(a=>a.id!==id));renderWeekDay(selectedDayKey);initWeekplanning();showToast('Verwijderd');}
 function selectOS(os){document.getElementById('os-iphone').classList.toggle('active',os==='iphone');document.getElementById('os-android').classList.toggle('active',os==='android');document.getElementById('steps-iphone').style.display=os==='iphone'?'flex':'none';document.getElementById('steps-android').style.display=os==='android'?'flex':'none';}
-function enterApp(){document.getElementById('install-screen').classList.remove('active');localStorage.setItem('mijnAnker_seen_install','1');}
+function enterApp(){document.getElementById('install-screen').classList.remove('active');document.getElementById('naam-modal').classList.add('active');localStorage.setItem('mijnAnker_seen_install','1');}
+function saveNaamAndEnter(){const naam=document.getElementById('naam-input-modal').value.trim();if(!naam){alert('Vul alsjeblieft je naam in');return;}localStorage.setItem('mijnAnker_username',naam);document.getElementById('naam-modal').classList.remove('active');goHome();updateWelcomeText();}
 function checkInstallScreen(){const seen=localStorage.getItem('mijnAnker_seen_install');const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;if(isStandalone)return;if(!seen){document.getElementById('install-screen').classList.add('active');if(/android/i.test(navigator.userAgent))selectOS('android');}}
 
 let disclaimerShown = false;
@@ -619,28 +621,3 @@ checkDisclaimer();updateWelcomeText();if('serviceWorker' in navigator)navigator.
 </script>
 </body>
 </html>
-<script style="display:none">
-// Placeholder for extra functions
-window.currentOnboardStep = 1;
-function nextStep(){
-  document.getElementById('step'+window.currentOnboardStep).style.display = 'none';
-  window.currentOnboardStep++;
-  document.getElementById('step'+window.currentOnboardStep).style.display = 'flex';
-}
-function finishOnboard(){
-  const naam = document.getElementById('naam-input').value.trim();
-  if(!naam) return alert('Vul je naam in');
-  localStorage.setItem('mijnAnker_username', naam);
-  localStorage.setItem('mijnAnker_onboard_done', '1');
-  document.getElementById('onboarding').style.display = 'none';
-  document.getElementById('app').style.display = 'flex';
-  location.reload();
-}
-function checkOnboard(){
-  if(!localStorage.getItem('mijnAnker_onboard_done')){
-    document.getElementById('app').style.display = 'none';
-    document.getElementById('onboarding').style.display = 'flex';
-  }
-}
-checkOnboard();
-</script>
