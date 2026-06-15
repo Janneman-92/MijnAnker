@@ -13,16 +13,24 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg-dark:#0a0e1a;
-  --bg-light:#1a2332;
-  --accent-warm:#d4845c;
-  --accent-cool:#6fa3a8;
-  --accent-life:#a8d4a8;
-  --text-primary:#f5f7fa;
-  --text-muted:#b0b8c6;
-  --border-soft:rgba(212,132,92,0.15);
+  --bg-dark:#f0faf7;
+  --bg-light:#e0f2ed;
+  --accent-warm:#c9866d;
+  --accent-cool:#5ba89e;
+  --accent-life:#6ec86e;
+  --text-primary:#2c3e50;
+  --text-muted:#5a6c7d;
+  --border-soft:rgba(107,155,127,0.15);
 }
-body{background:linear-gradient(180deg,var(--bg-dark) 0%,var(--bg-light) 100%);min-height:100vh;min-height:100dvh;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:500;color:var(--text-primary);display:flex;justify-content:center;}
+body{
+  background:linear-gradient(180deg,var(--bg-dark) 0%,var(--bg-light) 100%);
+  min-height:100vh;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  color:var(--text-primary);
+  padding:16px;
+  overflow:hidden;
+  position:relative;
+}
 #app{width:100%;max-width:480px;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding:0 16px;padding-bottom:env(safe-area-inset-bottom,20px);}
 .header{display:flex;align-items:center;justify-content:space-between;padding:16px 0 12px;}
 .back-btn{background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);color:var(--text-primary);width:40px;height:40px;border-radius:12px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
@@ -60,19 +68,19 @@ body{background:linear-gradient(180deg,var(--bg-dark) 0%,var(--bg-light) 100%);m
   background-clip:text;
 }
 .app-sub{color:var(--text-muted);font-size:14px;margin-top:6px;}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:0;margin-bottom:12px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;margin-top:0;margin-bottom:12px;}
 .card{
-  background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));
-  border:1px solid rgba(212,132,92,0.2);
-  border-radius:16px;
-  padding:20px;
+  background:rgba(255,255,255,0.6);
+  border:2px solid var(--accent-life);
+  border-radius:24px;
+  padding:18px;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:8px;
+  gap:4px;
   cursor:pointer;
-  transition:all .3s ease;
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 .card:active{transform:scale(0.95);border-color:rgba(212,132,92,0.4);background:linear-gradient(135deg,rgba(26,35,50,0.7),rgba(26,35,50,0.4));}
 .card-icon{font-size:36px;}.card-label{color:var(--text-primary);font-weight:700;font-size:15px;}.card-sub{color:var(--text-muted);font-size:11px;}
@@ -92,13 +100,36 @@ body{background:linear-gradient(180deg,var(--bg-dark) 0%,var(--bg-light) 100%);m
 .result-icon{font-size:44px;margin-bottom:10px;}.result-fase{font-size:22px;font-weight:bold;margin-bottom:10px;}.result-tekst{color:#cbd5e1;font-size:15px;line-height:1.7;}
 .acties{display:flex;flex-direction:column;gap:10px;}
 .actie-btn{border:none;border-radius:14px;color:#fff;padding:15px;font-size:15px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:opacity .2s;}
-.plan-block{background:rgba(26,35,50,0.6);border-radius:16px;padding:18px;margin-bottom:16px;border:1px solid rgba(212,132,92,0.2)}
+.plan-block{
+  background:rgba(255,255,255,0.6);
+  border:2px solid var(--accent-life);
+  border-radius:24px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
 .plan-head{color:#a5b4fc;font-size:13px;margin-bottom:10px;letter-spacing:1px;text-transform:uppercase;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .plan-item{color:var(--text-primary);font-size:14px;line-height:2;}
 .contact-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;}
 .contact-name{color:var(--text-primary);font-size:14px;}
 .tel-btn{background:var(--purple);color:#fff;padding:6px 12px;border-radius:10px;text-decoration:none;font-size:13px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
-.oef-card{background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px;cursor:pointer;width:100%;text-align:left;transition:background .2s;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-bottom:12px;box-shadow:0 8px 16px rgba(0,0,0,0.2);}
+.oef-card{
+  background:rgba(255,255,255,0.6);
+  border:2px solid var(--accent-life);
+  border-radius:24px;
+  padding:18px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  cursor:pointer;
+  width:100%;
+  text-align:left;
+  transition:all 0.2s;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  margin-bottom:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  color:var(--text-primary);
+}
 .oef-card:active{background:rgba(255,255,255,.1);}
 .oef-icon{font-size:30px;}.oef-titel{color:var(--text-primary);font-size:16px;margin-bottom:3px;}.oef-duur{color:var(--text-muted);font-size:13px;}.arrow{color:var(--purple);font-size:26px;margin-left:auto;}
 .step-card{background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);border-radius:20px;padding:28px 20px;text-align:center;}
@@ -458,7 +489,12 @@ input:focus, textarea:focus, select:focus{
 
 /* Plan blocks */
 .plan-block{
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  background:rgba(255,255,255,0.6);
+  border:2px solid var(--accent-life);
+  border-radius:24px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
 /* Acuut button */
@@ -915,7 +951,7 @@ function renderGoedMomenten(){const m=loadGoedMomenten();const el=document.getEl
 function saveKladblok(){const titel=document.getElementById('kladblok-titel').value.trim();const tekst=document.getElementById('kladblok-tekst').value.trim();if(!titel&&!tekst){showToast('Vul een titel of tekst in');return;}const n=loadKladblok();n.unshift({id:Date.now(),titel:titel||'Notitie',tekst,datum:new Date().toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'})});saveKladblokToStorage(n);document.getElementById('kladblok-titel').value='';document.getElementById('kladblok-tekst').value='';renderKladblok();showToast('Kladblok opgeslagen 💙');}
 function deleteKladblok(id){if(!confirm('Kladblok verwijderen?'))return;saveKladblokToStorage(loadKladblok().filter(n=>n.id!==id));renderKladblok();showToast('Verwijderd');}
 function renderKladblok(){const n=loadKladblok();const el=document.getElementById('kladblok-lijst');if(!n.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:16px 0">Nog geen kladblok aantekeningen</p>';return;}el.innerHTML=n.map(x=>`<div class="notitie-card"><div class="notitie-header"><span class="notitie-titel-txt">${escHtml(x.titel)}</span><span class="notitie-datum">${x.datum}</span></div>${x.tekst?`<div class="notitie-inhoud">${escHtml(x.tekst)}</div>`:''}<div class="notitie-actions"><button class="entry-action-btn delete" onclick="deleteKladblok(${x.id})">🗑 Verwijderen</button></div></div>`).join('');}
-function saveAfspraak(){const titel=document.getElementById('agenda-titel').value.trim();const datum=document.getElementById('agenda-datum').value;const tijd=document.getElementById('agenda-tijd').value;if(!titel||!datum||!tijd){showToast('Vul alle velden in');return;}const ts=new Date(datum+'T'+tijd).getTime();const a=loadAfspraken();a.push({id:Date.now(),titel,datum,tijd,ts,datumStr:new Date(datum+'T'+tijd).toLocaleDateString('nl-NL',{weekday:'short',day:'numeric',month:'long',year:'numeric'})});a.sort((x,y)=>x.ts-y.ts);saveAfsprakenToStorage(a);document.getElementById('agenda-titel').value='';document.getElementById('agenda-datum').value='';document.getElementById('agenda-tijd').value='';renderAgenda();showToast('Afspraak opgeslagen 📅');}
+function saveAfspraak(){const titel=document.getElementById('agenda-titel').value.trim();const datum=document.getElementById('agenda-datum').value;const tijd=document.getElementById('agenda-tijd').value;if(!titel||!datum||!tijd){showToast('Vul alle velden in');return;}const ts=new Date(datum+'T'+tijd).getTime();const a=loadAfspraken();const d=new Date(datum);const datumStr=d.toLocaleDateString('nl-NL',{weekday:'short',day:'numeric',month:'long',year:'numeric'});a.push({id:Date.now(),titel,datum,tijd,ts,datumStr});a.sort((x,y)=>x.ts-y.ts);saveAfsprakenToStorage(a);document.getElementById('agenda-titel').value='';document.getElementById('agenda-datum').value='';document.getElementById('agenda-tijd').value='';renderAgenda();showToast('Afspraak opgeslagen 📅');}
 function deleteAfspraak(id){if(!confirm('Afspraak verwijderen?'))return;saveAfsprakenToStorage(loadAfspraken().filter(a=>a.id!==id));renderAgenda();if(selectedDayKey)renderWeekDay(selectedDayKey);showToast('Verwijderd');}
 function renderAgenda(){const a=loadAfspraken();const el=document.getElementById('agenda-lijst');const now=Date.now();if(!a.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:16px 0">Nog geen afspraken</p>';return;}el.innerHTML=a.map(x=>`<div class="afspraak-card ${x.ts<now?'verlopen':''}"><div class="afspraak-titel">${escHtml(x.titel)}</div><div class="afspraak-tijd">📅 ${x.datumStr} · ${x.tijd}</div>${x.ts<now?'<div style="color:var(--text-muted);font-size:11px;margin-top:3px">Verlopen</div>':''}<div class="afspraak-actions"><button class="entry-action-btn delete" onclick="deleteAfspraak(${x.id})">🗑 Verwijderen</button></div></div>`).join('');}
 function switchMedTab(tab){document.getElementById('med-tab-vandaag').classList.toggle('active',tab==='vandaag');document.getElementById('med-tab-lijst').classList.toggle('active',tab==='lijst');document.getElementById('med-vandaag').style.display=tab==='vandaag'?'flex':'none';document.getElementById('med-lijst').style.display=tab==='lijst'?'flex':'none';if(tab==='vandaag')renderMedVandaag();if(tab==='lijst')renderMedBeheer();}
