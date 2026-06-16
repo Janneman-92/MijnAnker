@@ -774,6 +774,9 @@ input:focus, textarea:focus, select:focus{
 <div id="app">
   <div class="header" id="header" style="display:none">
     <button class="back-btn" onclick="goBack()">←</button>
+    <div style="flex:1;text-align:center;position:relative;z-index:2">
+      <h2 id="header-title" style="color:#d4d8e0;font-size:18px;font-weight:700;margin:0;padding:0;line-height:1.2">Pagina</h2>
+    </div>
     <svg style="width:40px;height:40px;flex-shrink:0;opacity:0.12" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
       <path d="M 60 35 C 55 25 40 25 35 35 C 30 45 45 60 60 70 C 75 60 90 45 85 35 C 80 25 65 25 60 35" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
       <path d="M 45 70 Q 35 85 30 105" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -845,7 +848,6 @@ input:focus, textarea:focus, select:focus{
 
   <!-- PLAN -->
   <div class="screen" id="screen-plan">
-    <h2 class="section-title">Mijn Signaleringsplan</h2>
     <div class="plan-tab-btns">
       <button class="plan-tab active" id="tab-bekijk" onclick="switchPlanTab('bekijk')">👁 Bekijken</button>
       <button class="plan-tab" id="tab-bewerk" onclick="switchPlanTab('bewerk')">✏️ Bewerken</button>
@@ -872,11 +874,6 @@ input:focus, textarea:focus, select:focus{
 
   <!-- GEREEDSCHAPPEN -->
   <div class="screen" id="screen-gereedschappen">
-    <div style="text-align:center;margin-bottom:20px;padding-top:12px">
-      <div class="logo" style="width:60px;height:60px;font-size:32px;margin:0 auto 12px">🧰</div>
-      <h2 style="background:none;-webkit-text-fill-color:#d4d8e0;color:#d4d8e0;font-size:28px;font-weight:700;margin-bottom:4px">Gereedschappen</h2>
-      <p class="app-sub" style="margin-bottom:0;font-size:13px;color:var(--text-muted)">Hulpmiddelen voor moeilijke momenten</p>
-    </div>
     <div class="grid">
       <button class="card" onclick="showScreen('checkin')" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)"><span class="card-icon">🌡️</span><span class="card-label">Check-in</span><span class="card-sub">Check je gevoel</span></button>
       <button class="card" onclick="showScreen('oefeningen')" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)"><span class="card-icon">🧘</span><span class="card-label">Oefeningen</span><span class="card-sub">Adem in, ontspan</span></button>
@@ -892,11 +889,11 @@ input:focus, textarea:focus, select:focus{
   </div>
 
   <!-- OEFENINGEN -->
-  <div class="screen" id="screen-oefeningen"><h2 class="section-title">Oefeningen</h2><div id="oef-list"></div>
+  <div class="screen" id="screen-oefeningen"><div id="oef-list"></div>
     <p class="greeting">Made by JW Design - MijnAnker</p>
   </div>
   <div class="screen" id="screen-oefening-detail">
-    <h2 class="section-title" id="oef-detail-title"></h2>
+    <h2 class="section-title" id="oef-detail-title" style="display:none"></h2>
     <div class="step-card"><div class="step-num" id="step-num"></div><p class="step-tekst" id="step-tekst"></p><div class="step-btns" id="step-btns"></div></div>
   
     <p class="greeting">Made by JW Design - MijnAnker</p>
@@ -904,7 +901,6 @@ input:focus, textarea:focus, select:focus{
 
   <!-- CONTACTEN -->
   <div class="screen" id="screen-contacten">
-    <h2 class="section-title">Contacten uit je plan</h2>
     <div id="contacten-lijst" style="display:flex;flex-direction:column;gap:12px;margin-top:16px"></div>
     <p id="contacten-empty" style="color:var(--text-muted);text-align:center;margin-top:20px;font-size:14px">Nog geen contacten toegevoegd</p>
   
@@ -922,7 +918,7 @@ input:focus, textarea:focus, select:focus{
 
   <!-- DAGBOEK -->
   <div class="screen" id="screen-dagboek">
-    <h2 class="section-title">Dagboek</h2>
+    
     <div class="plan-tab-btns">
       <button class="plan-tab active" id="dag-tab-invoer" onclick="switchDagboekTab('invoer')">📝 Invoer</button>
       <button class="plan-tab" id="dag-tab-grafiek" onclick="switchDagboekTab('grafiek')">📊 Grafiek</button>
@@ -961,7 +957,7 @@ input:focus, textarea:focus, select:focus{
 
   <!-- GOED MOMENT -->
   <div class="screen" id="screen-goedmoment">
-    <h2 class="section-title">Goed Moment</h2>
+    
     <div class="plan-tab-btns">
       <button class="plan-tab active" id="gm-tab-lezen" onclick="switchGMTab('lezen')">💚 Lezen</button>
       <button class="plan-tab" id="gm-tab-schrijven" onclick="switchGMTab('schrijven')">✍️ Schrijven</button>
@@ -981,7 +977,7 @@ input:focus, textarea:focus, select:focus{
 
   <!-- AGENDA -->
   <div class="screen" id="screen-agenda">
-    <h2 class="section-title">Agenda</h2>
+    
     <div class="plan-block">
       <div class="plan-head">➕ Afspraak toevoegen</div>
       <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;width:100%;align-items:center;max-width:380px;margin-left:auto;margin-right:auto">
@@ -1001,7 +997,7 @@ input:focus, textarea:focus, select:focus{
 
   <!-- MEDICATIE -->
   <div class="screen" id="screen-medicatie">
-    <h2 class="section-title">Medicatie</h2>
+    
     <div class="plan-tab-btns">
       <button class="plan-tab active" id="med-tab-vandaag" onclick="switchMedTab('vandaag')">✅ Vandaag</button>
       <button class="plan-tab" id="med-tab-lijst" onclick="switchMedTab('lijst')">💊 Mijn medicatie</button>
@@ -1029,7 +1025,7 @@ input:focus, textarea:focus, select:focus{
 
   <!-- WEEKPLANNING -->
   <div class="screen" id="screen-weekplanning">
-    <h2 class="section-title">Weekplanning</h2>
+    
     <div class="week-nav">
       <button class="week-nav-btn" onclick="navigateWeek(-1)">‹</button>
       <span class="week-label" id="week-label"></span>
@@ -1109,6 +1105,8 @@ function showScreen(name){
   document.getElementById('screen-'+name).classList.add('active');
   document.getElementById('header').style.display='flex';
   document.getElementById('header-divider').style.display='block';
+  const titles={checkin:'Check-in',dagboek:'Dagboek',oefeningen:'Oefeningen','oefening-detail':'Oefeningen','mijn-plan':'Mijn Plan',plan:'Mijn Plan',gereedschappen:'Gereedschappen',acuut:'Acuut',contacten:'Contacten',agenda:'Agenda',weekplanning:'Week Planner',medicatie:'Medicatie',result:'Resultaat','goedmoment':'Goed Moment'};
+  document.getElementById('header-title').textContent=titles[name]||'Pagina';
   if(name==='checkin')initCheckin();if(name==='plan')renderPlan();if(name==='oefeningen')renderOefeningen();if(name==='acuut')renderAcuut();if(name==='contacten')renderContacten();
   if(name==='dagboek')renderDagboek();if(name==='goedmoment'){renderGoedMomenten();switchGMTab('lezen');}
   if(name==='agenda')renderAgenda();if(name==='medicatie'){renderMedVandaag();switchMedTab('vandaag');}if(name==='gereedschappen'){} if(name==='weekplanning')initWeekplanning();
