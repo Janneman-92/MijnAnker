@@ -3,731 +3,198 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
-<meta name="theme-color" content="#0f172a"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="MijnAnker"/>
-<link rel="manifest" href="manifest.json"/>
-<link rel="apple-touch-icon" href="icons/icon-192.png"/>
-<title>MijnAnker</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#FAF8F3"/>
+<title>MijnAnker — preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+html{background:#FAF8F3;color-scheme:light;}
 :root{
-  --bg-dark:#0f172a;
-  --bg-light:#1a2332;
-  --accent-warm:#d4845c;
-  --accent-cool:#4a9b7f;
-  --accent-life:#7ec87e;
-  --text-primary:#ffffff;
-  --text-muted:#b0b9c3;
+  --cream:#FAF8F3; --card:#FFFFFF; --moss:#E8F0E4;
+  --green:#4A7A5C; --green-deep:#3A6249;
+  --ink:#2C2E2B; --ink-soft:#8A8D85;
+  --line:rgba(74,122,92,0.14);
+  --warm:#C46C4A; --warm-bg:#FBF3EE; --warm-line:rgba(196,108,74,0.18);
 }
-body{background:linear-gradient(180deg,var(--bg-dark) 0%,var(--bg-light) 100%);min-height:100vh;min-height:100dvh;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:500;color:var(--text-primary);display:flex;justify-content:center;}
-#app{width:100%;max-width:480px;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding:0 16px;padding-bottom:env(safe-area-inset-bottom,20px);position:relative;z-index:1;}
-.header{display:flex;align-items:center;justify-content:space-between;padding:16px 0 12px;}
-.back-btn{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;color:var(--text-primary);width:40px;height:40px;border-radius:12px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1)}
-.app-name{font-size:16px;letter-spacing:2px;opacity:.8;}
-.screen{display:none;flex-direction:column;gap:16px;padding-top:8px;flex:1;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+body{background:var(--cream);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink);display:flex;justify-content:center;min-height:100vh;}
+#frame{width:100%;max-width:430px;min-height:100vh;position:relative;}
+.screen{display:none;padding:28px 22px 40px;flex-direction:column;}
 .screen.active{display:flex;}
-.logo-wrap{text-align:center;padding:24px 0 20px;margin-bottom:20px;}
-.logo{
-  width:70px;
-  height:70px;
-  background:linear-gradient(135deg,var(--accent-warm),var(--accent-cool)));
-  border-radius:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:40px;
-  box-shadow:0 12px 30px rgba(212,132,92,0.2);
-  margin:0 auto 20px;
-}
-/* HOME TITLE - WIT */
-.logo-wrap .app-title{
-  background:none !important;
-  -webkit-text-fill-color:var(--text-primary) !important;
-  color:var(--text-primary) !important;
-}
-
-/* ANDERE TITLES - GRADIENT */
-.app-title{
-  font-size:36px;
-  font-weight:700;
-  letter-spacing:0;
-  background:linear-gradient(135deg,var(--accent-warm),var(--accent-cool)));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-.app-sub{color:var(--text-muted);font-size:14px;margin-top:6px;}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:0;margin-bottom:12px;}
-.card{
-  background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);
-  border:none;
-  border-radius:28px;
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:8px;
-  cursor:pointer;
-  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
-  box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06);
-  position:relative;
-  overflow:hidden;
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-}
-
-.card::before{
-  content:'';
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background:linear-gradient(135deg,rgba(255,255,255,0.12) 0%,transparent 60%);
-  pointer-events:none;
-  border-radius:28px;
-}
-
-.card::after{
-  content:'';
-  position:absolute;
-  bottom:0;
-  right:0;
-  width:100%;
-  height:100%;
-  background:radial-gradient(circle at bottom right,rgba(74,155,127,0.2) 0%,transparent 70%);
-  pointer-events:none;
-}
-
-.card:hover{
-  /* Hover disabled for mobile-friendly experience */
-}
-
-.card:active{
-  transform:translateY(-2px);
-  box-shadow:0 15px 30px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.1);
-}
-.card-icon{font-size:38px;filter:drop-shadow(0 3px 6px rgba(74,155,127,0.2))}.card-label{color:var(--text-primary);font-weight:700;font-size:14px;letter-spacing:-0.3px}.card-sub{color:var(--text-muted);font-size:11px;margin-top:2px}
-.card-purple{background:linear-gradient(135deg,#6366f1,#8b5cf6);}
-.card-blue{background:linear-gradient(135deg,#0ea5e9,#06b6d4);}
-.card-green{background:linear-gradient(135deg,#10b981,#059669);}
-.card-red{background:linear-gradient(135deg,#ef4444,#dc2626);}
-.greeting{color:var(--text-muted);font-size:11px;text-align:center;padding-bottom:24px;border-top:1px solid transparent;background:linear-gradient(90deg,rgba(74,155,127,0) 0%,rgba(74,155,127,0.3) 50%,rgba(74,155,127,0) 100%) no-repeat top;background-size:100% 1px;padding-top:20px;margin-top:20px;}
-.section-title{font-size:22px;font-weight:700;letter-spacing:0;margin-bottom:16px;color:#d4d8e0;}
-.progress{display:flex;gap:8px;justify-content:center;margin-bottom:8px;}
-.dot{width:10px;height:10px;border-radius:50%;background:#e2e8f0;transition:background .3s;}.dot.active{background:var(--purple);}
-.q-title{font-size:19px;font-weight:normal;line-height:1.6;text-align:center;margin:8px 0;}
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+.back-btn{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--green-deep);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+.back-btn svg{width:18px;height:18px;}
+.topbar h2{font-family:'Fraunces',serif;font-weight:600;font-size:22px;color:var(--ink);}
+.anchor-mark{position:absolute;top:18px;right:-30px;width:170px;height:170px;opacity:0.07;color:var(--green-deep);pointer-events:none;}
+header.home-header{position:relative;z-index:1;margin-bottom:8px;}
+.eyebrow{font-size:12.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--green-deep);font-weight:600;margin-bottom:10px;}
+h1.title{font-family:'Fraunces',serif;font-optical-sizing:auto;font-weight:600;font-size:40px;line-height:1.05;letter-spacing:-0.01em;color:var(--ink);margin-bottom:10px;}
+.sub{font-size:15px;color:var(--ink-soft);line-height:1.5;max-width:280px;}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--line) 18%,var(--line) 82%,transparent);margin:26px 0 22px;}
+.checkin-strip{background:linear-gradient(135deg,var(--green) 0%,var(--green-deep) 100%);border-radius:22px;padding:22px 22px 24px;margin-bottom:22px;position:relative;overflow:hidden;cursor:pointer;box-shadow:0 8px 24px rgba(58,98,73,0.22);border:none;width:100%;text-align:left;font-family:inherit;}
+.checkin-strip::after{content:'';position:absolute;top:-40%;right:-15%;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,0.07);}
+.checkin-label{color:rgba(255,255,255,0.78);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;margin-bottom:8px;}
+.checkin-question{color:#fff;font-family:'Fraunces',serif;font-size:21px;font-weight:500;line-height:1.3;max-width:240px;margin-bottom:18px;}
+.checkin-cta{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.16);color:#fff;font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:30px;border:none;cursor:pointer;font-family:inherit;}
+.checkin-cta svg{width:14px;height:14px;}
+.section-label{font-size:12px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 16px;display:flex;flex-direction:column;gap:10px;cursor:pointer;box-shadow:0 2px 8px rgba(74,122,92,0.06);transition:transform .15s ease;font-family:inherit;text-align:left;}
+.card:active{transform:scale(0.98);}
+.card-icon{width:34px;height:34px;color:var(--green);}
+.card-label{font-size:15px;font-weight:600;color:var(--ink);}
+.card-sub{font-size:12px;color:var(--ink-soft);line-height:1.4;}
+.wide-card{grid-column:1/-1;flex-direction:row;align-items:center;gap:14px;}
+.wide-card .card-icon{flex-shrink:0;}
+.wide-card .text{display:flex;flex-direction:column;gap:3px;}
+.acuut-card{background:var(--warm-bg);border-color:var(--warm-line);}
+.acuut-card .card-icon{color:var(--warm);}
+footer.app-footer{margin-top:30px;text-align:center;}
+.footer-mark{font-size:11px;color:var(--ink-soft);letter-spacing:0.02em;}
+.progress{display:flex;gap:8px;justify-content:center;margin-bottom:28px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--line);transition:background .3s;}
+.dot.active{background:var(--green);}
+.q-title{font-family:'Fraunces',serif;font-weight:500;font-size:24px;line-height:1.35;text-align:center;margin-bottom:28px;color:var(--ink);}
 .options{display:flex;flex-direction:column;gap:10px;}
-.opt-btn{background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:14px;color:var(--text-primary);padding:15px 18px;font-size:15px;cursor:pointer;text-align:left;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:background .2s,border-color .2s;;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1)}
-.opt-btn:active{background:rgba(99,102,241,.25);border-color:var(--purple);}
-.result-card{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:20px;padding:28px 20px;text-align:center;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03)}
-.result-icon{font-size:44px;margin-bottom:10px;}.result-fase{font-size:22px;font-weight:bold;margin-bottom:10px;}.result-tekst{color:#cbd5e1;font-size:15px;line-height:1.7;}
+.opt-btn{background:var(--card);border:1px solid var(--line);border-radius:14px;color:var(--ink);padding:16px 18px;font-size:15px;cursor:pointer;text-align:left;font-family:inherit;transition:background .2s,border-color .2s;}
+.opt-btn:active{background:var(--moss);border-color:var(--green);}
+.result-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:32px 24px;text-align:center;box-shadow:0 4px 16px rgba(74,122,92,0.08);margin-bottom:20px;}
+.result-icon{width:46px;height:46px;margin:0 auto 14px;}
+.result-fase{font-family:'Fraunces',serif;font-size:23px;font-weight:600;margin-bottom:12px;}
+.result-tekst{color:var(--ink-soft);font-size:15px;line-height:1.6;}
 .acties{display:flex;flex-direction:column;gap:10px;}
-.actie-btn{border:none;border-radius:14px;color:#fff;padding:15px;font-size:15px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:opacity .2s;}
-.plan-block{
-  background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);
-  border:none;
-  border-radius:20px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);
-  transition:all 0.3s ease;
-  position:relative;
-  overflow:hidden;
-}
-
-.plan-block:hover{
-  transform:translateY(-2px);
-  box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.15);
-}}
-.plan-head{color:#a5b4fc;font-size:13px;margin-bottom:10px;letter-spacing:1px;text-transform:uppercase;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
-.plan-item{color:var(--text-primary);font-size:14px;line-height:2;}
-.contact-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;}
-.contact-name{color:var(--text-primary);font-size:14px;}
-.tel-btn{background:var(--purple);color:#fff;padding:6px 12px;border-radius:10px;text-decoration:none;font-size:13px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
-.oef-card{
-  background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);
-  border:none;
-  border-radius:16px;
-  padding:18px;
-  display:flex;
-  align-items:center;
-  gap:14px;
-  cursor:pointer;
-  width:100%;
-  text-align:left;
-  transition:all 0.3s ease;
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  margin-bottom:12px;
-  box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);
-  position:relative;
-  overflow:hidden;
-}
-
-.oef-card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.15);
-}
-
-.oef-card:active{background:rgba(74,155,127,0.25);}
-.oef-icon{font-size:30px;}.oef-titel{color:var(--text-primary);font-size:16px;margin-bottom:3px;}.oef-duur{color:var(--text-muted);font-size:13px;}.arrow{color:var(--purple);font-size:26px;margin-left:auto;}
-.step-card{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:20px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;padding:28px 20px;text-align:center;}
-.step-num{color:var(--text-muted);font-size:13px;margin-bottom:20px;letter-spacing:1px;}
-.step-tekst{color:var(--text-primary);font-size:18px;line-height:1.8;margin-bottom:28px;}
+.actie-btn{border:none;border-radius:14px;color:#fff;padding:16px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;width:100%;}
+.actie-btn.primary{background:var(--green);}
+.actie-btn.warm{background:var(--warm);}
+.plan-tabs{display:flex;gap:8px;margin-bottom:18px;}
+.plan-tab{flex:1;padding:11px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+.plan-tab.active{background:var(--moss);border-color:var(--green);color:var(--green-deep);}
+.plan-block{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 2px 8px rgba(74,122,92,0.06);}
+.plan-head{color:var(--green-deep);font-size:12px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:10px;}
+.plan-item{color:var(--ink);font-size:14px;line-height:1.9;}
+.contact-name{color:var(--ink);font-size:14px;}
+.tel-btn{background:var(--green);color:#fff;padding:7px 14px;border-radius:20px;text-decoration:none;font-size:12.5px;font-weight:600;}
+.oef-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;width:100%;text-align:left;margin-bottom:10px;box-shadow:0 2px 8px rgba(74,122,92,0.06);font-family:inherit;}
+.oef-icon{width:28px;height:28px;color:var(--green);flex-shrink:0;}
+.oef-titel{color:var(--ink);font-size:15px;font-weight:600;margin-bottom:2px;}
+.oef-duur{color:var(--ink-soft);font-size:12.5px;}
+.arrow{color:var(--green);margin-left:auto;width:18px;height:18px;flex-shrink:0;}
+.step-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:34px 24px;text-align:center;box-shadow:0 4px 16px rgba(74,122,92,0.08);}
+.step-num{color:var(--ink-soft);font-size:12.5px;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:22px;}
+.step-tekst{font-family:'Fraunces',serif;color:var(--ink);font-size:19px;line-height:1.6;margin-bottom:30px;}
 .step-btns{display:flex;gap:10px;justify-content:center;}
-.nav-btn{border:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);color:var(--text-primary);border-radius:12px;padding:11px 18px;font-size:14px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:opacity .2s;}
-.nav-btn.primary{background:var(--purple);border-color:var(--purple);color:#fff;}
-.nav-btn.done{background:var(--green);border-color:var(--green);color:#fff;}
-.acuut-banner{text-align:center;padding:20px 0 10px;}
-.acuut-icon{font-size:48px;}.acuut-titel{font-size:26px;font-weight:normal;margin:10px 0 4px;}.acuut-sub{color:var(--text-muted);font-size:14px;}
-.acuut-btn{display:block;color:#fff;text-decoration:none;padding:18px 16px;border-radius:16px;font-size:15px;text-align:center;transition:opacity .2s;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-bottom:12px;}
-.acuut-btn:active{opacity:.8;}
-.acuut-note{color:var(--text-muted);font-size:12px;text-align:center;margin-top:4px;}
-.mood-row{display:flex;justify-content:space-between;gap:8px;}
-.mood-btn{flex:1;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:14px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;padding:14px 8px;font-size:22px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:background .2s,border-color .2s;}
-.mood-btn span{font-size:11px;color:var(--text-muted);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
-.mood-btn.selected{border-color:var(--purple);background:rgba(99,102,241,.2);}
-textarea,.edit-input{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:20px;color:var(--text-primary);padding:12px 16px;font-size:15px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;width:100%;box-sizing:border-box;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;transition:all 0.3s ease;}
-textarea{resize:none;line-height:1.6;}
-textarea::placeholder,.edit-input::placeholder{color:var(--text-muted);}
-.edit-input:focus,textarea:focus{outline:none;background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.1);}
-.save-btn{background:var(--purple);border:none;border-radius:14px;color:#fff;padding:15px;font-size:15px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:opacity .2s;width:100%;}
-.save-btn:active{opacity:.8;}
-.entries{display:flex;flex-direction:column;gap:10px;margin-top:4px;}
-.entry{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border-radius:20px;padding:14px 16px;border:none;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;}
+.nav-btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 20px;font-size:14px;cursor:pointer;font-family:inherit;font-weight:600;}
+.nav-btn.primary{background:var(--green);border-color:var(--green);color:#fff;}
+.acuut-banner{text-align:center;padding:10px 0 26px;}
+.acuut-icon{width:48px;height:48px;color:var(--warm);margin:0 auto 14px;}
+.acuut-titel{font-family:'Fraunces',serif;font-size:25px;font-weight:600;margin-bottom:6px;}
+.acuut-sub{color:var(--ink-soft);font-size:14px;}
+.acuut-contact{display:flex;justify-content:space-between;align-items:center;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:10px;box-shadow:0 2px 8px rgba(74,122,92,0.06);}
+.acuut-contact.crisis{background:var(--warm-bg);border-color:var(--warm-line);}
+.acuut-contact .name{color:var(--ink);font-weight:600;font-size:14.5px;margin-bottom:3px;}
+.acuut-contact .num{color:var(--ink-soft);font-size:13px;}
+.acuut-note{color:var(--ink-soft);font-size:12px;text-align:center;margin-top:14px;}
+.mood-row{display:flex;justify-content:space-between;gap:8px;margin-bottom:16px;}
+.mood-btn{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 6px;font-size:24px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font-family:inherit;}
+.mood-btn span{font-size:10.5px;color:var(--ink-soft);font-weight:600;}
+.mood-btn.selected{border-color:var(--green);background:var(--moss);}
+textarea,.text-input{background:var(--card);border:1px solid var(--line);border-radius:16px;color:var(--ink);padding:14px 16px;font-size:15px;font-family:inherit;width:100%;box-sizing:border-box;}
+textarea{resize:none;line-height:1.6;min-height:100px;}
+.save-btn{background:var(--green);border:none;border-radius:30px;color:#fff;padding:15px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;width:100%;margin-top:14px;}
+.entry{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:10px;}
 .entry-header{display:flex;justify-content:space-between;margin-bottom:6px;}
-.entry-date{color:var(--text-muted);font-size:12px;}.entry-mood{font-size:18px;}
-.entry-text{color:var(--text-primary);font-size:14px;line-height:1.6;}
+.entry-date{color:var(--ink-soft);font-size:12px;}
+.entry-mood{font-size:17px;}
+.entry-text{color:var(--ink);font-size:14px;line-height:1.5;}
 .entry-actions{display:flex;gap:8px;margin-top:10px;}
-.entry-action-btn{flex:1;padding:8px;border-radius:10px;font-size:12px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;border:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);color:var(--text-muted);}
-.entry-action-btn.delete{color:#ef4444;border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.08);}
-.plan-tab-btns{display:flex;gap:8px;margin-bottom:4px;}
-.plan-tab{flex:1;padding:10px;border-radius:20px;border:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);color:var(--text-muted);font-size:13px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:all 0.3s ease;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);}
-.plan-tab.active{background:linear-gradient(135deg,rgba(74,155,127,0.35) 0%,rgba(60,90,110,0.4) 50%,rgba(35,50,80,0.7) 100%);border:none;color:#fff;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.1);}
-.plan-save-btn{background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;color:#fff;padding:14px 24px;font-size:15px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:4px;width:100%;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06);transition:all 0.3s ease;position:relative;overflow:hidden;}
-.plan-save-btn::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(255,255,255,0.12) 0%,transparent 60%);pointer-events:none;border-radius:28px;}
-.plan-save-btn:active{transform:translateY(-2px);box-shadow:0 8px 16px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.25);}
-.save-btn{background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;color:#fff;padding:14px 24px;font-size:15px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:4px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06);transition:all 0.3s ease;position:relative;overflow:hidden;width:100%;}
-.save-btn::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(255,255,255,0.12) 0%,transparent 60%);pointer-events:none;border-radius:28px;}
-.save-btn:active{transform:translateY(-2px);box-shadow:0 8px 16px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.25);}
-.add-btn{background:linear-gradient(135deg,rgba(74,155,127,0.2) 0%,rgba(74,155,127,0.1) 100%);border:none;color:var(--accent-cool);border-radius:10px;padding:10px;font-size:13px;cursor:pointer;width:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:4px;transition:all 0.3s ease;}
-.add-btn:hover{background:linear-gradient(135deg,var(--accent-cool) 0%,#3d8b6e 100%);color:white;transform:translateY(-2px);}
-.contact-edit-row{display:flex;flex-direction:column;gap:6px;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border-radius:20px;padding:10px 12px;margin-bottom:8px;border:none;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);}
-.contact-edit-inputs{display:flex;gap:8px;}
-.notitie-card{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:20px;padding:14px 16px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;}
-.notitie-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;}
-.notitie-titel-txt{color:var(--text-primary);font-size:15px;font-weight:bold;}
-.notitie-datum{color:var(--text-muted);font-size:11px;white-space:nowrap;}
-.notitie-inhoud{color:var(--text-muted);font-size:13px;line-height:1.6;white-space:pre-wrap;}
-.notitie-actions{display:flex;gap:8px;margin-top:10px;}
-.afspraak-card{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:20px;padding:14px 16px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;}
-.afspraak-card.verlopen{opacity:.45;}
-.afspraak-titel{color:var(--text-primary);font-size:15px;font-weight:bold;}
-.afspraak-tijd{color:var(--purple);font-size:13px;margin-top:4px;}
-.afspraak-actions{display:flex;gap:8px;margin-top:10px;}
-select.edit-input{appearance:none;-webkit-appearance:none;cursor:pointer;}
-input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
-
-/* WEEKPLANNING */
-.week-nav{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:14px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;padding:10px 14px;}
-.week-nav-btn{background:none;border:none;color:var(--purple);font-size:22px;cursor:pointer;padding:4px 10px;}
-.week-label{color:var(--text-primary);font-size:14px;font-weight:bold;}
-.week-days{display:flex;gap:6px;justify-content:center;overflow-x:auto;padding-bottom:4px;}
-.week-day-btn{flex-shrink:0;width:44px;padding:8px 4px;border-radius:12px;border:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);color:var(--text-muted);font-size:11px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all .2s;}
-.week-day-btn .day-num{font-size:16px;font-weight:bold;color:var(--text-primary);}
-.week-day-btn.active{background:var(--purple);border-color:var(--purple);color:#fff;}
-.week-day-btn.active .day-num{color:#fff;}
-.week-day-btn.today{border-color:var(--yellow);}
-.week-day-btn .day-dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:none;}
-.week-day-btn.has-items .day-dot{display:block;}
-.dag-sectie{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;padding:16px;}
-.dag-sectie-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.dag-sectie-titel{color:#a5b4fc;font-size:13px;letter-spacing:1px;text-transform:uppercase;}
-.taak-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:rgba(255,255,255,.04);border:none;margin-bottom:6px;cursor:pointer;transition:all .2s;}
-.taak-item.gedaan{opacity:.5;}
-.taak-check{width:24px;height:24px;border-radius:7px;border:none;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s;}
+.entry-action-btn{flex:1;background:var(--moss);border:none;color:var(--green-deep);padding:8px;border-radius:10px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;}
+.entry-action-btn.delete{background:var(--warm-bg);color:var(--warm);}
+.cancel-btn{width:100%;background:none;border:1px solid var(--line);color:var(--ink-soft);border-radius:30px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px;}
+.afspraak-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:10px;}
+.afspraak-titel{color:var(--ink);font-size:15px;font-weight:600;}
+.afspraak-tijd{color:var(--green-deep);font-size:13px;margin-top:4px;font-weight:600;}
+.week-nav{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 16px;margin-bottom:16px;}
+.week-nav button{background:none;border:none;color:var(--green);font-size:20px;cursor:pointer;padding:4px 10px;}
+.week-label{color:var(--ink);font-size:14px;font-weight:600;}
+.week-days{display:flex;gap:6px;justify-content:center;margin-bottom:16px;overflow-x:auto;}
+.week-day-btn{flex-shrink:0;width:42px;padding:8px 4px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);font-size:11px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-family:inherit;}
+.week-day-btn .day-num{font-size:15px;font-weight:700;color:var(--ink);}
+.week-day-btn.active{background:var(--green);border-color:var(--green);}
+.week-day-btn.active .day-num,.week-day-btn.active span{color:#fff;}
+.dag-sectie{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;}
+.dag-sectie-titel{color:var(--green-deep);font-size:12px;letter-spacing:0.05em;text-transform:uppercase;font-weight:600;margin-bottom:12px;display:block;}
+.taak-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;margin-bottom:6px;cursor:pointer;}
+.taak-check{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;}
 .taak-item.gedaan .taak-check{background:var(--green);border-color:var(--green);}
-.taak-tekst{flex:1;font-size:14px;color:var(--text-primary);}
-.taak-item.gedaan .taak-tekst{text-decoration:line-through;color:var(--text-muted);}
-.taak-cat{font-size:10px;padding:2px 7px;border-radius:6px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;flex-shrink:0;}
-.taak-del{background:none;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;padding:2px 6px;}
-.afspraak-item{display:flex;align-items:flex-start;gap:10px;padding:10px;border-radius:12px;background:rgba(99,102,241,.08);border:none;margin-bottom:6px;}
-.afspraak-tijd-badge{color:var(--purple);font-size:12px;white-space:nowrap;margin-top:2px;min-width:40px;}
-.afspraak-info{flex:1;}
-.afspraak-naam{color:var(--text-primary);font-size:14px;}
-.afspraak-del{background:none;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;padding:2px 6px;}
-.add-taak-form{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
-.cat-btns{display:flex;gap:6px;flex-wrap:wrap;}
-.cat-btn{padding:6px 12px;border-radius:10px;border:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);color:var(--text-muted);font-size:12px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:all .2s;}
-.cat-btn.selected{color:#fff;}
-.week-leeg{color:var(--text-muted);font-size:13px;text-align:center;padding:16px 0;}
+.taak-tekst{flex:1;font-size:14px;color:var(--ink);}
+.taak-item.gedaan .taak-tekst{text-decoration:line-through;color:var(--ink-soft);}
+.med-item{display:flex;align-items:center;gap:12px;padding:13px;border-radius:14px;margin-bottom:8px;cursor:pointer;background:var(--card);border:1px solid var(--line);}
+.med-item.genomen{background:var(--moss);border-color:var(--green);}
+.med-check{width:26px;height:26px;border-radius:8px;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;color:#fff;}
+.med-item.genomen .med-check{background:var(--green);border-color:var(--green);}
+.med-naam{color:var(--ink);font-size:15px;font-weight:600;}
+.med-item.genomen .med-naam{text-decoration:line-through;color:var(--ink-soft);}
+.med-moment{color:var(--ink-soft);font-size:12px;margin-top:2px;}
+.progress-bar{background:var(--moss);border-radius:8px;height:6px;overflow:hidden;margin-bottom:14px;}
+.progress-bar-fill{background:var(--green);height:100%;border-radius:8px;transition:width .4s;}
 
-/* INSTALL */
-.install-screen{display:none;position:fixed;inset:0;z-index:999;background:linear-gradient(180deg,rgba(10,14,26,0.9),rgba(26,35,50,0.9));backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:flex-start;padding:40px 24px 32px;overflow-y:auto;}
+.install-screen{display:none;position:fixed;inset:0;z-index:999;background:var(--cream);flex-direction:column;align-items:center;justify-content:flex-start;padding:48px 24px 32px;overflow-y:auto;}
 .install-screen.active{display:flex;}
-.install-logo{font-size:52px;margin-bottom:8px;}
-.install-title{font-size:28px;letter-spacing:2px;margin-bottom:6px;font-weight:normal;}
-.install-sub{color:var(--text-muted);font-size:14px;text-align:center;margin-bottom:32px;line-height:1.6;}
-.install-os-btns{display:flex;gap:12px;width:100%;margin-bottom:28px;}
-.os-btn{flex:1;padding:14px;border-radius:16px;border:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);color:var(--text-muted);font-size:14px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:6px;}
-.os-btn.active{border-color:var(--purple);background:rgba(99,102,241,.15);color:#fff;}
-.os-btn span:first-child{font-size:28px;}
-.install-steps{width:100%;display:flex;flex-direction:column;gap:8px;margin-bottom:28px;}
-.install-step{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;padding:8px;display:flex;align-items:flex-start;gap:8px;}
-.install-step-num{background:var(--purple);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;flex-shrink:0;}
-.install-step-text{color:var(--text-primary);font-size:14px;line-height:1.7;}
-.install-step-text strong{color:#fff;}
-.install-step-img{font-size:28px;margin-top:2px;}
-.install-enter-btn{width:100%;background:var(--purple);border:none;border-radius:16px;color:#fff;padding:18px;font-size:16px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:1px;}
-.install-skip{color:var(--text-muted);font-size:13px;margin-top:14px;cursor:pointer;text-decoration:underline;}
-.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;padding:12px 20px;border-radius:12px;font-size:14px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;white-space:nowrap;}
-.toast.show{opacity:1;}
+.install-title{font-family:'Fraunces',serif;font-size:30px;font-weight:600;margin-bottom:8px;color:var(--ink);text-align:center;}
+.install-sub{color:var(--ink-soft);font-size:14px;text-align:center;margin-bottom:28px;line-height:1.6;}
+.install-os-btns{display:flex;gap:12px;width:100%;max-width:380px;margin-bottom:24px;}
+.os-btn{flex:1;padding:14px;border-radius:16px;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);font-size:14px;cursor:pointer;font-family:inherit;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.os-btn.active{border-color:var(--green);background:var(--moss);color:var(--ink);}
+.os-btn span:first-child{font-size:26px;}
+.install-steps{width:100%;max-width:380px;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.install-step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 2px 8px rgba(74,122,92,0.06);}
+.install-step-num{background:var(--green);color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
+.install-step-text{color:var(--ink-soft);font-size:13px;line-height:1.55;}
+.install-step-text strong{color:var(--ink);}
+.install-enter-btn{width:100%;max-width:380px;background:var(--green);border:none;border-radius:30px;color:#fff;padding:16px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:14px;}
+.install-skip{color:var(--ink-soft);font-size:13px;text-decoration:underline;cursor:pointer;}
 
-/* DISCLAIMER */
-.disclaimer-modal{display:none;position:fixed;inset:0;z-index:9998;background:linear-gradient(180deg,rgba(10,14,26,0.9),rgba(26,35,50,0.9));backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+.disclaimer-modal{display:none;position:fixed;inset:0;z-index:998;background:var(--cream);align-items:center;justify-content:center;padding:24px;}
 .disclaimer-modal.active{display:flex;}
-.disclaimer-box{background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;backdrop-filter:blur(20px);border-radius:20px;padding:40px 30px;max-width:420px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.3)}
-.disclaimer-box h2{font-size:22px;margin-bottom:14px;color:#fff;}
-.disclaimer-box p{color:#94a3b8;font-size:13px;line-height:1.7;margin-bottom:10px;text-align:center;}
-.disclaimer-box strong{color:#fff;}
-.disclaimer-btn{width:100%;background:#6366f1;border:none;border-radius:12px;color:#fff;padding:12px;font-size:14px;cursor:pointer;margin-top:16px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
-.disclaimer-btn:active{opacity:0.8;}
-
-.welcome-meta{font-size:12px;color:var(--accent-cool);font-weight:600;margin-bottom:0;}
-
-.app-slogan{
-  font-size:13px;
-  color:var(--text-muted);
-  margin-bottom:0;
-  font-weight:500;
-}
-
-
-
-/* BACKGROUND ICONS */
-.screen::before{
-  content:'🧠 💭 ✨ 🌱 💜 🔮 🧠 💭 ✨ 🌱 💜 🔮';
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  z-index:0;
-  opacity:0.15;
-  font-size:80px;
-  line-height:1.4;
-  color:#f5f7fa;
-  overflow:hidden;
-  white-space:pre-wrap;
-  word-wrap:break-word;
-  padding:20px;
-  display:flex;
-  flex-wrap:wrap;
-  align-content:space-around;
-}
-
-.screen{
-  position:relative;
-  z-index:1;
-}
-
-/* Zorg dat cards boven background icons staan */
-.card, .grid, .logo-wrap, .greeting, .section-title, input, textarea, button, h2, p{
-  position:relative;
-  z-index:2;
-}
-
-
-
-/* BACKGROUND ICONS - RANDOM POSITIONED */
-.screen::before{
-  content:'';
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  z-index:0;
-  overflow:hidden;
-  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200"><defs><pattern id="waves" x="0" y="0" width="150" height="150" patternUnits="userSpaceOnUse"><path d="M0,50 Q35,35 70,50 T140,50" stroke="rgba(255,255,255,0.03)" stroke-width="1" fill="none"/><path d="M0,80 Q40,70 80,80 T160,80" stroke="rgba(74,155,127,0.02)" stroke-width="0.8" fill="none"/><path d="M0,30 Q45,15 90,30 T180,30" stroke="rgba(255,255,255,0.02)" stroke-width="1" fill="none"/><path d="M0,110 Q35,95 70,110 T140,110" stroke="rgba(74,155,127,0.025)" stroke-width="0.8" fill="none"/></pattern></defs><rect width="1000" height="1200" fill="url(%23waves)"/><path d="M0,250 Q80,220 160,250 T320,250 T480,250 T640,250 T800,250 T960,250" stroke="rgba(74,155,127,0.03)" stroke-width="1" fill="none"/><path d="M0,600 Q120,580 240,600 T480,600 T720,600 T960,600" stroke="rgba(255,255,255,0.02)" stroke-width="0.8" fill="none"/><path d="M0,950 Q100,970 200,950 T400,950 T600,950 T800,950 T1000,950" stroke="rgba(74,155,127,0.025)" stroke-width="0.8" fill="none"/></svg>');
-  background-repeat:no-repeat;
-  background-size:cover;
-  background-attachment:fixed;
-}
-
-.screen{
-  position:relative;
-  z-index:1;
-}
-
-/* Zorg dat content boven background staat */
-.card, .grid, .logo-wrap, .greeting, .section-title, input, textarea, button, h2, p, .screen > div{
-  position:relative;
-  z-index:2;
-}
-
-
-
-/* ===== ANIMATIONS ===== */
-
-/* Fade in animation */
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-/* Slide up animation */
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-/* Pulse animation */
-
-  50%{
-    opacity:0.8;
-  }
-}
-
-/* ===== CARD ANIMATIONS ===== */
-.card{
-  transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-
-
-.card:active{
-  transform:scale(0.98);
-}
-
-/* ===== BUTTON ANIMATIONS ===== */
-button{
-  transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-
-
-button:active:not(.card){
-  transform:scale(0.98);
-}
-
-/* ===== INPUT ANIMATIONS ===== */
-input, textarea, select{
-  transition:all 0.3s ease;
-}
-
-
-
-input:focus, textarea:focus, select:focus{
-  border-color:rgba(212,132,92,0.5);
-  background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);
-  box-shadow:0 0 0 3px rgba(212,132,92,0.1);
-}
-
-/* ===== SCREEN ANIMATIONS =====
-(Removed to prevent glitch on page transitions)
-*/
-
-/* ===== HEADER ANIMATIONS ===== */
-.logo-wrap{
-  
-}
-
-.logo{
-  
-}
-
-#welcome-text{
-  
-}
-
-/* ===== GRID ANIMATIONS ===== */
-.grid{ /* animations removed to prevent glitch */ }
-
-.grid .card{
-  
-}
-
-.grid .card:nth-child(1){
-  
-}
-
-.grid .card:nth-child(2){
-  
-}
-
-/* ===== GREETING ANIMATIONS ===== */
-.greeting{
-  
-}
-
-/* ===== TEXT ANIMATIONS ===== */
-h2, p{
-  
-}
-
-
-
-/* DATE DISPLAY */
-.date-display{
-  display:flex !important;
-  justify-content:center;
-  align-items:center;
-  gap:16px;
-  padding:16px 12px;
-  margin:0 16px 12px 16px;
-  margin-top:0;
-  border-bottom:1px solid rgba(74,155,127,0.15);
-  width:auto;
-}
-
-.date-item{
-  text-align:center;
-}
-
-.date-day{
-  font-size:16px;
-  font-weight:700;
-  color:var(--accent-cool);
-  margin-bottom:2px;
-}
-
-.date-label{
-  font-size:10px;
-  color:var(--text-muted);
-}
-
-.date-divider{
-  width:1px;
-  height:30px;
-  background:rgba(212,132,92,0.2);
-}
-
-
-
-/* MEDIUM SHADOWS */
-.card{
-  box-shadow:0 2px 6px rgba(0,0,0,0.15), 0 1px 2px rgba(74,155,127,0.08);
-  transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-button{
-  box-shadow:0 2px 4px rgba(0,0,0,0.1);
-}
-
-input, textarea, select{
-  box-shadow:inset 0 1px 2px rgba(0,0,0,0.08);
-}
-
-/* Focus state - extra shadow */
-input:focus, textarea:focus, select:focus{
-  box-shadow:inset 0 1px 2px rgba(0,0,0,0.08), 0 0 0 3px rgba(212,132,92,0.1);
-}
-
-/* Plan blocks */
-.plan-block{
-  box-shadow:0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Acuut button */
-.acuut-btn{
-  box-shadow:0 2px 4px rgba(0,0,0,0.1) !important;
-}
-
-
-/* Save & Add buttons - Groen */
-.add-btn,
-.plan-save-btn {
-  background:linear-gradient(135deg,var(--accent-cool) 0%,#3d8b6e 100%) !important;
-  border:none !important;
-  color:white !important;
-  box-shadow:0 4px 12px rgba(74,155,127,0.3) !important;
-}
-
-.add-btn:hover,
-.plan-save-btn:hover {
-  transform:translateY(-2px) !important;
-  box-shadow:0 6px 20px rgba(74,155,127,0.4) !important;
-}
-
-.add-btn:active,
-.plan-save-btn:active {
-  transform:translateY(0) !important;
-}
-
-
-/* === MODALS STYLING === */
-.modal {
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.8);
-  z-index:9999;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.modal.active {
-  display:flex;
-}
-
-.modal-content {
-  background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);
-}
-
-.modal-content h2 {
-  color:var(--text-primary);
-  font-size:24px;
-  margin-bottom:16px;
-  font-weight:700;
-}
-
-.modal-content p {
-  color:var(--text-muted);
-  font-size:14px;
-  line-height:1.6;
-  margin-bottom:12px;
-}
-
-.disclaimer-btn {
-  background:linear-gradient(135deg,var(--accent-cool) 0%,#3d8b6e 100%);
-  border:none;
-  color:white;
-  padding:14px 20px;
-  border-radius:12px;
-  font-size:15px;
-  cursor:pointer;
-  width:100%;
-  font-weight:600;
-  box-shadow:0 4px 12px rgba(74,155,127,0.3);
-  transition:all 0.3s ease;
-  margin-top:20px;
-}
-
-.disclaimer-btn:hover {
-  transform:translateY(-2px);
-  box-shadow:0 6px 20px rgba(74,155,127,0.4);
-}
-
-.install-step {
-  display:flex;
-  gap:16px;
-  margin-bottom:20px;
-  align-items:flex-start;
-  background:rgba(74,155,127,0.1);
-  border:none;
-  border-radius:14px;
-  padding:14px;
-}
-
-.install-step-num {
-  width:32px;
-  height:32px;
-  min-width:32px;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--accent-cool) 0%,#3d8b6e 100%);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
-  font-size:14px;
-}
-
-.install-step-text {
-  color:var(--text-muted);
-  font-size:13px;
-  line-height:1.5;
-}
-
-.install-step-text strong {
-  color:var(--text-primary);
-  font-weight:600;
-}
-
-.install-step-img {
-  font-size:24px;
-  min-width:24px;
-}
-
-#naam-input-modal {
-  background:rgba(255,255,255,0.1);
-  border:none;
-  color:var(--text-primary);
-  padding:12px;
-  border-radius:12px;
-  font-size:15px;
-  margin:12px 0;
-  width:100%;
-  font-family:inherit;
-}
-
-#naam-input-modal::placeholder {
-  color:var(--text-muted);
-}
-
-#naam-input-modal:focus {
-  outline:none;
-  border-color:var(--accent-cool);
-  background:rgba(255,255,255,0.15);
-}
-
+.disclaimer-box{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px 24px;max-width:380px;width:100%;box-shadow:0 4px 16px rgba(74,122,92,0.08);}
+.disclaimer-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--ink);margin-bottom:18px;text-align:center;}
+.disclaimer-text-box{background:var(--moss);border-radius:14px;padding:16px;margin-bottom:20px;}
+.disclaimer-text{color:var(--ink-soft);font-size:12.5px;line-height:1.6;margin-bottom:8px;}
+.disclaimer-text:last-child{margin-bottom:0;}
+.disclaimer-text strong{color:var(--ink);}
+.disclaimer-label{color:var(--ink-soft);font-size:13px;margin-bottom:10px;text-align:center;}
+.disclaimer-footnote{color:var(--ink-soft);font-size:11px;line-height:1.5;text-align:center;font-style:italic;}
+
+.med-beheer-item{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:8px;}
+.med-beheer-info .med-naam{font-size:15px;}
+.med-beheer-info .med-moment{margin-top:3px;}
+.med-delete-btn{background:none;border:none;color:var(--ink-soft);cursor:pointer;width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.med-delete-btn:active{background:var(--warm-bg);color:var(--warm);}
+.med-delete-btn svg{width:17px;height:17px;}
+.empty-state{color:var(--ink-soft);font-size:13px;text-align:center;padding:18px 0;}
+.add-row{display:flex;gap:8px;margin-top:10px;}
+.add-row .text-input{flex:1;}
+.add-icon-btn{flex-shrink:0;width:48px;background:var(--green);border:none;color:#fff;border-radius:14px;font-size:22px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.plan-item-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;}
+.plan-item-row .plan-item{flex:1;padding:0;line-height:1.5;}
+.item-delete-btn{background:none;border:none;color:var(--ink-soft);cursor:pointer;width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;line-height:1;}
+.item-delete-btn:active{background:var(--warm-bg);color:var(--warm);}
+.contact-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;gap:8px;}
 </style>
 </head>
 <body>
-<svg style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <pattern id="wavePattern" x="0" y="0" width="150" height="150" patternUnits="userSpaceOnUse">
-      <path d="M0,50 Q35,35 70,50 T140,50" stroke="rgba(255,255,255,0.03)" stroke-width="1" fill="none"/>
-      <path d="M0,80 Q40,70 80,80 T160,80" stroke="rgba(74,155,127,0.02)" stroke-width="0.8" fill="none"/>
-      <path d="M0,30 Q45,15 90,30 T180,30" stroke="rgba(255,255,255,0.02)" stroke-width="1" fill="none"/>
-      <path d="M0,110 Q35,95 70,110 T140,110" stroke="rgba(74,155,127,0.025)" stroke-width="0.8" fill="none"/>
-    </pattern>
-  </defs>
-  
-  <!-- Base wave pattern -->
-  <rect width="100%" height="100%" fill="url(#wavePattern)"/>
-  
-  <!-- Random scattered curves -->
-  <path d="M0,250 Q80,220 160,250 T320,250 T480,250 T640,250 T800,250" 
-        stroke="rgba(74,155,127,0.03)" stroke-width="1" fill="none"/>
-  
-  <path d="M0,600 Q120,580 240,600 T480,600 T720,600 T960,600" 
-        stroke="rgba(255,255,255,0.02)" stroke-width="0.8" fill="none"/>
-  
-  <path d="M0,950 Q100,970 200,950 T400,950 T600,950 T800,950" 
-        stroke="rgba(74,155,127,0.025)" stroke-width="0.8" fill="none"/>
-  
-  <path d="M0,400 Q90,380 180,400 T360,400 T540,400 T720,400 T900,400" 
-        stroke="rgba(255,255,255,0.02)" stroke-width="0.8" fill="none"/>
-</svg>
+<div id="frame">
 
-
-<!-- DISCLAIMER MODAL -->
-<!-- INSTALL SCHERM -->
 <div class="install-screen" id="install-screen">
-  <svg style="width:80px;height:80px;margin:0 auto 20px;display:block" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-    <!-- Brain lobes forming anchor -->
-    <circle cx="40" cy="40" r="12" fill="none" stroke="var(--accent-cool)" stroke-width="2"/>
-    <circle cx="70" cy="30" r="14" fill="none" stroke="var(--accent-cool)" stroke-width="2"/>
-    <circle cx="100" cy="40" r="12" fill="none" stroke="var(--accent-cool)" stroke-width="2"/>
-    <!-- Brain stem = anchor shaft -->
-    <line x1="70" y1="45" x2="70" y2="85" stroke="var(--accent-cool)" stroke-width="2.5"/>
-    <!-- Anchor flukes from bottom -->
-    <path d="M 68 85 Q 50 100 45 110" fill="none" stroke="var(--accent-cool)" stroke-width="2" stroke-linecap="round"/>
-    <path d="M 72 85 Q 90 100 95 110" fill="none" stroke="var(--accent-cool)" stroke-width="2" stroke-linecap="round"/>
+  <svg style="width:64px;height:64px;margin:0 auto 20px;display:block;color:var(--green)" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="16" r="7" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="50" y1="23" x2="50" y2="82" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="36" y1="34" x2="64" y2="34" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 C16 75, 31 88, 50 88 C 69 88, 84 75, 84 56" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 L 24 50 M16 56 L 24 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M84 56 L 76 50 M84 56 L 76 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
   </svg>
   <h1 class="install-title">MijnAnker</h1>
   <p class="install-sub">Voeg de app toe aan je beginscherm<br>voor de beste ervaring</p>
@@ -736,486 +203,813 @@ input:focus, textarea:focus, select:focus{
     <button class="os-btn" id="os-android" onclick="selectOS('android')"><span>🤖</span><span>Android</span></button>
   </div>
   <div class="install-steps" id="steps-iphone">
-    <div class="install-step"><div class="install-step-num">1</div><div style="flex:1"><div class="install-step-text">Open deze pagina in <strong>Safari</strong>. Andere browsers werken niet voor installatie op iPhone.</div></div><div class="install-step-img">🧭</div></div>
-    <div class="install-step"><div class="install-step-num">2</div><div style="flex:1"><div class="install-step-text">Tik onderaan op het <strong>deel-icoon</strong> — het vierkantje met een pijl omhoog.</div></div><div class="install-step-img">⬆️</div></div>
-    <div class="install-step"><div class="install-step-num">3</div><div style="flex:1"><div class="install-step-text">Scrol omlaag en tik op <strong>"Zet op beginscherm"</strong>.</div></div><div class="install-step-img">📲</div></div>
-    <div class="install-step"><div class="install-step-num">4</div><div style="flex:1"><div class="install-step-text">Tik op <strong>"Voeg toe"</strong> rechtsboven. Het anker-icoon staat nu op je beginscherm!</div></div><div class="install-step-img">✅</div></div>
+    <div class="install-step"><div class="install-step-num">1</div><div style="flex:1"><div class="install-step-text">Open deze pagina in <strong>Safari</strong>. Andere browsers werken niet voor installatie op iPhone.</div></div></div>
+    <div class="install-step"><div class="install-step-num">2</div><div style="flex:1"><div class="install-step-text">Tik onderaan op het <strong>deel-icoon</strong> — het vierkantje met een pijl omhoog.</div></div></div>
+    <div class="install-step"><div class="install-step-num">3</div><div style="flex:1"><div class="install-step-text">Scrol omlaag en tik op <strong>"Zet op beginscherm"</strong>.</div></div></div>
+    <div class="install-step"><div class="install-step-num">4</div><div style="flex:1"><div class="install-step-text">Tik op <strong>"Voeg toe"</strong> rechtsboven. Het anker-icoon staat nu op je beginscherm!</div></div></div>
   </div>
   <div class="install-steps" id="steps-android" style="display:none">
-    <div class="install-step"><div class="install-step-num">1</div><div style="flex:1"><div class="install-step-text">Open deze pagina in <strong>Chrome</strong>. Er verschijnt automatisch een banner onderaan.</div></div><div class="install-step-img">🌐</div></div>
-    <div class="install-step"><div class="install-step-num">2</div><div style="flex:1"><div class="install-step-text">Zie je de banner niet? Tik op de <strong>drie puntjes</strong> rechtsboven in Chrome.</div></div><div class="install-step-img">⋮</div></div>
-    <div class="install-step"><div class="install-step-num">3</div><div style="flex:1"><div class="install-step-text">Kies <strong>"Toevoegen aan startscherm"</strong> of <strong>"App installeren"</strong>.</div></div><div class="install-step-img">📲</div></div>
-    <div class="install-step"><div class="install-step-num">4</div><div style="flex:1"><div class="install-step-text">Tik op <strong>"Installeren"</strong>. Het anker-icoon staat nu op je beginscherm!</div></div><div class="install-step-img">✅</div></div>
+    <div class="install-step"><div class="install-step-num">1</div><div style="flex:1"><div class="install-step-text">Open deze pagina in <strong>Chrome</strong>. Er verschijnt automatisch een banner onderaan.</div></div></div>
+    <div class="install-step"><div class="install-step-num">2</div><div style="flex:1"><div class="install-step-text">Zie je de banner niet? Tik op de <strong>drie puntjes</strong> rechtsboven in Chrome.</div></div></div>
+    <div class="install-step"><div class="install-step-num">3</div><div style="flex:1"><div class="install-step-text">Kies <strong>"Toevoegen aan startscherm"</strong> of <strong>"App installeren"</strong>.</div></div></div>
+    <div class="install-step"><div class="install-step-num">4</div><div style="flex:1"><div class="install-step-text">Tik op <strong>"Installeren"</strong>. Het anker-icoon staat nu op je beginscherm!</div></div></div>
   </div>
-  <button class="install-enter-btn" onclick="enterApp()" style="background:linear-gradient(135deg,var(--accent-cool),#3d8b6e);border:none;box-shadow:0 4px 12px rgba(74,155,127,0.3)">Doorgaan naar de app →</button>
+  <button class="install-enter-btn" onclick="enterApp()">Doorgaan naar de app →</button>
   <span class="install-skip" onclick="enterApp()">Overslaan, gewoon in de browser gebruiken</span>
 </div>
 
-<!-- NAAM MODAL -->
 <div class="disclaimer-modal" id="naam-modal">
-  <div class="disclaimer-box" style="max-width:500px">
-    <h2 style="font-size:24px;margin-bottom:24px;color:#fff;font-weight:700">⚖️ Disclaimer & Starten</h2>
-    
-    <div style="background:rgba(0,0,0,0.2);border-radius:16px;padding:20px;margin-bottom:24px;max-height:200px;overflow-y:auto">
-      <p style="color:#94a3b8;font-size:12px;line-height:1.7;margin-bottom:12px;text-align:center"><strong style="color:#fff">DISCLAIMER:</strong></p>
-      <p style="color:#94a3b8;font-size:12px;line-height:1.7;margin-bottom:8px;text-align:center">MijnAnker is een persoonlijk hulpmiddel voor mentaal welzijn. Het vervangt geen professionele medische of psychologische hulp. Bij crisis of nood: bel 113 of ga naar de spoedopvang.</p>
-      <p style="color:#94a3b8;font-size:12px;line-height:1.7;text-align:center">Je bent verantwoordelijk voor je eigen gezondheid en veiligheid.</p>
+  <div class="disclaimer-box">
+    <h2 class="disclaimer-title">Disclaimer &amp; Starten</h2>
+    <div class="disclaimer-text-box">
+      <p class="disclaimer-text"><strong>Disclaimer:</strong> MijnAnker is een persoonlijk hulpmiddel voor mentaal welzijn. Het vervangt geen professionele medische of psychologische hulp. Bij crisis of nood: bel 113 of ga naar de spoedopvang.</p>
+      <p class="disclaimer-text">Je bent verantwoordelijk voor je eigen gezondheid en veiligheid.</p>
     </div>
-
-    <div style="margin-bottom:24px">
-      <p style="color:var(--text-muted);margin-bottom:16px;font-size:13px;text-align:center">Wat is je naam?</p>
-      <input id="naam-input-modal" type="text" placeholder="Vul je naam in" style="width:100%;padding:12px;margin-bottom:12px;border-radius:12px;border:none;background:rgba(255,255,255,0.05);color:#fff;font-size:16px;box-sizing:border-box;font-family:inherit">
-    </div>
-
-    <p style="color:#94a3b8;font-size:11px;line-height:1.6;margin-bottom:20px;text-align:center;font-style:italic">Door op 'App starten' te klikken, ga je akkoord met de disclaimer en ben je je bewust van je eigen verantwoordelijkheid voor je gezondheid.</p>
-
-    <button onclick="saveNaamAndContinue()" style="width:100%;padding:15px;background:linear-gradient(135deg,var(--accent-cool),#3d8b6e);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(74,155,127,0.3);margin-top:12px;transition:all 0.3s ease">App starten! 🚀</button>
+    <p class="disclaimer-label">Wat is je naam?</p>
+    <input class="text-input" id="naam-input-modal" placeholder="Vul je naam in" style="margin-bottom:14px"/>
+    <p class="disclaimer-footnote">Door op "App starten" te klikken, ga je akkoord met de disclaimer en ben je je bewust van je eigen verantwoordelijkheid voor je gezondheid.</p>
+    <button class="save-btn" onclick="saveNaamAndContinue()" style="margin-top:14px">App starten</button>
   </div>
 </div>
 
-<div id="app">
-  <div class="header" id="header" style="display:none">
-    <button class="back-btn" onclick="goBack()">←</button>
-    <div style="flex:1;text-align:center;position:relative;z-index:2">
-      <h2 id="header-title" style="color:#d4d8e0;font-size:18px;font-weight:700;margin:0;padding:0;line-height:1.2">Pagina</h2>
-    </div>
-    <svg style="width:40px;height:40px;flex-shrink:0;opacity:0.12" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 60 35 C 55 25 40 25 35 35 C 30 45 45 60 60 70 C 75 60 90 45 85 35 C 80 25 65 25 60 35" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
-      <path d="M 45 70 Q 35 85 30 105" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <path d="M 60 75 Q 60 95 60 115" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <path d="M 75 70 Q 85 85 90 105" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="60" cy="125" r="2.5" fill="currentColor"/>
-    </svg>
+<div class="screen active" id="screen-home">
+  <svg class="anchor-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="16" r="7" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="50" y1="23" x2="50" y2="82" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="36" y1="34" x2="64" y2="34" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 C16 75, 31 88, 50 88 C 69 88, 84 75, 84 56" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 L 24 50 M16 56 L 24 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M84 56 L 76 50 M84 56 L 76 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+  </svg>
+  <header class="home-header">
+    <div class="eyebrow" id="home-greeting">Welkom terug, Jan</div>
+    <h1 class="title">Mijn&nbsp;Anker</h1>
+    <p class="sub">Een rustig moment voor jezelf, vandaag.</p>
+  </header>
+  <div class="divider"></div>
+  <button class="checkin-strip" onclick="goTo('checkin')">
+    <div class="checkin-label">Vandaag</div>
+    <div class="checkin-question">Hoe voel je je op dit moment?</div>
+    <span class="checkin-cta">Start de check-in
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </span>
+  </button>
+  <div class="section-label">Overzicht</div>
+  <div class="grid">
+    <button class="card" onclick="goTo('medicatie')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="3" width="8" height="18" rx="4" transform="rotate(45 12 12)"/><path d="M9 12.5l6-6"/></svg>
+      <div class="card-label">Medicatie</div><div class="card-sub">Zorg voor jezelf</div>
+    </button>
+    <button class="card" onclick="goTo('agenda')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+      <div class="card-label">Agenda</div><div class="card-sub">Wat staat er te wachten</div>
+    </button>
+    <button class="card" onclick="goTo('weekplanning')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 10h18"/><path d="M8 14h2M14 14h2M8 17h2M14 17h2"/></svg>
+      <div class="card-label">Weekplanning</div><div class="card-sub">Plan je dag</div>
+    </button>
+    <button class="card" onclick="goTo('dagboek')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h11a2 2 0 012 2v14l-4-2-4 2-4-2-2 1V6a2 2 0 012-2z"/></svg>
+      <div class="card-label">Dagboek</div><div class="card-sub">Hoe gaat het met je</div>
+    </button>
+    <button class="card wide-card" onclick="goTo('gereedschappen')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+      <div class="text"><div class="card-label">Gereedschappen</div><div class="card-sub">Oefeningen, hulp en meer</div></div>
+    </button>
+    <button class="card wide-card acuut-card" onclick="goTo('acuut')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.35-9.33-9.3C1.4 8.93 3 6 6 6c2 0 3.3 1.2 4 2.2.7-1 2-2.2 4-2.2 3 0 4.6 2.93 3.33 5.7C19 16.65 12 21 12 21z"/></svg>
+      <div class="text"><div class="card-label">Acuut</div><div class="card-sub">Je hoeft dit niet alleen te doen</div></div>
+    </button>
   </div>
-  <div style="height:1px;background:linear-gradient(90deg,rgba(74,155,127,0) 0%,rgba(74,155,127,0.3) 50%,rgba(74,155,127,0) 100%);margin-bottom:16px;display:none" id="header-divider"></div>
+  <footer class="app-footer"><div class="footer-mark">Made by JW Design — MijnAnker</div></footer>
+</div>
 
-  <!-- HOME -->
-  <div class="screen active" id="screen-home">
-    <div style="margin-bottom:16px;padding-top:12px">
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:0;position:relative;z-index:2;margin-bottom:16px">
-      <div style="flex:1;position:relative">
-        <h2 style="background:none;-webkit-text-fill-color:#d4d8e0;color:#d4d8e0;font-size:36px;font-weight:700;margin-bottom:4px;margin-top:0;line-height:1.2;position:relative;z-index:2">Mijn Anker</h2>
-        <p id="welcome-text" class="app-sub" style="margin-bottom:0;font-size:13px;color:var(--text-muted);position:relative;z-index:2">Welkom terug!</p>
+<div class="screen" id="screen-checkin">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Check-in</h2></div>
+  <div class="progress" id="ci-progress"></div>
+  <div class="q-title" id="ci-question"></div>
+  <div class="options" id="ci-options"></div>
+</div>
+
+<div class="screen" id="screen-result">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Resultaat</h2></div>
+  <div class="result-card">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-fase" id="result-fase"></div>
+    <div class="result-tekst" id="result-tekst"></div>
+  </div>
+  <div class="acties" id="result-acties"></div>
+</div>
+
+<div class="screen" id="screen-gereedschappen">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Gereedschappen</h2></div>
+  <div class="grid">
+    <button class="card" onclick="goTo('checkin')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v4M12 17v4M5 12H3M21 12h-2"/><circle cx="12" cy="12" r="5"/></svg>
+      <div class="card-label">Check-in</div><div class="card-sub">Check je gevoel</div>
+    </button>
+    <button class="card" onclick="goTo('oefeningen')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c4-3 8-6 8-11a4 4 0 00-8-1 4 4 0 00-8 1c0 5 4 8 8 11z"/></svg>
+      <div class="card-label">Oefeningen</div><div class="card-sub">Adem in, ontspan</div>
+    </button>
+    <button class="card" onclick="goTo('goedmoment')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 17.3l-5.4 3 1-6-4.6-4 6-.6L12 4l3 5.7 6 .6-4.6 4 1 6z"/></svg>
+      <div class="card-label">Goed Moment</div><div class="card-sub">Wat je sterker maakt</div>
+    </button>
+    <button class="card" onclick="goTo('plan')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6v4H9z"/><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 12h6M9 16h6"/></svg>
+      <div class="card-label">Mijn Plan</div><div class="card-sub">Jouw voorzorgsmaatregel</div>
+    </button>
+    <button class="card wide-card" onclick="goTo('contacten')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg>
+      <div class="text"><div class="card-label">Contacten</div><div class="card-sub">Bel iemand die luistert</div></div>
+    </button>
+  </div>
+</div>
+
+<div class="screen" id="screen-oefeningen">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Oefeningen</h2></div>
+  <div id="oef-list"></div>
+</div>
+<div class="screen" id="screen-oefening-detail">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2 id="oef-detail-title"></h2></div>
+  <div class="step-card">
+    <div class="step-num" id="step-num"></div>
+    <div class="step-tekst" id="step-tekst"></div>
+    <div class="step-btns" id="step-btns"></div>
+  </div>
+</div>
+
+<div class="screen" id="screen-plan">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Mijn Plan</h2></div>
+  <div class="plan-block">
+    <div class="plan-head">Vroege signalen</div>
+    <div id="plan-signalen"></div>
+    <div class="add-row"><input class="text-input" id="plan-signalen-input" placeholder="Nieuw signaal..."/><button class="add-icon-btn" onclick="addPlanItem('signalen')">+</button></div>
+  </div>
+  <div class="plan-block">
+    <div class="plan-head">Mijn triggers</div>
+    <div id="plan-triggers"></div>
+    <div class="add-row"><input class="text-input" id="plan-triggers-input" placeholder="Nieuwe trigger..."/><button class="add-icon-btn" onclick="addPlanItem('triggers')">+</button></div>
+  </div>
+  <div class="plan-block">
+    <div class="plan-head">Wat helpt mij</div>
+    <div id="plan-helpend"></div>
+    <div class="add-row"><input class="text-input" id="plan-helpend-input" placeholder="Wat helpt jou..."/><button class="add-icon-btn" onclick="addPlanItem('helpend')">+</button></div>
+  </div>
+  <div class="plan-block">
+    <div class="plan-head">Mijn contacten</div>
+    <div id="plan-contacten"></div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+      <input class="text-input" id="plan-contact-naam-input" placeholder="Naam"/>
+      <div style="display:flex;gap:8px">
+        <input class="text-input" id="plan-contact-tel-input" placeholder="Telefoonnummer"/>
+        <button class="add-icon-btn" style="flex-shrink:0" onclick="addPlanContact()">+</button>
       </div>
-      <div style="position:relative;flex:0 0 auto;margin-right:-40px">
-        <svg style="position:absolute;top:50%;right:0;transform:translateY(-50%);opacity:0.12;z-index:1;pointer-events:none;width:180px;height:100px" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-          <!-- Heart shape -->
-          <path d="M 60 35 C 55 25 40 25 35 35 C 30 45 45 60 60 70 C 75 60 90 45 85 35 C 80 25 65 25 60 35" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
-          <!-- Root lines down -->
-          <path d="M 45 70 Q 35 85 30 105" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M 60 75 Q 60 95 60 115" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M 75 70 Q 85 85 90 105" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <!-- Ground dot -->
-          <circle cx="60" cy="125" r="2.5" fill="currentColor"/>
-        </svg>
-      </div>
     </div>
-    <div style="height:1px;background:linear-gradient(90deg,rgba(74,155,127,0) 0%,rgba(74,155,127,0.3) 50%,rgba(74,155,127,0) 100%);margin-bottom:16px"></div>
-    <div class="grid">
-      <button class="card" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)" onclick="showScreen('medicatie')"><span class="card-icon">💊</span><span class="card-label">Medicatie</span><span class="card-sub">Zorg voor jezelf</span></button>
-      <button class="card" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)" onclick="showScreen('agenda')"><span class="card-icon">📅</span><span class="card-label">Agenda</span><span class="card-sub">Wat staat je te wachten?</span></button>
-    </div>
-    <div class="grid" style="margin-top:-4px">
-      <button class="card" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)" onclick="showScreen('weekplanning')"><span class="card-icon">🗓️</span><span class="card-label">Weekplanning</span><span class="card-sub">Plan je dag</span></button>
-      <button class="card" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)" onclick="showScreen('dagboek')"><span class="card-icon">📓</span><span class="card-label">Dagboek</span><span class="card-sub">Hoe gaat het met je?</span></button>
-    </div>
-    <div class="grid" style="margin-top:-4px">
-      <button class="card" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:18px;display:flex;gap:16px;align-items:center;grid-column:1/-1;width:100%;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)" onclick="showScreen('gereedschappen')"><span class="card-icon">🧰</span><span class="card-label">Gereedschappen</span><span class="card-sub">Oefeningen, hulp & meer</span></button>
-    </div>
-    <div class="grid" style="margin-top:-4px">
-      <button class="card" style="background:linear-gradient(135deg,rgba(220,38,38,0.3),rgba(185,28,28,0.2));border:none;border-radius:28px;padding:18px;display:flex;gap:16px;align-items:center;grid-column:1/-1;width:100%;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(220,38,38,0.08)" onclick="showScreen('acuut')"><span class="card-icon">🆘</span><span class="card-label">Acuut</span><span class="card-sub">Je hoeft dit niet alleen te doen</span></button>
-    </div>
-    <p class="greeting">Made by JW Design - MijnAnker</p>
   </div>
+</div>
 
-  <!-- CHECK-IN -->
-  <div class="screen" id="screen-checkin">
-    <div class="progress" id="progress"></div>
-    <h2 class="q-title" id="q-title"></h2>
-    <div class="options" id="q-options"></div>
-  
-    <p class="greeting">Made by JW Design - MijnAnker</p>
+<div class="screen" id="screen-contacten">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Contacten</h2></div>
+  <div id="contacten-lijst"></div>
+  <div class="plan-block" style="margin-top:14px">
+    <div class="plan-head">Contact toevoegen</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <input class="text-input" id="contact-naam-input" placeholder="Naam"/>
+      <input class="text-input" id="contact-tel-input" placeholder="Telefoonnummer"/>
+      <button class="save-btn" style="margin-top:0" onclick="addContactFromScreen()">Toevoegen</button>
+    </div>
   </div>
+</div>
 
-  <!-- RESULT -->
-  <div class="screen" id="screen-result">
-    <div class="result-card" id="result-card">
-      <div class="result-icon" id="result-icon"></div>
-      <div class="result-fase" id="result-fase"></div>
-      <div class="result-tekst" id="result-tekst"></div>
-    </div>
-    <div class="acties" id="result-acties"></div>
+<div class="screen" id="screen-acuut">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Acuut</h2></div>
+  <div class="acuut-banner">
+    <svg class="acuut-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.35-9.33-9.3C1.4 8.93 3 6 6 6c2 0 3.3 1.2 4 2.2.7-1 2-2.2 4-2.2 3 0 4.6 2.93 3.33 5.7C19 16.65 12 21 12 21z"/></svg>
+    <div class="acuut-titel">Je bent niet alleen</div>
+    <div class="acuut-sub">We helpen je erdoorheen</div>
   </div>
+  <div id="acuut-contacten"></div>
+  <div class="acuut-note">113 is 24/7 bereikbaar · Ook chatten via 113.nl</div>
+</div>
 
-  <!-- PLAN -->
-  <div class="screen" id="screen-plan">
-    <div class="plan-tab-btns">
-      <button class="plan-tab active" id="tab-bekijk" onclick="switchPlanTab('bekijk')">👁 Bekijken</button>
-      <button class="plan-tab" id="tab-bewerk" onclick="switchPlanTab('bewerk')">✏️ Bewerken</button>
-    </div>
-    <div id="plan-bekijk">
-      <div class="plan-block"><div class="plan-head">🚦 Vroege signalen</div><div id="plan-signalen"></div></div>
-      <div class="plan-block"><div class="plan-head">⚡ Mijn triggers</div><div id="plan-triggers"></div></div>
-      <div class="plan-block"><div class="plan-head">💚 Wat helpt mij</div><div id="plan-helpend"></div></div>
-      <div class="plan-block"><div class="plan-head">📞 Mijn contacten</div><div id="plan-contacten"></div></div>
-      <p style="color:var(--text-muted);font-size:12px;text-align:center;padding-bottom:12px">Stel je plan op samen met je behandelaar</p>
-    </div>
-    <div id="plan-bewerk" style="display:none;flex-direction:column;gap:16px">
-      <div class="plan-block"><div class="plan-head">🚦 Vroege signalen</div><div id="edit-signalen"></div><button class="add-btn" onclick="addItem('signalen')">+ Signaal toevoegen</button></div>
-      <div class="plan-block"><div class="plan-head">⚡ Mijn triggers</div><div id="edit-triggers"></div><button class="add-btn" onclick="addItem('triggers')">+ Trigger toevoegen</button></div>
-      <div class="plan-block"><div class="plan-head">💚 Wat helpt mij</div><div id="edit-helpend"></div><button class="add-btn" onclick="addItem('helpend')">+ Toevoegen</button></div>
-      <div class="plan-block"><div class="plan-head">📞 Mijn contacten</div><div id="edit-contacten"></div><button class="add-btn" onclick="addContact()">+ Contact toevoegen</button></div>
-      <button class="plan-save-btn" onclick="savePlan()">💾 Plan opslaan</button>
-      <p style="color:var(--text-muted);font-size:12px;text-align:center;padding-bottom:16px">Alles wordt alleen op jouw telefoon bewaard</p>
-    </div>
-  
-    <p class="greeting">Made by JW Design - MijnAnker</p>
+<div class="screen" id="screen-dagboek">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Dagboek</h2></div>
+  <div class="plan-tabs">
+    <button class="plan-tab active" id="dag-tab-invoer" onclick="switchDagTab('invoer')">Invoer</button>
+    <button class="plan-tab" id="dag-tab-lijst" onclick="switchDagTab('lijst')">Lijst</button>
   </div>
-
-
-  <!-- GEREEDSCHAPPEN -->
-  <div class="screen" id="screen-gereedschappen">
-    <div class="grid">
-      <button class="card" onclick="showScreen('checkin')" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)"><span class="card-icon">🌡️</span><span class="card-label">Check-in</span><span class="card-sub">Check je gevoel</span></button>
-      <button class="card" onclick="showScreen('oefeningen')" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)"><span class="card-icon">🧘</span><span class="card-label">Oefeningen</span><span class="card-sub">Adem in, ontspan</span></button>
-    </div>
-    <div class="grid" style="margin-top:-4px">
-      <button class="card" onclick="showScreen('goedmoment')" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)"><span class="card-icon">💛</span><span class="card-label">Goed Moment</span><span class="card-sub">Wat je sterker maakt</span></button>
-      <button class="card" onclick="showScreen('plan')" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)"><span class="card-icon">📋</span><span class="card-label">Mijn Plan</span><span class="card-sub">Jouw voorzorgsmaatregel</span></button>
-    </div>
-    <div class="grid" style="margin-top:-4px">
-      <button class="card" onclick="showScreen('contacten')" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;grid-column:1/-1;width:100%;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)"><span class="card-icon">☎️</span><span class="card-label">Contacten</span><span class="card-sub">Bel iemand die luistert</span></button>
-    </div>
-    <p class="greeting">Made by JW Design - MijnAnker</p>
-  </div>
-
-  <!-- OEFENINGEN -->
-  <div class="screen" id="screen-oefeningen"><div id="oef-list"></div>
-    <p class="greeting">Made by JW Design - MijnAnker</p>
-  </div>
-  <div class="screen" id="screen-oefening-detail">
-    <h2 class="section-title" id="oef-detail-title" style="display:none"></h2>
-    <div class="step-card"><div class="step-num" id="step-num"></div><p class="step-tekst" id="step-tekst"></p><div class="step-btns" id="step-btns"></div></div>
-  
-    <p class="greeting">Made by JW Design - MijnAnker</p>
-  </div>
-
-  <!-- CONTACTEN -->
-  <div class="screen" id="screen-contacten">
-    <div id="contacten-lijst" style="display:flex;flex-direction:column;gap:12px;margin-top:16px"></div>
-    <p id="contacten-empty" style="color:var(--text-muted);text-align:center;margin-top:20px;font-size:14px">Nog geen contacten toegevoegd</p>
-  
-    <p class="greeting">Made by JW Design - MijnAnker</p>
-  </div>
-
-  <!-- ACUUT -->
-  <div class="screen" id="screen-acuut">
-    <div class="acuut-banner"><div class="acuut-icon">🆘</div><h2 class="acuut-titel">Je bent niet alleen</h2><p class="acuut-sub">We helpen je erdoorheen</p></div>
-    <div id="acuut-contacten" style="display:flex;flex-direction:column;gap:12px"></div>
-    <p class="acuut-note">113 is 24/7 bereikbaar · Ook chatten via 113.nl</p>
-  
-    <p class="greeting">Made by JW Design - MijnAnker</p>
-  </div>
-
-  <!-- DAGBOEK -->
-  <div class="screen" id="screen-dagboek">
-    
-    <div class="plan-tab-btns">
-      <button class="plan-tab active" id="dag-tab-invoer" onclick="switchDagboekTab('invoer')">📝 Invoer</button>
-      <button class="plan-tab" id="dag-tab-grafiek" onclick="switchDagboekTab('grafiek')">📊 Grafiek</button>
-      <button class="plan-tab" id="dag-tab-lijst" onclick="switchDagboekTab('lijst')">📋 Lijst</button>
-    </div>
-    <div id="dag-invoer" style="display:flex;flex-direction:column;gap:12px">
-      <div class="plan-block"><div class="plan-head">Hoe voel je je nu?</div>
-        <div class="mood-row">
-          <button class="mood-btn" data-mood="😊" onclick="selectMood(this)">😊<span>Goed</span></button>
-          <button class="mood-btn" data-mood="😐" onclick="selectMood(this)">😐<span>Oké</span></button>
-          <button class="mood-btn" data-mood="😟" onclick="selectMood(this)">😟<span>Moeilijk</span></button>
-          <button class="mood-btn" data-mood="😰" onclick="selectMood(this)">😰<span>Zwaar</span></button>
-        </div>
-      </div>
-      <textarea id="dagboek-tekst" rows="4" placeholder="Wat speelt er? (optioneel)"></textarea>
-      <button class="save-btn" id="dagboek-save-btn" onclick="saveDagboek()">💾 Opslaan</button>
-      <button class="save-btn" id="dagboek-cancel-btn" onclick="cancelEdit()" style="display:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;color:var(--text-muted)">✕ Annuleren</button>
-    </div>
-    <div id="dag-grafiek" style="display:none;flex-direction:column;gap:14px">
-      <div class="plan-tab-btns" style="margin-bottom:0">
-        <button class="plan-tab active" id="range-week" onclick="switchRange('week')">Week</button>
-        <button class="plan-tab" id="range-maand" onclick="switchRange('maand')">Maand</button>
-        <button class="plan-tab" id="range-jaar" onclick="switchRange('jaar')">Jaar</button>
-      </div>
-      <div class="plan-block" style="padding:16px 10px">
-        <div id="grafiek-leeg" style="display:none;color:var(--text-muted);font-size:13px;text-align:center;padding:20px 0">Nog geen gegevens voor deze periode</div>
-        <canvas id="moodCanvas" height="200" style="width:100%"></canvas>
-        <div id="grafiek-legend" style="display:flex;justify-content:center;gap:16px;margin-top:12px;flex-wrap:wrap"></div>
-      </div>
-      <div id="grafiek-samenvatting" class="plan-block" style="display:none"><div class="plan-head">Samenvatting</div><div id="grafiek-stats"></div></div>
-    </div>
-    <div id="dag-lijst" style="display:none"><div class="entries" id="entries"></div></div>
-  
-    <p class="greeting">Made by JW Design - MijnAnker</p>
-  </div>
-
-  <!-- GOED MOMENT -->
-  <div class="screen" id="screen-goedmoment">
-    
-    <div class="plan-tab-btns">
-      <button class="plan-tab active" id="gm-tab-lezen" onclick="switchGMTab('lezen')">💚 Lezen</button>
-      <button class="plan-tab" id="gm-tab-schrijven" onclick="switchGMTab('schrijven')">✍️ Schrijven</button>
-    </div>
-    <div id="gm-lezen">
-      <p style="color:var(--text-muted);font-size:14px;line-height:1.7;margin-bottom:16px">Lees wat je jezelf in goede momenten hebt willen vertellen. Dit kan je helpen als het moeilijk wordt.</p>
-      <div id="gm-list"></div>
-    </div>
-    <div id="gm-schrijven" style="display:none;flex-direction:column;gap:12px">
-      <p style="color:var(--text-muted);font-size:14px;line-height:1.7">Schrijf iets dat je jezelf wilt vertellen in een moeilijk moment. Zeg tegen jezelf wat je nu voelt, wat je hebt overwonnen, waarom je sterk bent.</p>
-      <textarea class="edit-input" id="gm-tekst" rows="5" placeholder="Schrijf hier je boodschap aan jezelf..."></textarea>
-      <button class="save-btn" onclick="saveGoedMoment()">💛 Opslaan</button>
-    </div>
-  
-    <p class="greeting">Made by JW Design - MijnAnker</p>
-  </div>
-
-  <!-- AGENDA -->
-  <div class="screen" id="screen-agenda">
-    
+  <div id="dag-invoer">
     <div class="plan-block">
-      <div class="plan-head">➕ Afspraak toevoegen</div>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;width:100%;align-items:center;max-width:380px;margin-left:auto;margin-right:auto">
-        <input class="edit-input" id="agenda-titel" placeholder="Omschrijving bijv. Afspraak behandelaar" style="width:100%"/>
-        <input class="edit-input" id="agenda-locatie" placeholder="Plaats/Locatie bijv. Thuis, Kantoor, Stad" style="width:100%"/>
-        <div style="display:flex;gap:8px;width:100%">
-          <input class="edit-input" id="agenda-datum" type="date" style="flex:1"/>
-          <input class="edit-input" id="agenda-tijd" type="time" style="flex:1"/>
-        </div>
-        <button class="save-btn" onclick="saveAfspraak()" style="margin:0;width:100%">💾 Opslaan</button>
-      </div>
+      <div class="plan-head">Hoe voel je je nu?</div>
+      <div class="mood-row" id="mood-row"></div>
+      <textarea id="dagboek-tekst" placeholder="Wat speelt er? (optioneel)"></textarea>
+      <button class="save-btn" onclick="saveDagboekEntry()"><span id="dagboek-save-label">Opslaan</span></button>
+      <button class="cancel-btn" id="dagboek-cancel-btn" onclick="cancelDagboekEdit()" style="display:none">Annuleren</button>
     </div>
-    <div id="agenda-lijst" style="display:flex;flex-direction:column;gap:10px"></div>
-  
-    <p class="greeting">Made by JW Design - MijnAnker</p>
   </div>
+  <div id="dag-lijst" style="display:none"></div>
+</div>
 
-  <!-- MEDICATIE -->
-  <div class="screen" id="screen-medicatie">
-    
-    <div class="plan-tab-btns">
-      <button class="plan-tab active" id="med-tab-vandaag" onclick="switchMedTab('vandaag')">✅ Vandaag</button>
-      <button class="plan-tab" id="med-tab-lijst" onclick="switchMedTab('lijst')">💊 Mijn medicatie</button>
-    </div>
-    <div id="med-vandaag" style="display:flex;flex-direction:column;gap:12px">
-      <div class="plan-block"><div class="plan-head" id="med-datum-label"></div><div id="med-check-lijst"></div></div>
-      <p style="color:var(--text-muted);font-size:12px;text-align:center">Reset automatisch elke dag</p>
-    </div>
-    <div id="med-lijst" style="display:none;flex-direction:column;gap:12px">
-      <div class="plan-block">
-        <div class="plan-head">➕ Medicatie toevoegen</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
-          <input class="edit-input" id="med-naam" placeholder="Naam medicijn bijv. Sertraline"/>
-          <input class="edit-input" id="med-dosering" placeholder="Dosering bijv. 50mg"/>
-          <input class="edit-input" id="med-moment" placeholder="Moment bijv. Ochtend, Avond"/>
-          <textarea class="edit-input" id="med-info" rows="2" placeholder="Extra info (optioneel)" style="resize:none;line-height:1.5"></textarea>
-          <button class="save-btn" onclick="saveMedicatie()" style="margin:0">💾 Toevoegen</button>
-        </div>
+<div class="screen" id="screen-agenda">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Agenda</h2></div>
+  <div class="plan-block">
+    <div class="plan-head">Nieuwe afspraak</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <input class="text-input" id="ag-titel" placeholder="Omschrijving"/>
+      <div style="display:flex;gap:8px">
+        <input class="text-input" id="ag-datum" type="date"/>
+        <input class="text-input" id="ag-tijd" type="time"/>
       </div>
-      <div id="med-beheer-lijst" style="display:flex;flex-direction:column;gap:10px"></div>
+      <button class="save-btn" style="margin-top:4px" onclick="saveAfspraak()">Opslaan</button>
     </div>
-  
-    <p class="greeting">Made by JW Design - MijnAnker</p>
   </div>
+  <div id="agenda-lijst"></div>
+</div>
 
-  <!-- WEEKPLANNING -->
-  <div class="screen" id="screen-weekplanning">
-    
-    <div class="week-nav">
-      <button class="week-nav-btn" onclick="navigateWeek(-1)">‹</button>
-      <span class="week-label" id="week-label"></span>
-      <button class="week-nav-btn" onclick="navigateWeek(1)">›</button>
+<div class="screen" id="screen-weekplanning">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Weekplanning</h2></div>
+  <div class="week-nav"><button onclick="navigateWeek(-1)">‹</button><span class="week-label" id="week-label"></span><button onclick="navigateWeek(1)">›</button></div>
+  <div class="week-days" id="week-days"></div>
+  <div class="dag-sectie"><span class="dag-sectie-titel">Afspraken</span><div id="week-afspraken"></div></div>
+  <div class="dag-sectie">
+    <span class="dag-sectie-titel">Taken</span>
+    <div id="week-taken"></div>
+    <div id="week-taak-form" style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+      <input class="text-input" id="week-taak-input" placeholder="Nieuwe taak..."/>
+      <button class="save-btn" style="margin-top:0" onclick="addWeekTaak()">Toevoegen</button>
     </div>
-    <div class="week-days" id="week-days"></div>
-    <div class="dag-sectie" id="dag-afspraken-sectie">
-      <div class="dag-sectie-head"><span class="dag-sectie-titel">📅 Afspraken</span></div>
-      <div id="dag-afspraken-lijst"></div>
-    </div>
-    <div class="dag-sectie">
-      <div class="dag-sectie-head">
-        <span class="dag-sectie-titel">✅ Taken</span>
-        <button class="add-btn" style="width:auto;padding:6px 12px;margin:0;font-size:12px" onclick="toggleTaakForm()">+ Toevoegen</button>
-      </div>
-      <div id="taak-form" style="display:none" class="add-taak-form">
-        <input class="edit-input" id="taak-input" placeholder="Beschrijf de taak..."/>
-        <div class="cat-btns" id="cat-btns">
-          <button class="cat-btn" data-cat="🏠 Huishouden" data-color="#6366f1" onclick="selectCat(this)">🏠 Huishouden</button>
-          <button class="cat-btn" data-cat="🛒 Boodschappen" data-color="#0ea5e9" onclick="selectCat(this)">🛒 Boodschappen</button>
-          <button class="cat-btn" data-cat="💼 Werk" data-color="#f59e0b" onclick="selectCat(this)">💼 Werk</button>
-          <button class="cat-btn" data-cat="🏃 Beweging" data-color="#10b981" onclick="selectCat(this)">🏃 Beweging</button>
-          <button class="cat-btn" data-cat="💆 Zelfzorg" data-color="#8b5cf6" onclick="selectCat(this)">💆 Zelfzorg</button>
-          <button class="cat-btn" data-cat="📌 Overig" data-color="#94a3b8" onclick="selectCat(this)">📌 Overig</button>
-        </div>
-        <div style="display:flex;gap:8px">
-          <button class="save-btn" onclick="saveTaak()" style="flex:1">💾 Opslaan</button>
-          <button class="save-btn" onclick="toggleTaakForm()" style="flex:0 0 auto;width:auto;padding:15px 16px;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;color:var(--text-muted)">✕</button>
-        </div>
-      </div>
-      <div id="dag-taken-lijst"></div>
-    </div>
-    <p style="color:var(--text-muted);font-size:12px;text-align:center;padding-bottom:16px">Taken worden per dag opgeslagen op je telefoon</p>
-    <p class="greeting">Made by JW Design - MijnAnker</p>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="screen" id="screen-medicatie">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Medicatie</h2></div>
+  <div class="plan-tabs">
+    <button class="plan-tab active" id="med-tab-vandaag" onclick="switchMedTab('vandaag')">Vandaag</button>
+    <button class="plan-tab" id="med-tab-beheer" onclick="switchMedTab('beheer')">Mijn medicatie</button>
+  </div>
+  <div id="med-vandaag">
+    <div class="plan-block">
+      <div class="plan-head" id="med-datum-label"></div>
+      <div class="progress-bar"><div class="progress-bar-fill" id="med-progress-fill" style="width:0%"></div></div>
+      <div id="med-lijst"></div>
+    </div>
+  </div>
+  <div id="med-beheer" style="display:none">
+    <div class="plan-block">
+      <div class="plan-head">Nieuwe medicatie toevoegen</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <input class="text-input" id="med-naam-input" placeholder="Naam (bijv. Sertraline)"/>
+        <div style="display:flex;gap:8px">
+          <input class="text-input" id="med-dosering-input" placeholder="Dosering (bijv. 50mg)"/>
+          <input class="text-input" id="med-moment-input" placeholder="Moment (bijv. Ochtend)"/>
+        </div>
+        <button class="save-btn" style="margin-top:4px" onclick="addMedicatie()">Toevoegen</button>
+      </div>
+    </div>
+    <div id="med-beheer-lijst"></div>
+  </div>
+</div>
+
+<div class="screen" id="screen-goedmoment">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Goed Moment</h2></div>
+  <p class="sub" style="margin-bottom:20px">Lees wat je jezelf in goede momenten hebt willen vertellen.</p>
+  <div id="goedmoment-lijst"></div>
+  <div class="plan-block" style="margin-top:14px">
+    <div class="plan-head">Nieuwe boodschap aan jezelf</div>
+    <textarea id="goedmoment-tekst" placeholder="Schrijf hier je boodschap aan jezelf..."></textarea>
+    <button class="save-btn" onclick="saveGoedMoment()">Opslaan</button>
+  </div>
+</div>
+
+</div>
 
 <script>
-function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-const defaultPlan={signalen:["Slaapproblemen","Terugtrekken uit sociale contacten","Piekeren voor het slapen"],triggers:["Conflicten","Overprikkeling","Alleen zijn in de avond"],helpend:["Wandelen","Muziek luisteren","Tekenen","Bellen met een vriend"],contacten:[{naam:"Behandelaar",tel:"06-12345678"},{naam:"Vertrouwenspersoon",tel:"06-87654321"},{naam:"Crisislijn 113",tel:"113"}]};
-const oefeningen=[{titel:"4-7-8 Ademhaling",duur:"3 min",icon:"🌬️",stappen:["Ga comfortabel zitten en sluit je ogen","Adem in via je neus — tel langzaam tot 4","Houd je adem vast — tel tot 7","Adem langzaam uit via je mond — tel tot 8","Herhaal dit nog 3 keer. Goed gedaan 💙"]},{titel:"5-4-3-2-1 Grounding",duur:"5 min",icon:"🌿",stappen:["Kijk om je heen. Noem 5 dingen die je kunt zien","Noem 4 dingen die je fysiek kunt voelen","Luister. Noem 3 dingen die je kunt horen","Noem 2 dingen die je kunt ruiken","Noem 1 ding dat je kunt proeven. Je bent hier, je bent veilig 💙"]},{titel:"Koude water techniek",duur:"1 min",icon:"💧",stappen:["Ga naar de kraan of pak een ijsblokje","Houd je polsen onder koud stromend water of houd het ijsblokje vast","Focus volledig op het koude gevoel in je handen","Adem rustig door. Je lichaam kalmeert vanzelf 💙"]},{titel:"Veilige plek visualisatie",duur:"5 min",icon:"🏡",stappen:["Sluit je ogen en adem een paar keer rustig in en uit","Stel je een plek voor waar je je volkomen veilig voelt","Kijk goed rond. Wat zie je? Wat hoor je? Wat ruik je?","Voel hoe je lichaam ontspant terwijl je hier bent","Blijf hier zo lang als je wilt. Je kunt hier altijd naartoe 💙"]}];
-const vragen=[{tekst:"Hoe gespannen voel je je op dit moment?",opties:[{label:"Licht gespannen",score:1},{label:"Behoorlijk gespannen",score:2},{label:"Heel gespannen",score:3},{label:"Ondraaglijk gespannen",score:4}]},{tekst:"Heb je controle over je gedachten?",opties:[{label:"Ja, redelijk goed",score:1},{label:"Een beetje moeilijk",score:2},{label:"Nauwelijks",score:3},{label:"Nee, helemaal niet",score:4}]},{tekst:"Heb je gedachten aan jezelf iets aandoen?",opties:[{label:"Nee",score:1},{label:"Lichte gedachten, geen plannen",score:2},{label:"Sterke gedachten",score:3},{label:"Ik heb een plan of sterke drang",score:4}]}];
-const moodScore={'😊':4,'😐':3,'😟':2,'😰':1};const moodLabel={4:'Goed',3:'Oké',2:'Moeilijk',1:'Zwaar'};const moodColor={4:'#10b981',3:'#f59e0b',2:'#f97316',1:'#ef4444'};
-let currentQ=0,scores=[],activeOef=null,activeStep=0,selectedMood=null,deferredPrompt=null,lastScreen='home',parentScreen='home';let editPlan=null,editingEntryIndex=null,activeRange='week',dagboekTab='invoer';
-let weekOffset=0,selectedDayKey=null,selectedCat=null,taakFormOpen=false;
-function loadPlan(){try{const s=localStorage.getItem('mijnAnker_plan');return s?JSON.parse(s):defaultPlan;}catch{return defaultPlan;}}
-function loadEntries(){try{return JSON.parse(localStorage.getItem('mijnAnker_dagboek')||'[]');}catch{return[];}}
-function saveEntries(e){localStorage.setItem('mijnAnker_dagboek',JSON.stringify(e));}
-function loadGoedMomenten(){try{return JSON.parse(localStorage.getItem('mijnAnker_goedmomenten')||'[]');}catch{return[];}}
-function saveGoedMomentenToStorage(m){localStorage.setItem('mijnAnker_goedmomenten',JSON.stringify(m));}
-function loadKladblok(){try{return JSON.parse(localStorage.getItem('mijnAnker_kladblok')||'[]');}catch{return[];}}
-function saveKladblokToStorage(n){localStorage.setItem('mijnAnker_kladblok',JSON.stringify(n));}
-function loadAfspraken(){try{return JSON.parse(localStorage.getItem('mijnAnker_agenda')||'[]');}catch{return[];}}
-function saveAfsprakenToStorage(a){localStorage.setItem('mijnAnker_agenda',JSON.stringify(a));}
-function loadMedicatie(){try{return JSON.parse(localStorage.getItem('mijnAnker_medicatie')||'[]');}catch{return[];}}
-function saveMedicatieToStorage(m){localStorage.setItem('mijnAnker_medicatie',JSON.stringify(m));}
+const vragen=[
+  {tekst:"Hoe gespannen voel je je op dit moment?",opties:[{label:"Licht gespannen",score:1},{label:"Behoorlijk gespannen",score:2},{label:"Heel gespannen",score:3},{label:"Ondraaglijk gespannen",score:4}]},
+  {tekst:"Heb je controle over je gedachten?",opties:[{label:"Ja, redelijk goed",score:1},{label:"Een beetje moeilijk",score:2},{label:"Nauwelijks",score:3},{label:"Nee, helemaal niet",score:4}]},
+  {tekst:"Heb je gedachten aan jezelf iets aandoen?",opties:[{label:"Nee",score:1},{label:"Lichte gedachten, geen plannen",score:2},{label:"Sterke gedachten",score:3},{label:"Ik heb een plan of sterke drang",score:4}]}
+];
+const oefeningen=[
+  {titel:"4-7-8 Ademhaling",duur:"3 min",icon:'<path d="M12 2c-2 4-2 6 0 8s2 4 0 8M8 6c-1 3-1 5 0 7M16 6c1 3 1 5 0 7"/>',stappen:["Ga comfortabel zitten en sluit je ogen","Adem in via je neus — tel langzaam tot 4","Houd je adem vast — tel tot 7","Adem langzaam uit via je mond — tel tot 8","Herhaal dit nog 3 keer. Goed gedaan."]},
+  {titel:"5-4-3-2-1 Grounding",duur:"5 min",icon:'<path d="M12 22s-7-4.5-7-10a7 7 0 0114 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="11" r="2.5"/>',stappen:["Kijk om je heen. Noem 5 dingen die je kunt zien","Noem 4 dingen die je fysiek kunt voelen","Luister. Noem 3 dingen die je kunt horen","Noem 2 dingen die je kunt ruiken","Noem 1 ding dat je kunt proeven. Je bent hier, je bent veilig."]},
+  {titel:"Koude water techniek",duur:"1 min",icon:'<path d="M12 2v6M9 5l3-3 3 3"/><path d="M5 14c0 4 3 7 7 7s7-3 7-7c0-3-3-6-7-12-4 6-7 9-7 12z"/>',stappen:["Ga naar de kraan of pak een ijsblokje","Houd je polsen onder koud stromend water","Focus volledig op het koude gevoel in je handen","Adem rustig door. Je lichaam kalmeert vanzelf."]},
+  {titel:"Veilige plek visualisatie",duur:"5 min",icon:'<path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h12a1 1 0 001-1v-9"/><path d="M9 20v-6h6v6"/>',stappen:["Sluit je ogen en adem een paar keer rustig in en uit","Stel je een plek voor waar je je volkomen veilig voelt","Kijk goed rond. Wat zie je? Wat hoor je? Wat ruik je?","Voel hoe je lichaam ontspant terwijl je hier bent","Blijf hier zo lang als je wilt. Je kunt hier altijd naartoe."]}
+];
+const STORAGE_PREFIX='mijnAnker_';
+function saveData(key,value){
+  try{localStorage.setItem(STORAGE_PREFIX+key,JSON.stringify(value));}catch(e){console.warn('Opslaan mislukt:',key,e);}
+}
+function loadData(key,fallback){
+  try{
+    const raw=localStorage.getItem(STORAGE_PREFIX+key);
+    return raw!==null?JSON.parse(raw):fallback;
+  }catch(e){console.warn('Laden mislukt:',key,e);return fallback;}
+}
+
+let planNextId=100;
+function withIds(arr){return arr.map(function(tekst){return {id:planNextId++,tekst:tekst};});}
+const defaultPlan={
+  signalen:withIds(["Slaapproblemen","Terugtrekken uit sociale contacten","Piekeren voor het slapen"]),
+  triggers:withIds(["Conflicten","Overprikkeling","Alleen zijn in de avond"]),
+  helpend:withIds(["Wandelen","Muziek luisteren","Tekenen","Bellen met een vriend"]),
+  contacten:[{id:1,naam:"Behandelaar",tel:"06-12345678"},{id:2,naam:"Vertrouwenspersoon",tel:"06-87654321"},{id:3,naam:"Crisislijn 113",tel:"113"}]
+};
+let plan=loadData('plan',defaultPlan);
+function recalcNextIds(){
+  let maxPlanId=99;
+  ['signalen','triggers','helpend'].forEach(function(key){
+    (plan[key]||[]).forEach(function(item){if(item.id>maxPlanId)maxPlanId=item.id;});
+  });
+  planNextId=maxPlanId+1;
+  let maxContactId=0;
+  (plan.contacten||[]).forEach(function(c){if(c.id>maxContactId)maxContactId=c.id;});
+  contactNextId=maxContactId+1;
+}
+let contactNextId=4;
+recalcNextIds();
+const defaultMedicatie=[{id:1,naam:"Sertraline",dosering:"50mg",moment:"Ochtend"},{id:2,naam:"Mirtazapine",dosering:"15mg",moment:"Avond"}];
+let medicatie=loadData('medicatie',defaultMedicatie);
+let medNextId=(function(){let max=0;medicatie.forEach(function(m){if(m.id>max)max=m.id;});return max+1;})();
 function todayKey(){return new Date().toISOString().slice(0,10);}
-function loadCheckState(){try{return JSON.parse(localStorage.getItem('mijnAnker_med_check_'+todayKey())||'{}');}catch{return{};}}
-function saveCheckState(s){localStorage.setItem('mijnAnker_med_check_'+todayKey(),JSON.stringify(s));}
-function loadTaken(dayKey){try{return JSON.parse(localStorage.getItem('mijnAnker_taken_'+dayKey)||'[]');}catch{return[];}}
-function saveTaken(dayKey,taken){localStorage.setItem('mijnAnker_taken_'+dayKey,JSON.stringify(taken));}
-function showScreen(name){
-  if(name==='gereedschappen'){
-    parentScreen='home';
-    lastScreen='gereedschappen';
-  } else if(name!=='home' && lastScreen==='home'){
-    parentScreen='home';
-    lastScreen=name;
-  } else if(name!=='home' && lastScreen==='gereedschappen'){
-    parentScreen='gereedschappen';
-    lastScreen=name;
+let medChecked=loadData('medChecked_'+todayKey(),{});
+let medTab='vandaag';
+
+function selectOS(os){
+  document.getElementById('os-iphone').classList.toggle('active',os==='iphone');
+  document.getElementById('os-android').classList.toggle('active',os==='android');
+  document.getElementById('steps-iphone').style.display=os==='iphone'?'flex':'none';
+  document.getElementById('steps-android').style.display=os==='android'?'flex':'none';
+}
+function enterApp(){
+  saveData('seenInstall',true);
+  document.getElementById('install-screen').classList.remove('active');
+  document.getElementById('naam-modal').classList.add('active');
+}
+function saveNaamAndContinue(){
+  const naam=document.getElementById('naam-input-modal').value.trim();
+  if(!naam){alert('Vul alsjeblieft je naam in');return;}
+  saveData('username',naam);
+  document.getElementById('naam-modal').classList.remove('active');
+  document.getElementById('home-greeting').textContent='Welkom terug, '+naam;
+}
+
+let screenHistory=['home'];
+function goTo(screen, fromBack){
+  if(!fromBack){
+    const current=document.querySelector('.screen.active');
+    const currentId=current?current.id.replace('screen-',''):null;
+    if(currentId && currentId!==screen){
+      screenHistory.push(screen);
+    }
   }
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
-  document.getElementById('header').style.display='flex';
-  document.getElementById('header-divider').style.display='block';
-  const titles={checkin:'Check-in',dagboek:'Dagboek',oefeningen:'Oefeningen','oefening-detail':'Oefeningen','mijn-plan':'Mijn Plan',plan:'Mijn Plan',gereedschappen:'Gereedschappen',acuut:'Acuut',contacten:'Contacten',agenda:'Agenda',weekplanning:'Week Planner',medicatie:'Medicatie',result:'Resultaat','goedmoment':'Goed Moment'};
-  document.getElementById('header-title').textContent=titles[name]||'Pagina';
-  if(name==='checkin')initCheckin();if(name==='plan')renderPlan();if(name==='oefeningen')renderOefeningen();if(name==='acuut')renderAcuut();if(name==='contacten')renderContacten();
-  if(name==='dagboek')renderDagboek();if(name==='goedmoment'){renderGoedMomenten();switchGMTab('lezen');}
-  if(name==='agenda')renderAgenda();if(name==='medicatie'){renderMedVandaag();switchMedTab('vandaag');}if(name==='gereedschappen'){} if(name==='weekplanning')initWeekplanning();
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('screen-'+screen).classList.add('active');
   window.scrollTo(0,0);
+  if(screen==='checkin')initCheckin();
+  if(screen==='oefeningen')renderOefeningen();
+  if(screen==='plan')renderPlan();
+  if(screen==='contacten')renderContacten();
+  if(screen==='acuut')renderAcuut();
+  if(screen==='dagboek')renderDagboek();
+  if(screen==='weekplanning')renderWeek();
+  if(screen==='medicatie')renderMedicatie();
+  if(screen==='goedmoment')renderGoedMomenten();
 }
-function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-home').classList.add('active');document.getElementById('header').style.display='none';document.getElementById('header-divider').style.display='none';currentQ=0;scores=[];lastScreen='home';updateWelcomeText();window.scrollTo(0,0);}
-function updateWelcomeText(){const naam=localStorage.getItem('mijnAnker_username')||'';if(naam&&lastScreen==='home'){document.getElementById('welcome-text').textContent='Welkom terug, '+naam+'!';}else if(lastScreen==='home'){document.getElementById('welcome-text').textContent='Welkom terug!';}updateDateDisplay();}
-function updateDateDisplay(){const days=['Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag'];const months=['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];const now=new Date();const dayName=days[now.getDay()];const date=now.getDate();const monthName=months[now.getMonth()];const dayEl=document.getElementById('date-day');const monthEl=document.getElementById('date-month');if(dayEl)dayEl.textContent=dayName;if(monthEl)monthEl.textContent=date+' '+monthName;}
 function goBack(){
-  const currentScreen = document.querySelector('.screen.active')?.id.replace('screen-', '');
-  if(currentScreen === 'gereedschappen'){
-    goHome();
-  } else if(currentScreen === 'home'){
-    goHome();
-  } else if(currentScreen === 'oefening-detail' && parentScreen === 'oefeningen'){
-    parentScreen='gereedschappen';
-    showScreen('oefeningen');
-  } else if(parentScreen === 'gereedschappen'){
-    showScreen('gereedschappen');
-  } else if(parentScreen === 'oefeningen'){
-    showScreen('oefeningen');
+  screenHistory.pop();
+  const previous=screenHistory.length ? screenHistory[screenHistory.length-1] : 'home';
+  goTo(previous, true);
+}
+
+let ciIndex=0, ciScores=[];
+function initCheckin(){ciIndex=0;ciScores=[];renderQuestion();}
+function renderQuestion(){
+  const q=vragen[ciIndex];
+  document.getElementById('ci-progress').innerHTML=vragen.map(function(_,i){return '<div class="dot '+(i<=ciIndex?'active':'')+'"></div>';}).join('');
+  document.getElementById('ci-question').textContent=q.tekst;
+  document.getElementById('ci-options').innerHTML=q.opties.map(function(o){return '<button class="opt-btn" onclick="answerCheckin('+o.score+')">'+o.label+'</button>';}).join('');
+}
+function answerCheckin(score){
+  ciScores.push(score);
+  if(ciIndex<vragen.length-1){ciIndex++;renderQuestion();}else{showResult();}
+}
+function showResult(){
+  const total=ciScores.reduce(function(a,b){return a+b;},0);
+  let r;
+  if(total<=4) r={fase:"Gespannen",kleur:"#C9971F",tekst:"Je voelt spanning, maar je hebt nog grip. Probeer een oefening of kijk naar je plan.",acuut:false};
+  else if(total<=8) r={fase:"Hoge spanning",kleur:"#C46C4A",tekst:"De spanning loopt op. Gebruik je signaleringsplan en overweeg contact op te nemen.",acuut:false};
+  else r={fase:"Crisissituatie",kleur:"#B0432E",tekst:"Dit is een zware crisissituatie. Neem direct contact op met je behandelaar of bel 113.",acuut:true};
+  document.getElementById('result-icon').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="'+r.kleur+'" stroke-width="1.6" width="46" height="46"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>';
+  const faseEl=document.getElementById('result-fase');
+  faseEl.textContent=r.fase; faseEl.style.color=r.kleur;
+  document.getElementById('result-tekst').textContent=r.tekst;
+  document.getElementById('result-acties').innerHTML = r.acuut
+    ? '<button class="actie-btn warm" onclick="goTo(\'acuut\')">Je bent niet alleen</button>'
+    : '<button class="actie-btn primary" onclick="goTo(\'oefeningen\')">Oefening doen</button><button class="actie-btn" style="background:var(--moss);color:var(--green-deep)" onclick="goTo(\'plan\')">Mijn plan bekijken</button>';
+  goTo('result');
+}
+
+let activeOef=null, activeStep=0;
+function renderOefeningen(){
+  document.getElementById('oef-list').innerHTML = oefeningen.map(function(o,i){
+    return '<button class="oef-card" onclick="startOefening('+i+')"><svg class="oef-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">'+o.icon+'</svg><div><div class="oef-titel">'+o.titel+'</div><div class="oef-duur">'+o.duur+'</div></div><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg></button>';
+  }).join('');
+}
+function startOefening(i){
+  activeOef=oefeningen[i]; activeStep=0;
+  document.getElementById('oef-detail-title').textContent=activeOef.titel;
+  renderStep();
+  goTo('oefening-detail');
+}
+function renderStep(){
+  document.getElementById('step-num').textContent='Stap '+(activeStep+1)+' van '+activeOef.stappen.length;
+  document.getElementById('step-tekst').textContent=activeOef.stappen[activeStep];
+  let html='';
+  if(activeStep>0) html+='<button class="nav-btn" onclick="prevStep()">Terug</button>';
+  if(activeStep<activeOef.stappen.length-1) html+='<button class="nav-btn primary" onclick="nextStep()">Volgende</button>';
+  else html+='<button class="nav-btn primary" onclick="goTo(\'oefeningen\')">Klaar</button>';
+  document.getElementById('step-btns').innerHTML=html;
+}
+function nextStep(){activeStep++;renderStep();}
+function prevStep(){activeStep--;renderStep();}
+
+function renderPlanList(key, containerId){
+  const items=plan[key];
+  if(items.length===0){
+    document.getElementById(containerId).innerHTML='<div class="empty-state">Nog niets toegevoegd</div>';
+    return;
+  }
+  document.getElementById(containerId).innerHTML=items.map(function(item){
+    return '<div class="plan-item-row"><div class="plan-item">· '+item.tekst+'</div><button class="item-delete-btn" onclick="deletePlanItem(\''+key+'\','+item.id+')">×</button></div>';
+  }).join('');
+}
+function renderPlan(){
+  saveData('plan',plan);
+  renderPlanList('signalen','plan-signalen');
+  renderPlanList('triggers','plan-triggers');
+  renderPlanList('helpend','plan-helpend');
+  if(plan.contacten.length===0){
+    document.getElementById('plan-contacten').innerHTML='<div class="empty-state">Nog geen contacten toegevoegd</div>';
   } else {
-    goHome();
+    document.getElementById('plan-contacten').innerHTML=plan.contacten.map(function(c){
+      return '<div class="contact-row"><span class="contact-name">'+c.naam+'</span><div style="display:flex;align-items:center;gap:8px"><a class="tel-btn" href="tel:'+c.tel+'">'+c.tel+'</a><button class="item-delete-btn" onclick="deletePlanContact('+c.id+')">×</button></div></div>';
+    }).join('');
   }
 }
-function initCheckin(){currentQ=0;scores=[];renderQuestion();}
-function renderQuestion(){const q=vragen[currentQ];document.getElementById('progress').innerHTML=vragen.map((_,i)=>`<div class="dot ${i<=currentQ?'active':''}"></div>`).join('');document.getElementById('q-title').textContent=q.tekst;document.getElementById('q-options').innerHTML=q.opties.map(o=>`<button class="opt-btn" onclick="handleAnswer(${o.score})">${o.label}</button>`).join('');}
-function handleAnswer(score){scores.push(score);if(currentQ<vragen.length-1){currentQ++;renderQuestion();}else showResult();}
-function showResult(){
-  const total=scores.reduce((a,b)=>a+b,0);let a;if(total<=4)a={fase:"Gespannen",kleur:"#f59e0b",icon:"🟡",tekst:"Je voelt spanning, maar je hebt nog grip. Probeer een oefening of kijk naar je plan.",acuut:false};
-  else if(total<=8)a={fase:"Hoge spanning",kleur:"#f97316",icon:"🟠",tekst:"De spanning loopt op. Gebruik je signaleringsplan en overweeg contact op te nemen.",acuut:false};
-  else a={fase:"Crisissituatie",kleur:"#ef4444",icon:"🔴",tekst:"Dit is een zware crisissituatie. Neem direct contact op met je behandelaar of bel 113.",acuut:true};
-  document.getElementById('result-card').style.borderColor=a.kleur;document.getElementById('result-icon').textContent=a.icon;document.getElementById('result-fase').style.color=a.kleur;document.getElementById('result-fase').textContent=a.fase;document.getElementById('result-tekst').textContent=a.tekst;
-  document.getElementById('result-acties').innerHTML=a.acuut?`<button class="actie-btn" style="background:#ef4444" onclick="showScreen('acuut')">🆘 Je bent niet alleen</button>`:`<button class="actie-btn" style="background:#6366f1" onclick="showScreen('oefeningen')">🧘 Oefening doen</button><button class="actie-btn" style="background:#0ea5e9" onclick="showScreen('plan')">📋 Mijn plan bekijken</button>`;
-  showScreen('result');
+function addPlanItem(key){
+  const input=document.getElementById('plan-'+key+'-input');
+  const tekst=input.value.trim();
+  if(!tekst){alert('Vul een tekst in');return;}
+  plan[key].push({id:planNextId++,tekst:tekst});
+  input.value='';
+  renderPlan();
 }
-function switchPlanTab(tab){document.getElementById('tab-bekijk').classList.toggle('active',tab==='bekijk');document.getElementById('tab-bewerk').classList.toggle('active',tab==='bewerk');document.getElementById('plan-bekijk').style.display=tab==='bekijk'?'block':'none';document.getElementById('plan-bewerk').style.display=tab==='bewerk'?'flex':'none';if(tab==='bewerk'){editPlan=JSON.parse(JSON.stringify(loadPlan()));renderEditPlan();}}
-function renderPlan(){const p=loadPlan();document.getElementById('plan-signalen').innerHTML=p.signalen.map(s=>`<div class="plan-item">• ${escHtml(s)}</div>`).join('');document.getElementById('plan-triggers').innerHTML=p.triggers.map(s=>`<div class="plan-item">• ${escHtml(s)}</div>`).join('');document.getElementById('plan-helpend').innerHTML=p.helpend.map(s=>`<div class="plan-item">• ${escHtml(s)}</div>`).join('');document.getElementById('plan-contacten').innerHTML=p.contacten.map(c=>`<div class="contact-row"><span class="contact-name">${escHtml(c.naam)}</span><a class="tel-btn" href="tel:${c.tel}">📞 ${c.tel}</a></div>`).join('');document.getElementById('tab-bekijk').classList.add('active');document.getElementById('tab-bewerk').classList.remove('active');document.getElementById('plan-bekijk').style.display='block';document.getElementById('plan-bewerk').style.display='none';}
-function syncInputsToEditPlan(){['signalen','triggers','helpend'].forEach(key=>{document.querySelectorAll(`.edit-input[data-key="${key}"]`).forEach((inp,i)=>{if(editPlan[key][i]!==undefined)editPlan[key][i]=inp.value;});});document.querySelectorAll('.contact-naam-input').forEach((inp,i)=>{if(editPlan.contacten[i])editPlan.contacten[i].naam=inp.value;});document.querySelectorAll('.contact-tel-input').forEach((inp,i)=>{if(editPlan.contacten[i])editPlan.contacten[i].tel=inp.value;});}
-function renderEditPlan(){['signalen','triggers','helpend'].forEach(key=>{document.getElementById('edit-'+key).innerHTML=editPlan[key].map((v,i)=>`<div class="edit-row"><input class="edit-input" data-key="${key}" data-i="${i}" value="${escHtml(v)}" placeholder="Vul in..."/><button class="del-btn" onclick="removeItem('${key}',${i})">×</button></div>`).join('');});document.getElementById('edit-contacten').innerHTML=editPlan.contacten.map((c,i)=>`<div class="contact-edit-row"><div class="contact-edit-inputs"><input class="edit-input contact-naam-input" placeholder="Je voornaam (maakt het persoonlijker)" value="${escHtml(c.naam)}" style="flex:2"/><input class="edit-input contact-tel-input" placeholder="Telefoonnummer" value="${escHtml(c.tel)}" style="flex:1" inputmode="tel"/></div><button class="del-btn" onclick="removeContact(${i})" style="align-self:center;width:auto;padding:0 12px;font-size:13px">× Verwijder</button></div>`).join('');}
-function removeItem(key,i){syncInputsToEditPlan();editPlan[key].splice(i,1);renderEditPlan();}function removeContact(i){syncInputsToEditPlan();editPlan.contacten.splice(i,1);renderEditPlan();}
-function addItem(key){syncInputsToEditPlan();editPlan[key].push('');renderEditPlan();setTimeout(()=>{const inp=document.querySelectorAll(`.edit-input[data-key="${key}"]`);if(inp.length)inp[inp.length-1].focus();},50);}
-function addContact(){syncInputsToEditPlan();editPlan.contacten.push({naam:'',tel:''});renderEditPlan();}
-function savePlan(){syncInputsToEditPlan();['signalen','triggers','helpend'].forEach(key=>{editPlan[key]=editPlan[key].filter(v=>v.trim()!=='');});editPlan.contacten=editPlan.contacten.filter(c=>c.naam.trim()!==''||c.tel.trim()!=='');localStorage.setItem('mijnAnker_plan',JSON.stringify(editPlan));renderPlan();showToast('Plan opgeslagen 💙');}
-function renderOefeningen(){document.getElementById('oef-list').innerHTML=oefeningen.map((o,i)=>`<button class="oef-card" onclick="startOefening(${i})"><span class="oef-icon">${o.icon}</span><div><div class="oef-titel">${o.titel}</div><div class="oef-duur">${o.duur}</div></div><span class="arrow">›</span></button>`).join('');}
-function startOefening(i){activeOef=oefeningen[i];activeStep=0;parentScreen='oefeningen';document.getElementById('oef-detail-title').textContent=activeOef.icon+' '+activeOef.titel;renderStep();showScreen('oefening-detail');}
-function renderStep(){document.getElementById('step-num').textContent=`Stap ${activeStep+1} van ${activeOef.stappen.length}`;document.getElementById('step-tekst').textContent=activeOef.stappen[activeStep];let h='';if(activeStep>0)h+=`<button class="nav-btn" onclick="prevStep()">← Terug</button>`;if(activeStep<activeOef.stappen.length-1)h+=`<button class="nav-btn primary" onclick="nextStep()">Volgende →</button>`;else h+=`<button class="nav-btn done" onclick="showScreen('oefeningen')">✓ Klaar</button>`;document.getElementById('step-btns').innerHTML=h;}
-function nextStep(){activeStep++;renderStep();}function prevStep(){activeStep--;renderStep();}
-function renderAcuut(){const p=loadPlan();document.getElementById('acuut-contacten').innerHTML=p.contacten.map((c,i)=>{const is113=c.tel.includes('113');const style=is113?'background:linear-gradient(135deg,rgba(212,132,92,0.2),rgba(212,132,92,0.1));border:none':'background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none';return`<a href="tel:${c.tel}" style="${style};border-radius:16px;padding:16px 14px;display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--text-primary);transition:all 0.2s;box-shadow:0 2px 4px rgba(0,0,0,0.1);pointer-events:auto;cursor:pointer"><div style="display:flex;flex-direction:column;gap:4px;pointer-events:none"><div style="font-weight:bold">${escHtml(c.naam)}</div><div style="font-size:13px;color:var(--text-muted)">${c.tel}</div></div><div style="font-size:18px;pointer-events:none">📞</div></a>`;}).join('');}
-function renderContacten(){const p=loadPlan();const lijst=document.getElementById('contacten-lijst');const empty=document.getElementById('contacten-empty');if(p.contacten.length===0){lijst.innerHTML='';empty.style.display='block';}else{empty.style.display='none';lijst.innerHTML=p.contacten.map(c=>`<a href="tel:${c.tel}" style="background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;padding:16px 14px;display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--text-primary);transition:background 0.2s;pointer-events:auto;cursor:pointer"><div style="display:flex;flex-direction:column;gap:4px;pointer-events:none"><div style="font-weight:bold">${escHtml(c.naam)}</div><div style="font-size:13px;color:var(--text-muted)">${c.tel}</div></div><div style="font-size:18px;pointer-events:none">📞</div></a>`).join('');}}
-function switchDagboekTab(tab){dagboekTab=tab;['invoer','grafiek','lijst'].forEach(t=>{document.getElementById('dag-'+t).style.display='none';document.getElementById('dag-tab-'+t).classList.remove('active');});document.getElementById('dag-'+tab).style.display='flex';document.getElementById('dag-'+tab).style.flexDirection='column';document.getElementById('dag-tab-'+tab).classList.add('active');if(tab==='grafiek')renderGrafiek();if(tab==='lijst')renderEntries();}
-function switchRange(range){activeRange=range;['week','maand','jaar'].forEach(r=>document.getElementById('range-'+r).classList.toggle('active',r===range));renderGrafiek();}
-function selectMood(btn){document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedMood=btn.dataset.mood;}
-function saveDagboek(){if(!selectedMood){showToast('Kies eerst een stemming');return;}const tekst=document.getElementById('dagboek-tekst').value.trim();const entries=loadEntries();if(editingEntryIndex!==null){entries[editingEntryIndex].mood=selectedMood;entries[editingEntryIndex].tekst=tekst;entries[editingEntryIndex].bewerkt=true;editingEntryIndex=null;document.getElementById('dagboek-save-btn').textContent='💾 Opslaan';document.getElementById('dagboek-cancel-btn').style.display='none';}else{entries.unshift({id:Date.now(),datum:new Date().toLocaleDateString('nl-NL',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'}),ts:Date.now(),mood:selectedMood,tekst});}saveEntries(entries);document.getElementById('dagboek-tekst').value='';document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));selectedMood=null;showToast('Opgeslagen 💙');}
-function cancelEdit(){editingEntryIndex=null;document.getElementById('dagboek-tekst').value='';document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));selectedMood=null;document.getElementById('dagboek-save-btn').textContent='💾 Opslaan';document.getElementById('dagboek-cancel-btn').style.display='none';}
-function editEntry(i){const e=loadEntries()[i];editingEntryIndex=i;document.querySelectorAll('.mood-btn').forEach(b=>b.classList.toggle('selected',b.dataset.mood===e.mood));selectedMood=e.mood;document.getElementById('dagboek-tekst').value=e.tekst||'';document.getElementById('dagboek-save-btn').textContent='💾 Wijziging opslaan';document.getElementById('dagboek-cancel-btn').style.display='block';switchDagboekTab('invoer');window.scrollTo(0,0);}
-function deleteEntry(i){if(!confirm('Dit item verwijderen?'))return;const e=loadEntries();e.splice(i,1);saveEntries(e);renderEntries();showToast('Verwijderd');}
-function renderDagboek(){switchDagboekTab('invoer');}
-function renderEntries(){const entries=loadEntries();const el=document.getElementById('entries');if(!entries.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:20px 0">Nog geen aantekeningen</p>';return;}el.innerHTML=entries.slice(0,30).map((e,i)=>`<div class="entry"><div class="entry-header"><span class="entry-date">${e.datum}${e.bewerkt?' · bewerkt':''}</span><span class="entry-mood">${e.mood}</span></div>${e.tekst?`<div class="entry-text">${escHtml(e.tekst)}</div>`:''}<div class="entry-actions"><button class="entry-action-btn" onclick="editEntry(${i})">✏️ Bewerken</button><button class="entry-action-btn delete" onclick="deleteEntry(${i})">🗑 Verwijderen</button></div></div>`).join('');}
-function renderGrafiek(){const entries=loadEntries();const now=Date.now();const MS={week:7*86400000,maand:30*86400000,jaar:365*86400000};const filtered=entries.filter(e=>(e.ts||0)>=now-MS[activeRange]&&moodScore[e.mood]);const canvas=document.getElementById('moodCanvas');const leeg=document.getElementById('grafiek-leeg');const sam=document.getElementById('grafiek-samenvatting');if(!filtered.length){canvas.style.display='none';leeg.style.display='block';sam.style.display='none';document.getElementById('grafiek-legend').innerHTML='';return;}canvas.style.display='block';leeg.style.display='none';sam.style.display='block';const grouped={};filtered.forEach(e=>{const d=new Date(e.ts||now);let key;if(activeRange==='week')key=d.toLocaleDateString('nl-NL',{weekday:'short',day:'numeric'});else if(activeRange==='maand')key=d.toLocaleDateString('nl-NL',{day:'numeric',month:'short'});else key=d.toLocaleDateString('nl-NL',{month:'short'});if(!grouped[key])grouped[key]=[];grouped[key].push(moodScore[e.mood]);});const labels=Object.keys(grouped);const values=labels.map(k=>{const a=grouped[k];return Math.round(a.reduce((x,y)=>x+y,0)/a.length*10)/10;});drawBarChart(canvas,labels,values);const avg=values.reduce((a,b)=>a+b,0)/values.length;const best=Math.max(...values);const worst=Math.min(...values);document.getElementById('grafiek-stats').innerHTML=`<div class="plan-item">📊 Gemiddelde: <strong style="color:${moodColor[Math.round(avg)]}">${moodLabel[Math.round(avg)]||'Oké'}</strong></div><div class="plan-item">🌟 Beste moment: <strong style="color:${moodColor[best]}">${moodLabel[best]}</strong></div><div class="plan-item">💙 Zwaarste moment: <strong style="color:${moodColor[worst]}">${moodLabel[worst]}</strong></div><div class="plan-item">📝 Registraties: <strong>${filtered.length}</strong></div>`;document.getElementById('grafiek-legend').innerHTML=Object.entries(moodLabel).reverse().map(([s,l])=>`<div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-muted)"><div style="width:12px;height:12px;border-radius:3px;background:${moodColor[s]}"></div>${l}</div>`).join('');}
-function drawBarChart(canvas,labels,values){const dpr=window.devicePixelRatio||1;const W=canvas.parentElement.clientWidth-20;const H=200;canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,W,H);const padL=36,padR=10,padT=16,padB=40,chartW=W-padL-padR,chartH=H-padT-padB;ctx.strokeStyle='rgba(255,255,255,0.07)';ctx.lineWidth=1;for(let v=1;v<=4;v++){const y=padT+chartH-((v-1)/3)*chartH;ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(W-padR,y);ctx.stroke();ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='10px Georgia';ctx.textAlign='right';ctx.fillText(moodLabel[v]||v,padL-4,y+4);}const n=labels.length;const barW=Math.min(36,(chartW/n)*0.6);const gap=chartW/n;values.forEach((val,i)=>{const x=padL+gap*i+gap/2-barW/2;const barH=((val-1)/3)*chartH;const y=padT+chartH-barH;const color=moodColor[Math.round(val)]||'#6366f1';ctx.fillStyle=color;ctx.globalAlpha=0.85;roundRect(ctx,x,y,barW,barH,5);ctx.fill();ctx.globalAlpha=1;ctx.fillStyle='#fff';ctx.font='bold 11px Georgia';ctx.textAlign='center';if(barH>16)ctx.fillText(val.toFixed(1),x+barW/2,y+14);ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='10px Georgia';ctx.fillText(labels[i],x+barW/2,H-padB+14);});}
-function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h);ctx.lineTo(x,y+h);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();}
-function switchGMTab(tab){document.getElementById('gm-tab-lezen').classList.toggle('active',tab==='lezen');document.getElementById('gm-tab-schrijven').classList.toggle('active',tab==='schrijven');document.getElementById('gm-lezen').style.display=tab==='lezen'?'flex':'none';document.getElementById('gm-schrijven').style.display=tab==='schrijven'?'flex':'none';if(tab==='lezen')renderGoedMomenten();}
-function saveGoedMoment(){const tekst=document.getElementById('gm-tekst').value.trim();if(!tekst){showToast('Schrijf een boodschap');return;}const momenten=loadGoedMomenten();momenten.unshift({id:Date.now(),tekst,datum:new Date().toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'})});saveGoedMomentenToStorage(momenten);document.getElementById('gm-tekst').value='';renderGoedMomenten();switchGMTab('lezen');showToast('Opgeslagen 💛');}
-function deleteGoedMoment(id){if(!confirm('Boodschap verwijderen?'))return;saveGoedMomentenToStorage(loadGoedMomenten().filter(m=>m.id!==id));renderGoedMomenten();showToast('Verwijderd');}
-function renderGoedMomenten(){const m=loadGoedMomenten();const el=document.getElementById('gm-list');if(!m.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:20px 0">Nog geen boodschappen. Schrijf er eentje in een goed moment 💚</p>';return;}el.innerHTML=m.map(x=>`<div class="notitie-card" style="border-left:4px solid #f59e0b"><div class="notitie-header"><span class="notitie-datum">${x.datum}</span></div><div class="notitie-inhoud">${escHtml(x.tekst)}</div><div class="notitie-actions"><button class="entry-action-btn delete" onclick="deleteGoedMoment(${x.id})">🗑 Verwijderen</button></div></div>`).join('');}
-function saveKladblok(){const titel=document.getElementById('kladblok-titel').value.trim();const tekst=document.getElementById('kladblok-tekst').value.trim();if(!titel&&!tekst){showToast('Vul een titel of tekst in');return;}const n=loadKladblok();n.unshift({id:Date.now(),titel:titel||'Notitie',tekst,datum:new Date().toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'})});saveKladblokToStorage(n);document.getElementById('kladblok-titel').value='';document.getElementById('kladblok-tekst').value='';renderKladblok();showToast('Kladblok opgeslagen 💙');}
-function deleteKladblok(id){if(!confirm('Kladblok verwijderen?'))return;saveKladblokToStorage(loadKladblok().filter(n=>n.id!==id));renderKladblok();showToast('Verwijderd');}
-function renderKladblok(){const n=loadKladblok();const el=document.getElementById('kladblok-lijst');if(!n.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:16px 0">Nog geen kladblok aantekeningen</p>';return;}el.innerHTML=n.map(x=>`<div class="notitie-card"><div class="notitie-header"><span class="notitie-titel-txt">${escHtml(x.titel)}</span><span class="notitie-datum">${x.datum}</span></div>${x.tekst?`<div class="notitie-inhoud">${escHtml(x.tekst)}</div>`:''}<div class="notitie-actions"><button class="entry-action-btn delete" onclick="deleteKladblok(${x.id})">🗑 Verwijderen</button></div></div>`).join('');}
-function saveAfspraak(){const titel=document.getElementById('agenda-titel').value.trim();const locatie=document.getElementById('agenda-locatie').value.trim();const datum=document.getElementById('agenda-datum').value;const tijd=document.getElementById('agenda-tijd').value;if(!titel||!datum||!tijd){showToast('Vul alle velden in');return;}const parts=datum.split('-');const datumStr=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2])).toLocaleDateString('nl-NL',{weekday:'short',day:'numeric',month:'long',year:'numeric'});const a=loadAfspraken();a.push({id:Date.now(),titel,locatie,datum,tijd,ts:Date.now(),datumStr});a.sort((x,y)=>x.datum.localeCompare(y.datum));saveAfsprakenToStorage(a);document.getElementById('agenda-titel').value='';document.getElementById('agenda-locatie').value='';document.getElementById('agenda-datum').value='';document.getElementById('agenda-tijd').value='';renderAgenda();showToast('Afspraak opgeslagen 📅');}
-function deleteAfspraak(id){if(!confirm('Afspraak verwijderen?'))return;const numId=parseInt(id);saveAfsprakenToStorage(loadAfspraken().filter(a=>a.id!==numId));renderAgenda();if(selectedDayKey)renderWeekDay(selectedDayKey);showToast('Verwijderd');}
-function renderAgenda(){const a=loadAfspraken();const el=document.getElementById('agenda-lijst');const today=new Date().toISOString().slice(0,10);if(!a.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:16px 0">Nog geen afspraken</p>';return;}el.innerHTML=a.map(x=>`<div class="afspraak-card ${x.datum<today?'verlopen':''}"><div class="afspraak-titel">${escHtml(x.titel)}</div>${x.locatie?`<div style="color:var(--text-muted);font-size:12px;margin-top:2px">📍 ${escHtml(x.locatie)}</div>`:''}<div class="afspraak-tijd">📅 ${x.datumStr} · ${x.tijd}</div>${x.datum<today?'<div style="color:var(--text-muted);font-size:11px;margin-top:3px">Verlopen</div>':''}<div class="afspraak-actions"><button class="entry-action-btn delete" onclick="deleteAfspraak('${x.id}')">🗑 Verwijderen</button></div></div>`).join('');};
-function switchMedTab(tab){document.getElementById('med-tab-vandaag').classList.toggle('active',tab==='vandaag');document.getElementById('med-tab-lijst').classList.toggle('active',tab==='lijst');document.getElementById('med-vandaag').style.display=tab==='vandaag'?'flex':'none';document.getElementById('med-lijst').style.display=tab==='lijst'?'flex':'none';if(tab==='vandaag')renderMedVandaag();if(tab==='lijst')renderMedBeheer();}
-function saveMedicatie(){const naam=document.getElementById('med-naam').value.trim();const dosering=document.getElementById('med-dosering').value.trim();const moment=document.getElementById('med-moment').value.trim();const info=document.getElementById('med-info').value.trim();if(!naam){showToast('Vul een naam in');return;}const l=loadMedicatie();l.push({id:Date.now(),naam,dosering,moment,info});saveMedicatieToStorage(l);document.getElementById('med-naam').value='';document.getElementById('med-dosering').value='';document.getElementById('med-moment').value='';document.getElementById('med-info').value='';renderMedBeheer();showToast('Medicatie toegevoegd 💊');}
-function deleteMedicatie(id){if(!confirm('Medicatie verwijderen?'))return;saveMedicatieToStorage(loadMedicatie().filter(m=>m.id!==id));renderMedBeheer();renderMedVandaag();showToast('Verwijderd');}
-function toggleMedCheck(id){const s=loadCheckState();s[id]=!s[id];saveCheckState(s);renderMedVandaag();}
-function renderMedVandaag(){const lijst=loadMedicatie();const state=loadCheckState();const el=document.getElementById('med-check-lijst');document.getElementById('med-datum-label').textContent=new Date().toLocaleDateString('nl-NL',{weekday:'long',day:'numeric',month:'long'});if(!lijst.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:12px 0">Voeg medicatie toe via het tabblad "Mijn medicatie"</p>';return;}const genomen=lijst.filter(m=>state[m.id]).length;el.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"><span style="color:var(--text-muted);font-size:13px">${genomen} van ${lijst.length} genomen</span><span style="font-size:13px">${genomen===lijst.length?'🎉 Alles genomen!':''}</span></div><div style="background:rgba(255,255,255,.06);border-radius:8px;height:6px;overflow:hidden;margin-bottom:12px"><div style="background:var(--green);height:100%;width:${lijst.length?(genomen/lijst.length*100):0}%;border-radius:8px;transition:width .4s"></div></div>`+lijst.map(m=>{const g=!!state[m.id];return`<div onclick="toggleMedCheck(${m.id})" style="display:flex;align-items:center;gap:12px;padding:12px;background:${g?'rgba(16,185,129,.12)':'rgba(255,255,255,.04)'};border:none;box-shadow:0 4px 8px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1);border-radius:14px;cursor:pointer;margin-bottom:6px"><div style="width:26px;height:26px;border-radius:8px;border:1px solid ${g?'#10b981':'rgba(255,255,255,.2)'};background:${g?'#10b981':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">${g?'✓':''}</div><div style="flex:1"><div style="color:${g?'#94a3b8':'var(--text-primary)'};font-size:15px;${g?'text-decoration:line-through':''}">${escHtml(m.naam)}${m.dosering?` <span style="color:var(--purple);font-size:13px">${escHtml(m.dosering)}</span>`:''}</div>${m.moment?`<div style="color:var(--text-muted);font-size:12px;margin-top:2px">🕐 ${escHtml(m.moment)}</div>`:''}</div></div>`;}).join('');}
-function renderMedBeheer(){const l=loadMedicatie();const el=document.getElementById('med-beheer-lijst');if(!l.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:12px 0">Nog geen medicatie toegevoegd</p>';return;}el.innerHTML=l.map(m=>`<div class="notitie-card"><div class="notitie-header"><span class="notitie-titel-txt">💊 ${escHtml(m.naam)}</span>${m.dosering?`<span style="color:var(--purple);font-size:13px">${escHtml(m.dosering)}</span>`:''}</div>${m.moment?`<div style="color:var(--text-muted);font-size:13px;margin-bottom:3px">🕐 ${escHtml(m.moment)}</div>`:''}${m.info?`<div class="notitie-inhoud">ℹ️ ${escHtml(m.info)}</div>`:''}<div class="notitie-actions"><button class="entry-action-btn delete" onclick="deleteMedicatie(${m.id})">🗑 Verwijderen</button></div></div>`).join('');}
-const DAGEN=['zo','ma','di','wo','do','vr','za'];const DAGEN_LANG=['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];const MAANDEN=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
-function getWeekStart(offset){const today=new Date();const day=today.getDay();const diff=today.getDate()-day+(day===0?-6:1);const monday=new Date(today.getFullYear(),today.getMonth(),diff);monday.setDate(monday.getDate()+offset*7);return monday;}
-function dateToKey(d){const year=d.getFullYear();const month=String(d.getMonth()+1).padStart(2,'0');const date=String(d.getDate()).padStart(2,'0');return `${year}-${month}-${date}`;}
-function initWeekplanning(){const ws=getWeekStart(weekOffset);const we=new Date(ws);we.setDate(ws.getDate()+6);document.getElementById('week-label').textContent=`${ws.getDate()} ${MAANDEN[ws.getMonth()]} – ${we.getDate()} ${MAANDEN[we.getMonth()]}`;const container=document.getElementById('week-days');const today=dateToKey(new Date());if(!selectedDayKey||!isInWeek(selectedDayKey,ws))selectedDayKey=today;container.innerHTML='';for(let i=0;i<7;i++){const d=new Date(ws);d.setDate(ws.getDate()+i);const key=dateToKey(d);const taken=loadTaken(key);const afspraken=getAfsprakenForDay(key);const hasItems=taken.length>0||afspraken.length>0;const btn=document.createElement('button');btn.className=`week-day-btn${key===selectedDayKey?' active':''}${key===today?' today':''}${hasItems?' has-items':''}`;btn.innerHTML=`<span>${DAGEN[d.getDay()]}</span><span class="day-num">${d.getDate()}</span><div class="day-dot"></div>`;btn.onclick=()=>selectDay(key,btn);container.appendChild(btn);}renderWeekDay(selectedDayKey);}
-function isInWeek(key,ws){const wsKey=dateToKey(ws);const weKey=dateToKey(new Date(ws.getFullYear(),ws.getMonth(),ws.getDate()+6));return key>=wsKey&&key<=weKey;}
-function selectDay(key,btn){selectedDayKey=key;document.querySelectorAll('.week-day-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderWeekDay(key);if(taakFormOpen)toggleTaakForm();}
-function navigateWeek(dir){weekOffset+=dir;initWeekplanning();}
-function getAfsprakenForDay(dayKey){return loadAfspraken().filter(a=>a.datum===dayKey);}
-function renderWeekDay(dayKey){const d=new Date(dayKey);const afspraken=getAfsprakenForDay(dayKey);const afsprEl=document.getElementById('dag-afspraken-lijst');if(!afspraken.length){afsprEl.innerHTML=`<p class="week-leeg">Geen afspraken</p>`;}else{afsprEl.innerHTML=afspraken.map(a=>`<div class="afspraak-item"><span class="afspraak-tijd-badge">${a.tijd}</span><div class="afspraak-info"><div class="afspraak-naam">${escHtml(a.titel)}</div></div><button class="afspraak-del" onclick="deleteAfspraakFromWeek('${a.id}')">×</button></div>`).join('');}const taken=loadTaken(dayKey);const takenEl=document.getElementById('dag-taken-lijst');if(!taken.length){takenEl.innerHTML=`<p class="week-leeg">Geen taken — voeg er een toe!</p>`;}else{takenEl.innerHTML=taken.map((t,i)=>`<div class="taak-item${t.gedaan?' gedaan':''}" onclick="toggleTaak('${dayKey}',${i})"><div class="taak-check">${t.gedaan?'✓':''}</div><div class="taak-tekst">${escHtml(t.tekst)}</div><span class="taak-cat" style="background:${t.color}22;color:${t.color}">${t.cat}</span><button class="taak-del" onclick="event.stopPropagation();deleteTaak('${dayKey}',${i})">×</button>
-    <p class="greeting">Made by JW Design - MijnAnker</p>
-  </div>`).join('');}}
-function toggleTaakForm(){taakFormOpen=!taakFormOpen;document.getElementById('taak-form').style.display=taakFormOpen?'flex':'none';if(taakFormOpen)setTimeout(()=>document.getElementById('taak-input').focus(),50);}
-function selectCat(btn){document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');btn.style.background=btn.dataset.color+'33';btn.style.borderColor=btn.dataset.color;btn.style.color=btn.dataset.color;selectedCat={cat:btn.dataset.cat,color:btn.dataset.color};}
-function saveTaak(){const tekst=document.getElementById('taak-input').value.trim();if(!tekst){showToast('Vul een taak in');return;}if(!selectedCat){showToast('Kies een categorie');return;}const taken=loadTaken(selectedDayKey);taken.push({tekst,cat:selectedCat.cat,color:selectedCat.color,gedaan:false});saveTaken(selectedDayKey,taken);document.getElementById('taak-input').value='';document.querySelectorAll('.cat-btn').forEach(b=>{b.classList.remove('selected');b.style.background='';b.style.borderColor='';b.style.color='';});selectedCat=null;toggleTaakForm();renderWeekDay(selectedDayKey);initWeekplanning();showToast('Taak toegevoegd ✅');}
-function toggleTaak(dayKey,i){const taken=loadTaken(dayKey);taken[i].gedaan=!taken[i].gedaan;saveTaken(dayKey,taken);renderWeekDay(dayKey);}
-function deleteTaak(dayKey,i){const taken=loadTaken(dayKey);taken.splice(i,1);saveTaken(dayKey,taken);renderWeekDay(dayKey);initWeekplanning();showToast('Taak verwijderd');}
-function deleteAfspraakFromWeek(id){if(!confirm('Afspraak verwijderen?'))return;const numId=parseInt(id);saveAfsprakenToStorage(loadAfspraken().filter(a=>a.id!==numId));renderWeekDay(selectedDayKey);initWeekplanning();showToast('Verwijderd');}
-function selectOS(os){document.getElementById('os-iphone').classList.toggle('active',os==='iphone');document.getElementById('os-android').classList.toggle('active',os==='android');document.getElementById('steps-iphone').style.display=os==='iphone'?'flex':'none';document.getElementById('steps-android').style.display=os==='android'?'flex':'none';}
-function enterApp(){document.getElementById('install-screen').classList.remove('active');document.getElementById('naam-modal').classList.add('active');localStorage.setItem('mijnAnker_seen_install','1');}
-function checkInstallScreen(){const seen=localStorage.getItem('mijnAnker_seen_install');const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;if(isStandalone)return;if(!seen){document.getElementById('install-screen').classList.add('active');if(/android/i.test(navigator.userAgent))selectOS('android');}}
+function deletePlanItem(key,id){
+  plan[key]=plan[key].filter(function(item){return item.id!==id;});
+  renderPlan();
+}
+function addPlanContact(){
+  const naam=document.getElementById('plan-contact-naam-input').value.trim();
+  const tel=document.getElementById('plan-contact-tel-input').value.trim();
+  if(!naam||!tel){alert('Vul naam en telefoonnummer in');return;}
+  plan.contacten.push({id:contactNextId++,naam:naam,tel:tel});
+  document.getElementById('plan-contact-naam-input').value='';
+  document.getElementById('plan-contact-tel-input').value='';
+  renderPlan();
+}
+function deletePlanContact(id){
+  plan.contacten=plan.contacten.filter(function(c){return c.id!==id;});
+  renderPlan();
+}
+function addContactFromScreen(){
+  const naam=document.getElementById('contact-naam-input').value.trim();
+  const tel=document.getElementById('contact-tel-input').value.trim();
+  if(!naam||!tel){alert('Vul naam en telefoonnummer in');return;}
+  plan.contacten.push({id:contactNextId++,naam:naam,tel:tel});
+  document.getElementById('contact-naam-input').value='';
+  document.getElementById('contact-tel-input').value='';
+  renderContacten();
+}
+function deleteContactFromScreen(id){
+  plan.contacten=plan.contacten.filter(function(c){return c.id!==id;});
+  renderContacten();
+}
+function renderContacten(){
+  saveData('plan',plan);
+  if(plan.contacten.length===0){
+    document.getElementById('contacten-lijst').innerHTML='<div class="empty-state">Nog geen contacten toegevoegd</div>';
+    return;
+  }
+  document.getElementById('contacten-lijst').innerHTML=plan.contacten.map(function(c){
+    return '<div class="acuut-contact"><a href="tel:'+c.tel+'" style="text-decoration:none;flex:1;display:flex;justify-content:space-between;align-items:center"><div><div class="name">'+c.naam+'</div><div class="num">'+c.tel+'</div></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg></a><button class="item-delete-btn" style="margin-left:8px" onclick="deleteContactFromScreen('+c.id+')">×</button></div>';
+  }).join('');
+}
+function renderAcuut(){
+  document.getElementById('acuut-contacten').innerHTML=plan.contacten.map(function(c){
+    const isCrisis=c.tel.indexOf('113')>-1;
+    return '<a href="tel:'+c.tel+'" class="acuut-contact '+(isCrisis?'crisis':'')+'"><div><div class="name">'+c.naam+'</div><div class="num">'+c.tel+'</div></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="'+(isCrisis?'var(--warm)':'var(--green)')+'" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg></a>';
+  }).join('');
+}
 
-let disclaimerShown = false;
-function saveNaamAndContinue(){const naam=document.getElementById('naam-input-modal').value.trim();if(!naam){alert('Vul alsjeblieft je naam in');return;}localStorage.setItem('mijnAnker_username',naam);document.getElementById('naam-modal').classList.remove('active');goHome();updateWelcomeText();}
-function checkNaam(){if(!localStorage.getItem('mijnAnker_username')){return false;}return true;}
-function checkDisclaimer(){if(!localStorage.getItem('mijnAnker_seen_install')){document.getElementById('install-screen').classList.add('active');}else if(!checkNaam()){document.getElementById('naam-modal').classList.add('active');}}
+let selectedMood=null;
+const moodOptions=[{e:'😊',l:'Goed'},{e:'😐',l:'Oké'},{e:'😟',l:'Moeilijk'},{e:'😰',l:'Zwaar'}];
+const defaultDagboekEntries=[
+  {id:1,datum:'16 juni, 21:40',mood:'😐',tekst:'Drukke dag gehad, maar de ademhalingsoefening hielp.'},
+  {id:2,datum:'15 juni, 09:15',mood:'😊',tekst:'Goed geslapen, voel me rustig.'}
+];
+let dagboekEntries=loadData('dagboekEntries',defaultDagboekEntries);
+let dagboekNextId=(function(){let max=0;dagboekEntries.forEach(function(e){if(e.id>max)max=e.id;});return max+1;})();
+let editingEntryId=null;
+function renderDagboek(){
+  document.getElementById('mood-row').innerHTML=moodOptions.map(function(m){
+    return '<button class="mood-btn '+(selectedMood===m.e?'selected':'')+'" onclick="selectMood(\''+m.e+'\')">'+m.e+'<span>'+m.l+'</span></button>';
+  }).join('');
+  document.getElementById('dagboek-save-label').textContent = editingEntryId!==null ? 'Wijziging opslaan' : 'Opslaan';
+  document.getElementById('dagboek-cancel-btn').style.display = editingEntryId!==null ? 'block' : 'none';
+  renderDagboekList();
+}
+function selectMood(e){selectedMood=e;renderDagboek();}
+function saveDagboekEntry(){
+  if(!selectedMood){alert('Kies eerst een stemming');return;}
+  const tekst=document.getElementById('dagboek-tekst').value.trim();
+  if(editingEntryId!==null){
+    const entry=dagboekEntries.find(function(e){return e.id===editingEntryId;});
+    entry.mood=selectedMood;
+    entry.tekst=tekst;
+    editingEntryId=null;
+  } else {
+    const nu=new Date();
+    const datumStr=nu.getDate()+' '+maandenLang[nu.getMonth()]+', '+String(nu.getHours()).padStart(2,'0')+':'+String(nu.getMinutes()).padStart(2,'0');
+    dagboekEntries.unshift({id:dagboekNextId++,datum:datumStr,mood:selectedMood,tekst:tekst});
+  }
+  document.getElementById('dagboek-tekst').value='';
+  selectedMood=null;
+  switchDagTab('lijst');
+}
+function cancelDagboekEdit(){
+  editingEntryId=null;
+  selectedMood=null;
+  document.getElementById('dagboek-tekst').value='';
+  renderDagboek();
+}
+function editDagboekEntry(id){
+  const entry=dagboekEntries.find(function(e){return e.id===id;});
+  if(!entry)return;
+  editingEntryId=id;
+  selectedMood=entry.mood;
+  document.getElementById('dagboek-tekst').value=entry.tekst;
+  switchDagTab('invoer');
+}
+function deleteDagboekEntry(id){
+  dagboekEntries=dagboekEntries.filter(function(e){return e.id!==id;});
+  renderDagboekList();
+}
+function switchDagTab(tab){
+  document.getElementById('dag-tab-invoer').classList.toggle('active',tab==='invoer');
+  document.getElementById('dag-tab-lijst').classList.toggle('active',tab==='lijst');
+  document.getElementById('dag-invoer').style.display=tab==='invoer'?'block':'none';
+  document.getElementById('dag-lijst').style.display=tab==='lijst'?'block':'none';
+  renderDagboek();
+}
+function renderDagboekList(){
+  saveData('dagboekEntries',dagboekEntries);
+  if(dagboekEntries.length===0){
+    document.getElementById('dag-lijst').innerHTML='<div class="empty-state">Nog geen aantekeningen. Schrijf je eerste invoer via "Invoer".</div>';
+    return;
+  }
+  document.getElementById('dag-lijst').innerHTML=dagboekEntries.map(function(e){
+    return '<div class="entry"><div class="entry-header"><span class="entry-date">'+e.datum+'</span><span class="entry-mood">'+e.mood+'</span></div><div class="entry-text">'+(e.tekst||'<em style="color:var(--ink-soft)">Geen toelichting</em>')+'</div><div class="entry-actions"><button class="entry-action-btn" onclick="editDagboekEntry('+e.id+')">Bewerken</button><button class="entry-action-btn delete" onclick="deleteDagboekEntry('+e.id+')">Verwijderen</button></div></div>';
+  }).join('');
+}
 
+const weekdagenLang=['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];
+const maandenLang=['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+function formatAfspraakDatum(datumStr){
+  if(!datumStr) return 'Geen datum';
+  const d=new Date(datumStr+'T00:00:00');
+  if(isNaN(d.getTime())) return datumStr;
+  return weekdagenLang[d.getDay()].slice(0,2)+' '+d.getDate()+' '+maandenLang[d.getMonth()];
+}
+const defaultAfspraken=[{id:1,titel:"Afspraak behandelaar",datum:"2026-06-19",tijd:"14:00"}];
+let afspraken=loadData('afspraken',defaultAfspraken);
+let afspraakNextId=(function(){let max=0;afspraken.forEach(function(a){if(a.id>max)max=a.id;});return max+1;})();
+function saveAfspraak(){
+  const titel=document.getElementById('ag-titel').value.trim();
+  const datum=document.getElementById('ag-datum').value;
+  const tijd=document.getElementById('ag-tijd').value;
+  if(!titel){alert('Vul een omschrijving in');return;}
+  afspraken.push({id:afspraakNextId++,titel:titel,datum:datum,tijd:tijd||'--:--'});
+  afspraken.sort(function(a,b){return (a.datum||'').localeCompare(b.datum||'');});
+  document.getElementById('ag-titel').value='';
+  document.getElementById('ag-datum').value='';
+  document.getElementById('ag-tijd').value='';
+  renderAgenda();
+}
+function deleteAfspraak(id){
+  afspraken=afspraken.filter(function(a){return a.id!==id;});
+  renderAgenda();
+}
+function renderAgenda(){
+  saveData('afspraken',afspraken);
+  if(afspraken.length===0){
+    document.getElementById('agenda-lijst').innerHTML='<div class="empty-state">Nog geen afspraken gepland.</div>';
+    return;
+  }
+  document.getElementById('agenda-lijst').innerHTML=afspraken.map(function(a){
+    return '<div class="afspraak-card"><div class="afspraak-titel">'+a.titel+'</div><div class="afspraak-tijd">'+formatAfspraakDatum(a.datum)+' · '+a.tijd+'</div><button class="entry-action-btn delete" style="margin-top:10px;width:100%" onclick="deleteAfspraak('+a.id+')">Verwijderen</button></div>';
+  }).join('');
+}
+renderAgenda();
 
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});window.addEventListener('appinstalled',()=>showToast('MijnAnker toegevoegd 🎉'));checkInstallScreen();
-checkDisclaimer();updateWelcomeText();if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+const weekDagenKort=['ma','di','wo','do','vr','za','zo'];
+let weekOffset=0;
+let selectedDayKey=null;
+let takenPerDag=loadData('takenPerDag',{});
+let taakNextId=(function(){
+  let max=0;
+  Object.keys(takenPerDag).forEach(function(key){
+    (takenPerDag[key]||[]).forEach(function(t){if(t.id>max)max=t.id;});
+  });
+  return max+1;
+})();
+
+function dateToKey(d){
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function getWeekStart(offset){
+  const today=new Date();
+  const day=today.getDay();
+  const diff=today.getDate()-day+(day===0?-6:1);
+  const monday=new Date(today.getFullYear(),today.getMonth(),diff);
+  monday.setDate(monday.getDate()+offset*7);
+  return monday;
+}
+function navigateWeek(dir){
+  weekOffset+=dir;
+  selectedDayKey=null;
+  renderWeek();
+}
+function selectDay(key){
+  selectedDayKey=key;
+  renderWeek();
+}
+function getAfsprakenForDay(key){
+  return afspraken.filter(function(a){return a.datum===key;});
+}
+function addWeekTaak(){
+  const tekst=document.getElementById('week-taak-input').value.trim();
+  if(!tekst){alert('Vul een taak in');return;}
+  if(!takenPerDag[selectedDayKey])takenPerDag[selectedDayKey]=[];
+  takenPerDag[selectedDayKey].push({id:taakNextId++,tekst:tekst,gedaan:false});
+  document.getElementById('week-taak-input').value='';
+  renderWeek();
+}
+function toggleWeekTaak(key,id){
+  const taken=takenPerDag[key]||[];
+  const t=taken.find(function(x){return x.id===id;});
+  if(t)t.gedaan=!t.gedaan;
+  renderWeek();
+}
+function deleteWeekTaak(key,id){
+  takenPerDag[key]=(takenPerDag[key]||[]).filter(function(x){return x.id!==id;});
+  renderWeek();
+}
+function renderWeek(){
+  saveData('takenPerDag',takenPerDag);
+  const ws=getWeekStart(weekOffset);
+  const we=new Date(ws);we.setDate(ws.getDate()+6);
+  document.getElementById('week-label').textContent=ws.getDate()+' '+maandenLang[ws.getMonth()].slice(0,3)+' – '+we.getDate()+' '+maandenLang[we.getMonth()].slice(0,3);
+
+  const todayKey=dateToKey(new Date());
+  const days=[];
+  for(let i=0;i<7;i++){
+    const d=new Date(ws);d.setDate(ws.getDate()+i);
+    days.push({key:dateToKey(d),label:weekDagenKort[i],num:d.getDate()});
+  }
+  if(!selectedDayKey || !days.find(function(d){return d.key===selectedDayKey;})){
+    const todayInWeek=days.find(function(d){return d.key===todayKey;});
+    selectedDayKey=todayInWeek?todayInWeek.key:days[0].key;
+  }
+
+  document.getElementById('week-days').innerHTML=days.map(function(d){
+    return '<button class="week-day-btn '+(d.key===selectedDayKey?'active':'')+'" onclick="selectDay(\''+d.key+'\')"><span>'+d.label+'</span><span class="day-num">'+d.num+'</span></button>';
+  }).join('');
+
+  const dagAfspraken=getAfsprakenForDay(selectedDayKey);
+  document.getElementById('week-afspraken').innerHTML = dagAfspraken.length
+    ? dagAfspraken.map(function(a){return '<div class="afspraak-card" style="margin-bottom:6px"><div class="afspraak-titel">'+a.titel+'</div><div class="afspraak-tijd">'+a.tijd+'</div></div>';}).join('')
+    : '<div class="empty-state">Geen afspraken op deze dag</div>';
+
+  const dagTaken=takenPerDag[selectedDayKey]||[];
+  document.getElementById('week-taken').innerHTML = dagTaken.length
+    ? dagTaken.map(function(t){
+        return '<div class="taak-item '+(t.gedaan?'gedaan':'')+'"><div class="taak-check" onclick="toggleWeekTaak(\''+selectedDayKey+'\','+t.id+')">'+(t.gedaan?'✓':'')+'</div><div class="taak-tekst" onclick="toggleWeekTaak(\''+selectedDayKey+'\','+t.id+')">'+t.tekst+'</div><button class="med-delete-btn" onclick="deleteWeekTaak(\''+selectedDayKey+'\','+t.id+')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m2 0l-1 13a1 1 0 01-1 1H8a1 1 0 01-1-1L6 7"/></svg></button></div>';
+      }).join('')
+    : '<div class="empty-state">Geen taken op deze dag — voeg er een toe</div>';
+}
+
+function switchMedTab(tab){
+  medTab=tab;
+  document.getElementById('med-tab-vandaag').classList.toggle('active',tab==='vandaag');
+  document.getElementById('med-tab-beheer').classList.toggle('active',tab==='beheer');
+  document.getElementById('med-vandaag').style.display=tab==='vandaag'?'block':'none';
+  document.getElementById('med-beheer').style.display=tab==='beheer'?'block':'none';
+  renderMedicatie();
+}
+function renderMedicatie(){
+  saveData('medicatie',medicatie);
+  saveData('medChecked_'+todayKey(),medChecked);
+  const nu=new Date();
+  document.getElementById('med-datum-label').textContent=weekdagenLang[nu.getDay()]+' '+nu.getDate()+' '+maandenLang[nu.getMonth()];
+  if(medicatie.length===0){
+    document.getElementById('med-progress-fill').style.width='0%';
+    document.getElementById('med-lijst').innerHTML='<div class="empty-state">Nog geen medicatie toegevoegd. Voeg medicatie toe via "Mijn medicatie".</div>';
+  } else {
+    const genomen=medicatie.filter(function(m){return medChecked[m.id];}).length;
+    document.getElementById('med-progress-fill').style.width=(genomen/medicatie.length*100)+'%';
+    document.getElementById('med-lijst').innerHTML=medicatie.map(function(m){
+      const isChecked=!!medChecked[m.id];
+      return '<div class="med-item '+(isChecked?'genomen':'')+'" onclick="toggleMed('+m.id+')"><div class="med-check">'+(isChecked?'✓':'')+'</div><div><div class="med-naam">'+m.naam+' '+m.dosering+'</div><div class="med-moment">'+m.moment+'</div></div></div>';
+    }).join('');
+  }
+  if(medTab==='beheer'){
+    const lijstEl=document.getElementById('med-beheer-lijst');
+    if(medicatie.length===0){
+      lijstEl.innerHTML='<div class="empty-state">Nog geen medicatie toegevoegd.</div>';
+    } else {
+      lijstEl.innerHTML=medicatie.map(function(m){
+        return '<div class="med-beheer-item"><div class="med-beheer-info"><div class="med-naam">'+m.naam+' '+m.dosering+'</div><div class="med-moment">'+m.moment+'</div></div><button class="med-delete-btn" onclick="deleteMedicatie('+m.id+')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m2 0l-1 13a1 1 0 01-1 1H8a1 1 0 01-1-1L6 7"/></svg></button></div>';
+      }).join('');
+    }
+  }
+}
+function toggleMed(id){
+  medChecked[id]=!medChecked[id];
+  saveData('medChecked_'+todayKey(),medChecked);
+  renderMedicatie();
+}
+function addMedicatie(){
+  const naam=document.getElementById('med-naam-input').value.trim();
+  const dosering=document.getElementById('med-dosering-input').value.trim();
+  const moment=document.getElementById('med-moment-input').value.trim();
+  if(!naam){alert('Vul een naam in');return;}
+  medicatie.push({id:medNextId++,naam:naam,dosering:dosering,moment:moment||'—'});
+  document.getElementById('med-naam-input').value='';
+  document.getElementById('med-dosering-input').value='';
+  document.getElementById('med-moment-input').value='';
+  renderMedicatie();
+}
+function deleteMedicatie(id){
+  medicatie=medicatie.filter(function(m){return m.id!==id;});
+  delete medChecked[id];
+  renderMedicatie();
+}
+
+const defaultGoedMomenten=[
+  {id:1,datum:'10 juni',tekst:'Je hebt al zoveel moeilijke dagen overleefd. Dit is ook maar een moment — het gaat voorbij. Bel iemand, ga even naar buiten, en wees lief voor jezelf.'}
+];
+let goedMomenten=loadData('goedMomenten',defaultGoedMomenten);
+let goedMomentNextId=(function(){let max=0;goedMomenten.forEach(function(g){if(g.id>max)max=g.id;});return max+1;})();
+function saveGoedMoment(){
+  const tekst=document.getElementById('goedmoment-tekst').value.trim();
+  if(!tekst){alert('Schrijf eerst een boodschap');return;}
+  const nu=new Date();
+  const datumStr=nu.getDate()+' '+maandenLang[nu.getMonth()];
+  goedMomenten.unshift({id:goedMomentNextId++,datum:datumStr,tekst:tekst});
+  document.getElementById('goedmoment-tekst').value='';
+  renderGoedMomenten();
+}
+function deleteGoedMoment(id){
+  goedMomenten=goedMomenten.filter(function(g){return g.id!==id;});
+  renderGoedMomenten();
+}
+function renderGoedMomenten(){
+  saveData('goedMomenten',goedMomenten);
+  if(goedMomenten.length===0){
+    document.getElementById('goedmoment-lijst').innerHTML='<div class="empty-state">Nog geen boodschappen geschreven.</div>';
+    return;
+  }
+  document.getElementById('goedmoment-lijst').innerHTML=goedMomenten.map(function(g){
+    return '<div class="plan-block"><div class="entry-header"><span class="plan-head" style="margin-bottom:0">Aan mezelf</span><span class="entry-date">'+g.datum+'</span></div><p class="plan-item" style="line-height:1.7;margin-top:8px">'+g.tekst+'</p><div class="entry-actions"><button class="entry-action-btn delete" onclick="deleteGoedMoment('+g.id+')">Verwijderen</button></div></div>';
+  }).join('');
+}
+
+function initOnboarding(){
+  const seenInstall=loadData('seenInstall',false);
+  const savedNaam=loadData('username',null);
+  if(savedNaam){
+    document.getElementById('home-greeting').textContent='Welkom terug, '+savedNaam;
+  }
+  if(!seenInstall){
+    document.getElementById('install-screen').classList.add('active');
+  } else if(!savedNaam){
+    document.getElementById('naam-modal').classList.add('active');
+  }
+}
+initOnboarding();
+
 </script>
 </body>
 </html>
