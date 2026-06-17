@@ -10,22 +10,22 @@
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icons/icon-192.png"/>
 <title>MijnAnker</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 :root{
-  --bg-dark:#0a0e1a;
+  --bg-dark:#0f172a;
   --bg-light:#1a2332;
   --accent-warm:#d4845c;
-  --accent-cool:#6fa3a8;
-  --accent-life:#a8d4a8;
-  --text-primary:#f5f7fa;
-  --text-muted:#b0b8c6;
-  --border-soft:rgba(212,132,92,0.15);
+  --accent-cool:#4a9b7f;
+  --accent-life:#7ec87e;
+  --text-primary:#ffffff;
+  --text-muted:#b0b9c3;
 }
 body{background:linear-gradient(180deg,var(--bg-dark) 0%,var(--bg-light) 100%);min-height:100vh;min-height:100dvh;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:500;color:var(--text-primary);display:flex;justify-content:center;}
-#app{width:100%;max-width:480px;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding:0 16px;padding-bottom:env(safe-area-inset-bottom,20px);}
+#app{width:100%;max-width:480px;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding:0 16px;padding-bottom:env(safe-area-inset-bottom,20px);position:relative;z-index:1;}
 .header{display:flex;align-items:center;justify-content:space-between;padding:16px 0 12px;}
-.back-btn{background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);color:var(--text-primary);width:40px;height:40px;border-radius:12px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.back-btn{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;color:var(--text-primary);width:40px;height:40px;border-radius:12px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1)}
 .app-name{font-size:16px;letter-spacing:2px;opacity:.8;}
 .screen{display:none;flex-direction:column;gap:16px;padding-top:8px;flex:1;}
 .screen.active{display:flex;}
@@ -62,50 +62,122 @@ body{background:linear-gradient(180deg,var(--bg-dark) 0%,var(--bg-light) 100%);m
 .app-sub{color:var(--text-muted);font-size:14px;margin-top:6px;}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:0;margin-bottom:12px;}
 .card{
-  background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));
-  border:1px solid rgba(212,132,92,0.2);
-  border-radius:16px;
+  background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);
+  border:none;
+  border-radius:28px;
   padding:20px;
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:8px;
   cursor:pointer;
-  transition:all .3s ease;
+  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06);
+  position:relative;
+  overflow:hidden;
   font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
-.card:active{transform:scale(0.95);border-color:rgba(212,132,92,0.4);background:linear-gradient(135deg,rgba(26,35,50,0.7),rgba(26,35,50,0.4));}
-.card-icon{font-size:36px;}.card-label{color:var(--text-primary);font-weight:700;font-size:15px;}.card-sub{color:var(--text-muted);font-size:11px;}
+
+.card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.12) 0%,transparent 60%);
+  pointer-events:none;
+  border-radius:28px;
+}
+
+.card::after{
+  content:'';
+  position:absolute;
+  bottom:0;
+  right:0;
+  width:100%;
+  height:100%;
+  background:radial-gradient(circle at bottom right,rgba(74,155,127,0.2) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+.card:hover{
+  /* Hover disabled for mobile-friendly experience */
+}
+
+.card:active{
+  transform:translateY(-2px);
+  box-shadow:0 15px 30px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.card-icon{font-size:38px;filter:drop-shadow(0 3px 6px rgba(74,155,127,0.2))}.card-label{color:var(--text-primary);font-weight:700;font-size:14px;letter-spacing:-0.3px}.card-sub{color:var(--text-muted);font-size:11px;margin-top:2px}
 .card-purple{background:linear-gradient(135deg,#6366f1,#8b5cf6);}
 .card-blue{background:linear-gradient(135deg,#0ea5e9,#06b6d4);}
 .card-green{background:linear-gradient(135deg,#10b981,#059669);}
 .card-red{background:linear-gradient(135deg,#ef4444,#dc2626);}
-.greeting{color:var(--text-muted);font-size:11px;text-align:center;padding-bottom:24px;border-top:1px solid rgba(212,132,92,0.15);padding-top:20px;margin-top:20px;}
-.section-title{font-size:22px;font-weight:700;letter-spacing:0;margin-bottom:16px;}
+.greeting{color:var(--text-muted);font-size:11px;text-align:center;padding-bottom:24px;border-top:1px solid transparent;background:linear-gradient(90deg,rgba(74,155,127,0) 0%,rgba(74,155,127,0.3) 50%,rgba(74,155,127,0) 100%) no-repeat top;background-size:100% 1px;padding-top:20px;margin-top:20px;}
+.section-title{font-size:22px;font-weight:700;letter-spacing:0;margin-bottom:16px;color:#d4d8e0;}
 .progress{display:flex;gap:8px;justify-content:center;margin-bottom:8px;}
 .dot{width:10px;height:10px;border-radius:50%;background:#e2e8f0;transition:background .3s;}.dot.active{background:var(--purple);}
 .q-title{font-size:19px;font-weight:normal;line-height:1.6;text-align:center;margin:8px 0;}
 .options{display:flex;flex-direction:column;gap:10px;}
-.opt-btn{background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);border-radius:14px;color:var(--text-primary);padding:15px 18px;font-size:15px;cursor:pointer;text-align:left;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:background .2s,border-color .2s;}
+.opt-btn{background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:14px;color:var(--text-primary);padding:15px 18px;font-size:15px;cursor:pointer;text-align:left;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:background .2s,border-color .2s;;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1)}
 .opt-btn:active{background:rgba(99,102,241,.25);border-color:var(--purple);}
-.result-card{background:rgba(26,35,50,0.6);border:2px solid;border-radius:20px;padding:28px 20px;text-align:center;}
+.result-card{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:20px;padding:28px 20px;text-align:center;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03)}
 .result-icon{font-size:44px;margin-bottom:10px;}.result-fase{font-size:22px;font-weight:bold;margin-bottom:10px;}.result-tekst{color:#cbd5e1;font-size:15px;line-height:1.7;}
 .acties{display:flex;flex-direction:column;gap:10px;}
 .actie-btn{border:none;border-radius:14px;color:#fff;padding:15px;font-size:15px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:opacity .2s;}
-.plan-block{background:rgba(26,35,50,0.6);border-radius:16px;padding:18px;margin-bottom:16px;border:1px solid rgba(212,132,92,0.2)}
+.plan-block{
+  background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);
+  border:none;
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);
+  transition:all 0.3s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+.plan-block:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.15);
+}}
 .plan-head{color:#a5b4fc;font-size:13px;margin-bottom:10px;letter-spacing:1px;text-transform:uppercase;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .plan-item{color:var(--text-primary);font-size:14px;line-height:2;}
 .contact-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;}
 .contact-name{color:var(--text-primary);font-size:14px;}
 .tel-btn{background:var(--purple);color:#fff;padding:6px 12px;border-radius:10px;text-decoration:none;font-size:13px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
-.oef-card{background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px;cursor:pointer;width:100%;text-align:left;transition:background .2s;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-bottom:12px;box-shadow:0 8px 16px rgba(0,0,0,0.2);}
-.oef-card:active{background:rgba(255,255,255,.1);}
+.oef-card{
+  background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);
+  border:none;
+  border-radius:16px;
+  padding:18px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  cursor:pointer;
+  width:100%;
+  text-align:left;
+  transition:all 0.3s ease;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  margin-bottom:12px;
+  box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);
+  position:relative;
+  overflow:hidden;
+}
+
+.oef-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+.oef-card:active{background:rgba(74,155,127,0.25);}
 .oef-icon{font-size:30px;}.oef-titel{color:var(--text-primary);font-size:16px;margin-bottom:3px;}.oef-duur{color:var(--text-muted);font-size:13px;}.arrow{color:var(--purple);font-size:26px;margin-left:auto;}
-.step-card{background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);border-radius:20px;padding:28px 20px;text-align:center;}
+.step-card{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:20px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;padding:28px 20px;text-align:center;}
 .step-num{color:var(--text-muted);font-size:13px;margin-bottom:20px;letter-spacing:1px;}
 .step-tekst{color:var(--text-primary);font-size:18px;line-height:1.8;margin-bottom:28px;}
 .step-btns{display:flex;gap:10px;justify-content:center;}
-.nav-btn{border:1px solid rgba(212,132,92,0.2);background:rgba(26,35,50,0.6);color:var(--text-primary);border-radius:12px;padding:11px 18px;font-size:14px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:opacity .2s;}
+.nav-btn{border:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);color:var(--text-primary);border-radius:12px;padding:11px 18px;font-size:14px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:opacity .2s;}
 .nav-btn.primary{background:var(--purple);border-color:var(--purple);color:#fff;}
 .nav-btn.done{background:var(--green);border-color:var(--green);color:#fff;}
 .acuut-banner{text-align:center;padding:20px 0 10px;}
@@ -114,39 +186,43 @@ body{background:linear-gradient(180deg,var(--bg-dark) 0%,var(--bg-light) 100%);m
 .acuut-btn:active{opacity:.8;}
 .acuut-note{color:var(--text-muted);font-size:12px;text-align:center;margin-top:4px;}
 .mood-row{display:flex;justify-content:space-between;gap:8px;}
-.mood-btn{flex:1;background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);border-radius:14px;padding:14px 8px;font-size:22px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:background .2s,border-color .2s;}
+.mood-btn{flex:1;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:14px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;padding:14px 8px;font-size:22px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:background .2s,border-color .2s;}
 .mood-btn span{font-size:11px;color:var(--text-muted);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .mood-btn.selected{border-color:var(--purple);background:rgba(99,102,241,.2);}
-textarea,.edit-input{background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);border-radius:14px;color:var(--text-primary);padding:12px 14px;font-size:15px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;width:100%;box-sizing:border-box;}
+textarea,.edit-input{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:20px;color:var(--text-primary);padding:12px 16px;font-size:15px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;width:100%;box-sizing:border-box;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;transition:all 0.3s ease;}
 textarea{resize:none;line-height:1.6;}
 textarea::placeholder,.edit-input::placeholder{color:var(--text-muted);}
-.edit-input:focus,textarea:focus{outline:none;border-color:var(--purple);}
+.edit-input:focus,textarea:focus{outline:none;background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.1);}
 .save-btn{background:var(--purple);border:none;border-radius:14px;color:#fff;padding:15px;font-size:15px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:opacity .2s;width:100%;}
 .save-btn:active{opacity:.8;}
 .entries{display:flex;flex-direction:column;gap:10px;margin-top:4px;}
-.entry{background:rgba(26,35,50,0.6);border-radius:14px;padding:14px;}
+.entry{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border-radius:20px;padding:14px 16px;border:none;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;}
 .entry-header{display:flex;justify-content:space-between;margin-bottom:6px;}
 .entry-date{color:var(--text-muted);font-size:12px;}.entry-mood{font-size:18px;}
 .entry-text{color:var(--text-primary);font-size:14px;line-height:1.6;}
 .entry-actions{display:flex;gap:8px;margin-top:10px;}
-.entry-action-btn{flex:1;padding:8px;border-radius:10px;font-size:12px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;border:1px solid rgba(212,132,92,0.2);background:rgba(26,35,50,0.6);color:var(--text-muted);}
+.entry-action-btn{flex:1;padding:8px;border-radius:10px;font-size:12px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;border:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);color:var(--text-muted);}
 .entry-action-btn.delete{color:#ef4444;border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.08);}
 .plan-tab-btns{display:flex;gap:8px;margin-bottom:4px;}
-.plan-tab{flex:1;padding:10px;border-radius:12px;border:1px solid rgba(212,132,92,0.2);background:rgba(26,35,50,0.6);color:var(--text-muted);font-size:13px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:all .2s;}
-.plan-tab.active{background:var(--purple);border-color:var(--purple);color:#fff;}
-.plan-save-btn{background:var(--purple);border:none;border-radius:14px;color:#fff;padding:15px;font-size:15px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:4px;width:100%;}
-.edit-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.del-btn{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#ef4444;border-radius:10px;width:36px;height:36px;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-.add-btn{background:rgba(99,102,241,.15);border:1px dashed rgba(99,102,241,.4);color:var(--purple);border-radius:10px;padding:10px;font-size:13px;cursor:pointer;width:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:4px;}
-.contact-edit-row{display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,.04);border-radius:12px;padding:10px;margin-bottom:8px;}
+.plan-tab{flex:1;padding:10px;border-radius:20px;border:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);color:var(--text-muted);font-size:13px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:all 0.3s ease;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);}
+.plan-tab.active{background:linear-gradient(135deg,rgba(74,155,127,0.35) 0%,rgba(60,90,110,0.4) 50%,rgba(35,50,80,0.7) 100%);border:none;color:#fff;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.1);}
+.plan-save-btn{background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;color:#fff;padding:14px 24px;font-size:15px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:4px;width:100%;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06);transition:all 0.3s ease;position:relative;overflow:hidden;}
+.plan-save-btn::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(255,255,255,0.12) 0%,transparent 60%);pointer-events:none;border-radius:28px;}
+.plan-save-btn:active{transform:translateY(-2px);box-shadow:0 8px 16px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.25);}
+.save-btn{background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;color:#fff;padding:14px 24px;font-size:15px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:4px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06);transition:all 0.3s ease;position:relative;overflow:hidden;width:100%;}
+.save-btn::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(255,255,255,0.12) 0%,transparent 60%);pointer-events:none;border-radius:28px;}
+.save-btn:active{transform:translateY(-2px);box-shadow:0 8px 16px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.25);}
+.add-btn{background:linear-gradient(135deg,rgba(74,155,127,0.2) 0%,rgba(74,155,127,0.1) 100%);border:none;color:var(--accent-cool);border-radius:10px;padding:10px;font-size:13px;cursor:pointer;width:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:4px;transition:all 0.3s ease;}
+.add-btn:hover{background:linear-gradient(135deg,var(--accent-cool) 0%,#3d8b6e 100%);color:white;transform:translateY(-2px);}
+.contact-edit-row{display:flex;flex-direction:column;gap:6px;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border-radius:20px;padding:10px 12px;margin-bottom:8px;border:none;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);}
 .contact-edit-inputs{display:flex;gap:8px;}
-.notitie-card{background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:14px;}
+.notitie-card{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:20px;padding:14px 16px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;}
 .notitie-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;}
 .notitie-titel-txt{color:var(--text-primary);font-size:15px;font-weight:bold;}
 .notitie-datum{color:var(--text-muted);font-size:11px;white-space:nowrap;}
 .notitie-inhoud{color:var(--text-muted);font-size:13px;line-height:1.6;white-space:pre-wrap;}
 .notitie-actions{display:flex;gap:8px;margin-top:10px;}
-.afspraak-card{background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:14px;}
+.afspraak-card{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:20px;padding:14px 16px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;}
 .afspraak-card.verlopen{opacity:.45;}
 .afspraak-titel{color:var(--text-primary);font-size:15px;font-weight:bold;}
 .afspraak-tijd{color:var(--purple);font-size:13px;margin-top:4px;}
@@ -155,36 +231,36 @@ select.edit-input{appearance:none;-webkit-appearance:none;cursor:pointer;}
 input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
 
 /* WEEKPLANNING */
-.week-nav{display:flex;align-items:center;justify-content:space-between;background:rgba(26,35,50,0.6);border-radius:14px;padding:10px 14px;}
+.week-nav{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:14px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;padding:10px 14px;}
 .week-nav-btn{background:none;border:none;color:var(--purple);font-size:22px;cursor:pointer;padding:4px 10px;}
 .week-label{color:var(--text-primary);font-size:14px;font-weight:bold;}
 .week-days{display:flex;gap:6px;justify-content:center;overflow-x:auto;padding-bottom:4px;}
-.week-day-btn{flex-shrink:0;width:44px;padding:8px 4px;border-radius:12px;border:1px solid rgba(212,132,92,0.2);background:rgba(26,35,50,0.6);color:var(--text-muted);font-size:11px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all .2s;}
+.week-day-btn{flex-shrink:0;width:44px;padding:8px 4px;border-radius:12px;border:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);color:var(--text-muted);font-size:11px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all .2s;}
 .week-day-btn .day-num{font-size:16px;font-weight:bold;color:var(--text-primary);}
 .week-day-btn.active{background:var(--purple);border-color:var(--purple);color:#fff;}
 .week-day-btn.active .day-num{color:#fff;}
 .week-day-btn.today{border-color:var(--yellow);}
 .week-day-btn .day-dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:none;}
 .week-day-btn.has-items .day-dot{display:block;}
-.dag-sectie{background:rgba(26,35,50,0.6);border-radius:16px;padding:16px;}
+.dag-sectie{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;padding:16px;}
 .dag-sectie-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
 .dag-sectie-titel{color:#a5b4fc;font-size:13px;letter-spacing:1px;text-transform:uppercase;}
-.taak-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);margin-bottom:6px;cursor:pointer;transition:all .2s;}
+.taak-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:rgba(255,255,255,.04);border:none;margin-bottom:6px;cursor:pointer;transition:all .2s;}
 .taak-item.gedaan{opacity:.5;}
-.taak-check{width:24px;height:24px;border-radius:7px;border:2px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s;}
+.taak-check{width:24px;height:24px;border-radius:7px;border:none;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s;}
 .taak-item.gedaan .taak-check{background:var(--green);border-color:var(--green);}
 .taak-tekst{flex:1;font-size:14px;color:var(--text-primary);}
 .taak-item.gedaan .taak-tekst{text-decoration:line-through;color:var(--text-muted);}
 .taak-cat{font-size:10px;padding:2px 7px;border-radius:6px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;flex-shrink:0;}
 .taak-del{background:none;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;padding:2px 6px;}
-.afspraak-item{display:flex;align-items:flex-start;gap:10px;padding:10px;border-radius:12px;background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2);margin-bottom:6px;}
+.afspraak-item{display:flex;align-items:flex-start;gap:10px;padding:10px;border-radius:12px;background:rgba(99,102,241,.08);border:none;margin-bottom:6px;}
 .afspraak-tijd-badge{color:var(--purple);font-size:12px;white-space:nowrap;margin-top:2px;min-width:40px;}
 .afspraak-info{flex:1;}
 .afspraak-naam{color:var(--text-primary);font-size:14px;}
 .afspraak-del{background:none;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;padding:2px 6px;}
 .add-taak-form{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
 .cat-btns{display:flex;gap:6px;flex-wrap:wrap;}
-.cat-btn{padding:6px 12px;border-radius:10px;border:1px solid rgba(212,132,92,0.2);background:rgba(26,35,50,0.6);color:var(--text-muted);font-size:12px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:all .2s;}
+.cat-btn{padding:6px 12px;border-radius:10px;border:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);color:var(--text-muted);font-size:12px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:all .2s;}
 .cat-btn.selected{color:#fff;}
 .week-leeg{color:var(--text-muted);font-size:13px;text-align:center;padding:16px 0;}
 
@@ -195,11 +271,11 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
 .install-title{font-size:28px;letter-spacing:2px;margin-bottom:6px;font-weight:normal;}
 .install-sub{color:var(--text-muted);font-size:14px;text-align:center;margin-bottom:32px;line-height:1.6;}
 .install-os-btns{display:flex;gap:12px;width:100%;margin-bottom:28px;}
-.os-btn{flex:1;padding:14px;border-radius:16px;border:2px solid rgba(212,132,92,0.2);background:rgba(26,35,50,0.6);color:var(--text-muted);font-size:14px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.os-btn{flex:1;padding:14px;border-radius:16px;border:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);color:var(--text-muted);font-size:14px;cursor:pointer;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:6px;}
 .os-btn.active{border-color:var(--purple);background:rgba(99,102,241,.15);color:#fff;}
 .os-btn span:first-child{font-size:28px;}
-.install-steps{width:100%;display:flex;flex-direction:column;gap:14px;margin-bottom:28px;}
-.install-step{background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:16px;display:flex;align-items:flex-start;gap:14px;}
+.install-steps{width:100%;display:flex;flex-direction:column;gap:8px;margin-bottom:28px;}
+.install-step{background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;padding:8px;display:flex;align-items:flex-start;gap:8px;}
 .install-step-num{background:var(--purple);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;flex-shrink:0;}
 .install-step-text{color:var(--text-primary);font-size:14px;line-height:1.7;}
 .install-step-text strong{color:#fff;}
@@ -212,14 +288,14 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
 /* DISCLAIMER */
 .disclaimer-modal{display:none;position:fixed;inset:0;z-index:9998;background:linear-gradient(180deg,rgba(10,14,26,0.9),rgba(26,35,50,0.9));backdrop-filter:blur(10px);flex-direction:column;align-items:center;justify-content:center;padding:20px;}
 .disclaimer-modal.active{display:flex;}
-.disclaimer-box{background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));border:1px solid rgba(212,132,92,0.2);backdrop-filter:blur(20px);border-radius:20px;padding:40px 30px;max-width:420px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.disclaimer-box{background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;backdrop-filter:blur(20px);border-radius:20px;padding:40px 30px;max-width:420px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.3)}
 .disclaimer-box h2{font-size:22px;margin-bottom:14px;color:#fff;}
-.disclaimer-box p{color:#94a3b8;font-size:13px;line-height:1.7;margin-bottom:10px;text-align:left;}
+.disclaimer-box p{color:#94a3b8;font-size:13px;line-height:1.7;margin-bottom:10px;text-align:center;}
 .disclaimer-box strong{color:#fff;}
 .disclaimer-btn{width:100%;background:#6366f1;border:none;border-radius:12px;color:#fff;padding:12px;font-size:14px;cursor:pointer;margin-top:16px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .disclaimer-btn:active{opacity:0.8;}
 
-.welcome-meta{font-size:12px;color:var(--accent-warm);font-weight:600;margin-bottom:0;}
+.welcome-meta{font-size:12px;color:var(--accent-cool);font-weight:600;margin-bottom:0;}
 
 .app-slogan{
   font-size:13px;
@@ -277,7 +353,7 @@ input[type="date"].edit-input,input[type="time"].edit-input{color-scheme:dark;}
   pointer-events:none;
   z-index:0;
   overflow:hidden;
-  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200"><text x="80" y="150" font-size="85" opacity="0.25" fill="%23f5f7fa">🧠</text><text x="850" y="350" font-size="85" opacity="0.25" fill="%23f5f7fa">💭</text><text x="150" y="650" font-size="85" opacity="0.25" fill="%23f5f7fa">✨</text><text x="780" y="700" font-size="85" opacity="0.25" fill="%23f5f7fa">🌱</text><text x="250" y="950" font-size="85" opacity="0.25" fill="%23f5f7fa">💜</text><text x="600" y="200" font-size="75" opacity="0.25" fill="%23f5f7fa">🧠</text><text x="350" y="400" font-size="75" opacity="0.25" fill="%23f5f7fa">✨</text><text x="900" y="900" font-size="75" opacity="0.25" fill="%23f5f7fa">🌱</text></svg>');
+  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200"><defs><pattern id="waves" x="0" y="0" width="150" height="150" patternUnits="userSpaceOnUse"><path d="M0,50 Q35,35 70,50 T140,50" stroke="rgba(255,255,255,0.03)" stroke-width="1" fill="none"/><path d="M0,80 Q40,70 80,80 T160,80" stroke="rgba(74,155,127,0.02)" stroke-width="0.8" fill="none"/><path d="M0,30 Q45,15 90,30 T180,30" stroke="rgba(255,255,255,0.02)" stroke-width="1" fill="none"/><path d="M0,110 Q35,95 70,110 T140,110" stroke="rgba(74,155,127,0.025)" stroke-width="0.8" fill="none"/></pattern></defs><rect width="1000" height="1200" fill="url(%23waves)"/><path d="M0,250 Q80,220 160,250 T320,250 T480,250 T640,250 T800,250 T960,250" stroke="rgba(74,155,127,0.03)" stroke-width="1" fill="none"/><path d="M0,600 Q120,580 240,600 T480,600 T720,600 T960,600" stroke="rgba(255,255,255,0.02)" stroke-width="0.8" fill="none"/><path d="M0,950 Q100,970 200,950 T400,950 T600,950 T800,950 T1000,950" stroke="rgba(74,155,127,0.025)" stroke-width="0.8" fill="none"/></svg>');
   background-repeat:no-repeat;
   background-size:cover;
   background-attachment:fixed;
@@ -352,7 +428,7 @@ input, textarea, select{
 
 input:focus, textarea:focus, select:focus{
   border-color:rgba(212,132,92,0.5);
-  background:linear-gradient(135deg,rgba(26,35,50,0.8),rgba(26,35,50,0.5));
+  background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);
   box-shadow:0 0 0 3px rgba(212,132,92,0.1);
 }
 
@@ -409,7 +485,7 @@ h2, p{
   padding:16px 12px;
   margin:0 16px 12px 16px;
   margin-top:0;
-  border-bottom:2px solid rgba(212,132,92,0.25);
+  border-bottom:1px solid rgba(74,155,127,0.15);
   width:auto;
 }
 
@@ -420,7 +496,7 @@ h2, p{
 .date-day{
   font-size:16px;
   font-weight:700;
-  color:var(--accent-warm);
+  color:var(--accent-cool);
   margin-bottom:2px;
 }
 
@@ -439,51 +515,220 @@ h2, p{
 
 /* MEDIUM SHADOWS */
 .card{
-  box-shadow:0 8px 16px rgba(0,0,0,0.2);
+  box-shadow:0 2px 6px rgba(0,0,0,0.15), 0 1px 2px rgba(74,155,127,0.08);
   transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button{
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  box-shadow:0 2px 4px rgba(0,0,0,0.1);
 }
 
 input, textarea, select{
-  box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow:inset 0 1px 2px rgba(0,0,0,0.08);
 }
 
 /* Focus state - extra shadow */
 input:focus, textarea:focus, select:focus{
-  box-shadow:inset 0 1px 3px rgba(0,0,0,0.1), 0 0 0 3px rgba(212,132,92,0.1);
+  box-shadow:inset 0 1px 2px rgba(0,0,0,0.08), 0 0 0 3px rgba(212,132,92,0.1);
 }
 
 /* Plan blocks */
 .plan-block{
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  box-shadow:0 2px 4px rgba(0,0,0,0.1);
 }
 
 /* Acuut button */
 .acuut-btn{
-  box-shadow:0 4px 12px rgba(0,0,0,0.15) !important;
+  box-shadow:0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+
+/* Save & Add buttons - Groen */
+.add-btn,
+.plan-save-btn {
+  background:linear-gradient(135deg,var(--accent-cool) 0%,#3d8b6e 100%) !important;
+  border:none !important;
+  color:white !important;
+  box-shadow:0 4px 12px rgba(74,155,127,0.3) !important;
+}
+
+.add-btn:hover,
+.plan-save-btn:hover {
+  transform:translateY(-2px) !important;
+  box-shadow:0 6px 20px rgba(74,155,127,0.4) !important;
+}
+
+.add-btn:active,
+.plan-save-btn:active {
+  transform:translateY(0) !important;
+}
+
+
+/* === MODALS STYLING === */
+.modal {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.active {
+  display:flex;
+}
+
+.modal-content {
+  background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);
+}
+
+.modal-content h2 {
+  color:var(--text-primary);
+  font-size:24px;
+  margin-bottom:16px;
+  font-weight:700;
+}
+
+.modal-content p {
+  color:var(--text-muted);
+  font-size:14px;
+  line-height:1.6;
+  margin-bottom:12px;
+}
+
+.disclaimer-btn {
+  background:linear-gradient(135deg,var(--accent-cool) 0%,#3d8b6e 100%);
+  border:none;
+  color:white;
+  padding:14px 20px;
+  border-radius:12px;
+  font-size:15px;
+  cursor:pointer;
+  width:100%;
+  font-weight:600;
+  box-shadow:0 4px 12px rgba(74,155,127,0.3);
+  transition:all 0.3s ease;
+  margin-top:20px;
+}
+
+.disclaimer-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(74,155,127,0.4);
+}
+
+.install-step {
+  display:flex;
+  gap:16px;
+  margin-bottom:20px;
+  align-items:flex-start;
+  background:rgba(74,155,127,0.1);
+  border:none;
+  border-radius:14px;
+  padding:14px;
+}
+
+.install-step-num {
+  width:32px;
+  height:32px;
+  min-width:32px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--accent-cool) 0%,#3d8b6e 100%);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:14px;
+}
+
+.install-step-text {
+  color:var(--text-muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.install-step-text strong {
+  color:var(--text-primary);
+  font-weight:600;
+}
+
+.install-step-img {
+  font-size:24px;
+  min-width:24px;
+}
+
+#naam-input-modal {
+  background:rgba(255,255,255,0.1);
+  border:none;
+  color:var(--text-primary);
+  padding:12px;
+  border-radius:12px;
+  font-size:15px;
+  margin:12px 0;
+  width:100%;
+  font-family:inherit;
+}
+
+#naam-input-modal::placeholder {
+  color:var(--text-muted);
+}
+
+#naam-input-modal:focus {
+  outline:none;
+  border-color:var(--accent-cool);
+  background:rgba(255,255,255,0.15);
 }
 
 </style>
 </head>
 <body>
+<svg style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="wavePattern" x="0" y="0" width="150" height="150" patternUnits="userSpaceOnUse">
+      <path d="M0,50 Q35,35 70,50 T140,50" stroke="rgba(255,255,255,0.03)" stroke-width="1" fill="none"/>
+      <path d="M0,80 Q40,70 80,80 T160,80" stroke="rgba(74,155,127,0.02)" stroke-width="0.8" fill="none"/>
+      <path d="M0,30 Q45,15 90,30 T180,30" stroke="rgba(255,255,255,0.02)" stroke-width="1" fill="none"/>
+      <path d="M0,110 Q35,95 70,110 T140,110" stroke="rgba(74,155,127,0.025)" stroke-width="0.8" fill="none"/>
+    </pattern>
+  </defs>
+  
+  <!-- Base wave pattern -->
+  <rect width="100%" height="100%" fill="url(#wavePattern)"/>
+  
+  <!-- Random scattered curves -->
+  <path d="M0,250 Q80,220 160,250 T320,250 T480,250 T640,250 T800,250" 
+        stroke="rgba(74,155,127,0.03)" stroke-width="1" fill="none"/>
+  
+  <path d="M0,600 Q120,580 240,600 T480,600 T720,600 T960,600" 
+        stroke="rgba(255,255,255,0.02)" stroke-width="0.8" fill="none"/>
+  
+  <path d="M0,950 Q100,970 200,950 T400,950 T600,950 T800,950" 
+        stroke="rgba(74,155,127,0.025)" stroke-width="0.8" fill="none"/>
+  
+  <path d="M0,400 Q90,380 180,400 T360,400 T540,400 T720,400 T900,400" 
+        stroke="rgba(255,255,255,0.02)" stroke-width="0.8" fill="none"/>
+</svg>
+
 
 <!-- DISCLAIMER MODAL -->
-<div class="disclaimer-modal" id="disclaimer-modal">
-  <div class="disclaimer-box">
-    <h2>⚓ Disclaimer</h2>
-    <p><strong>MijnAnker is geen officieel medisch hulpmiddel.</strong> Deze app is ontworpen als ondersteunend gereedschap voor mensen in behandeling.</p>
-    <p>De app kan je helpen, maar <strong>vervangt geen professionele hulp</strong> van een behandelaar, psycholoog of psychiater.</p>
-    <p><strong>Bij acute nood:</strong> Bel 113 of contacteer je behandelaar direct.</p>
-    <button class="disclaimer-btn" onclick="acceptDisclaimer()">Ik begrijp dit</button>
-  </div>
-</div>
-
 <!-- INSTALL SCHERM -->
 <div class="install-screen" id="install-screen">
-  <div class="install-logo">⚓</div>
+  <svg style="width:80px;height:80px;margin:0 auto 20px;display:block" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+    <!-- Brain lobes forming anchor -->
+    <circle cx="40" cy="40" r="12" fill="none" stroke="var(--accent-cool)" stroke-width="2"/>
+    <circle cx="70" cy="30" r="14" fill="none" stroke="var(--accent-cool)" stroke-width="2"/>
+    <circle cx="100" cy="40" r="12" fill="none" stroke="var(--accent-cool)" stroke-width="2"/>
+    <!-- Brain stem = anchor shaft -->
+    <line x1="70" y1="45" x2="70" y2="85" stroke="var(--accent-cool)" stroke-width="2.5"/>
+    <!-- Anchor flukes from bottom -->
+    <path d="M 68 85 Q 50 100 45 110" fill="none" stroke="var(--accent-cool)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 72 85 Q 90 100 95 110" fill="none" stroke="var(--accent-cool)" stroke-width="2" stroke-linecap="round"/>
+  </svg>
   <h1 class="install-title">MijnAnker</h1>
   <p class="install-sub">Voeg de app toe aan je beginscherm<br>voor de beste ervaring</p>
   <div class="install-os-btns">
@@ -502,68 +747,84 @@ input:focus, textarea:focus, select:focus{
     <div class="install-step"><div class="install-step-num">3</div><div style="flex:1"><div class="install-step-text">Kies <strong>"Toevoegen aan startscherm"</strong> of <strong>"App installeren"</strong>.</div></div><div class="install-step-img">📲</div></div>
     <div class="install-step"><div class="install-step-num">4</div><div style="flex:1"><div class="install-step-text">Tik op <strong>"Installeren"</strong>. Het anker-icoon staat nu op je beginscherm!</div></div><div class="install-step-img">✅</div></div>
   </div>
-  <button class="install-enter-btn" onclick="enterApp()">Doorgaan naar de app →</button>
+  <button class="install-enter-btn" onclick="enterApp()" style="background:linear-gradient(135deg,var(--accent-cool),#3d8b6e);border:none;box-shadow:0 4px 12px rgba(74,155,127,0.3)">Doorgaan naar de app →</button>
   <span class="install-skip" onclick="enterApp()">Overslaan, gewoon in de browser gebruiken</span>
 </div>
 
 <!-- NAAM MODAL -->
 <div class="disclaimer-modal" id="naam-modal">
-  <div class="disclaimer-box">
-    <div style="font-size:56px;margin-bottom:20px">👋</div>
-    <h2 style="font-size:28px;margin-bottom:20px;color:#fff;font-weight:700">Hoe heet je?</h2>
-    <p style="color:var(--text-muted);margin-bottom:28px;font-size:14px">Je naam verschijnt bovenaan in de app</p>
-    <input id="naam-input-modal" type="text" placeholder="Vul je naam in" style="width:100%;padding:12px;margin:20px 0;border-radius:12px;border:1px solid rgba(124,58,237,0.4);background:rgba(255,255,255,0.05);color:#fff;font-size:16px;box-sizing:border-box;font-family:inherit">
-    <p style="color:var(--text-muted);font-size:12px;margin:10px 0">(Dit kun je later wijzigen)</p>
-    <button onclick="saveNaamAndContinue()" style="width:100%;padding:15px;background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(124,58,237,0.4);margin-top:20px">App starten! 🚀</button>
+  <div class="disclaimer-box" style="max-width:500px">
+    <h2 style="font-size:24px;margin-bottom:24px;color:#fff;font-weight:700">⚖️ Disclaimer & Starten</h2>
+    
+    <div style="background:rgba(0,0,0,0.2);border-radius:16px;padding:20px;margin-bottom:24px;max-height:200px;overflow-y:auto">
+      <p style="color:#94a3b8;font-size:12px;line-height:1.7;margin-bottom:12px;text-align:center"><strong style="color:#fff">DISCLAIMER:</strong></p>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.7;margin-bottom:8px;text-align:center">MijnAnker is een persoonlijk hulpmiddel voor mentaal welzijn. Het vervangt geen professionele medische of psychologische hulp. Bij crisis of nood: bel 113 of ga naar de spoedopvang.</p>
+      <p style="color:#94a3b8;font-size:12px;line-height:1.7;text-align:center">Je bent verantwoordelijk voor je eigen gezondheid en veiligheid.</p>
+    </div>
+
+    <div style="margin-bottom:24px">
+      <p style="color:var(--text-muted);margin-bottom:16px;font-size:13px;text-align:center">Wat is je naam?</p>
+      <input id="naam-input-modal" type="text" placeholder="Vul je naam in" style="width:100%;padding:12px;margin-bottom:12px;border-radius:12px;border:none;background:rgba(255,255,255,0.05);color:#fff;font-size:16px;box-sizing:border-box;font-family:inherit">
+    </div>
+
+    <p style="color:#94a3b8;font-size:11px;line-height:1.6;margin-bottom:20px;text-align:center;font-style:italic">Door op 'App starten' te klikken, ga je akkoord met de disclaimer en ben je je bewust van je eigen verantwoordelijkheid voor je gezondheid.</p>
+
+    <button onclick="saveNaamAndContinue()" style="width:100%;padding:15px;background:linear-gradient(135deg,var(--accent-cool),#3d8b6e);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(74,155,127,0.3);margin-top:12px;transition:all 0.3s ease">App starten! 🚀</button>
   </div>
 </div>
 
 <div id="app">
   <div class="header" id="header" style="display:none">
     <button class="back-btn" onclick="goBack()">←</button>
-    <span class="app-name">MijnAnker</span>
-    <div style="width:40px"></div>
+    <div style="flex:1;text-align:center;position:relative;z-index:2">
+      <h2 id="header-title" style="color:#d4d8e0;font-size:18px;font-weight:700;margin:0;padding:0;line-height:1.2">Pagina</h2>
+    </div>
+    <svg style="width:40px;height:40px;flex-shrink:0;opacity:0.12" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 60 35 C 55 25 40 25 35 35 C 30 45 45 60 60 70 C 75 60 90 45 85 35 C 80 25 65 25 60 35" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M 45 70 Q 35 85 30 105" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M 60 75 Q 60 95 60 115" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M 75 70 Q 85 85 90 105" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="60" cy="125" r="2.5" fill="currentColor"/>
+    </svg>
   </div>
+  <div style="height:1px;background:linear-gradient(90deg,rgba(74,155,127,0) 0%,rgba(74,155,127,0.3) 50%,rgba(74,155,127,0) 100%);margin-bottom:16px;display:none" id="header-divider"></div>
 
   <!-- HOME -->
   <div class="screen active" id="screen-home">
     <div style="margin-bottom:16px;padding-top:12px">
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:0;position:relative;z-index:2;margin-bottom:16px">
       <div style="flex:1;position:relative">
-        <svg style="position:absolute;top:50%;left:0;transform:translateY(-50%);opacity:0.12;z-index:1;pointer-events:none;width:180px;height:100px" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-          <!-- Brain lobes forming anchor -->
-          <circle cx="40" cy="40" r="12" fill="none" stroke="currentColor" stroke-width="2"/>
-          <circle cx="70" cy="30" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
-          <circle cx="100" cy="40" r="12" fill="none" stroke="currentColor" stroke-width="2"/>
-          <!-- Brain stem = anchor shaft -->
-          <line x1="70" y1="45" x2="70" y2="85" stroke="currentColor" stroke-width="2.5"/>
-          <!-- Anchor flukes from bottom -->
-          <path d="M 68 85 Q 50 100 45 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M 72 85 Q 90 100 95 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <h2 style="background:none;-webkit-text-fill-color:#d4d8e0;color:#d4d8e0;font-size:36px;font-weight:700;margin-bottom:4px;margin-top:0;line-height:1.2;position:relative;z-index:2">Mijn Anker</h2>
+        <p id="welcome-text" class="app-sub" style="margin-bottom:0;font-size:13px;color:var(--text-muted);position:relative;z-index:2">Welkom terug!</p>
+      </div>
+      <div style="position:relative;flex:0 0 auto;margin-right:-40px">
+        <svg style="position:absolute;top:50%;right:0;transform:translateY(-50%);opacity:0.12;z-index:1;pointer-events:none;width:180px;height:100px" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+          <!-- Heart shape -->
+          <path d="M 60 35 C 55 25 40 25 35 35 C 30 45 45 60 60 70 C 75 60 90 45 85 35 C 80 25 65 25 60 35" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+          <!-- Root lines down -->
+          <path d="M 45 70 Q 35 85 30 105" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 60 75 Q 60 95 60 115" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 75 70 Q 85 85 90 105" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <!-- Ground dot -->
+          <circle cx="60" cy="125" r="2.5" fill="currentColor"/>
         </svg>
-        <h2 style="background:none;-webkit-text-fill-color:var(--text-primary);color:var(--text-primary);font-size:36px;font-weight:700;margin-bottom:4px;margin-top:0;line-height:1.2;position:relative;z-index:2">MijnAnker</h2>
-        <p id="welcome-text" class="app-sub" style="margin-bottom:0;font-size:13px;color:var(--text-muted);position:relative;z-index:2">Hé, goed je te zien!</p>
-      </div>
-      <div style="text-align:right;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;height:100%">
-        <div class="date-day" id="date-day" style="font-size:20px;font-weight:700;color:var(--accent-warm);margin-bottom:0;line-height:1.2">Zondag</div>
-        <div class="date-label" id="date-month" style="font-size:13px;color:var(--text-muted);margin-top:2px">15 Juni</div>
       </div>
     </div>
-    <div style="border-bottom:1px solid rgba(212,132,92,0.2);margin-bottom:16px"></div>
+    <div style="height:1px;background:linear-gradient(90deg,rgba(74,155,127,0) 0%,rgba(74,155,127,0.3) 50%,rgba(74,155,127,0) 100%);margin-bottom:16px"></div>
     <div class="grid">
-      <button class="card" style="background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:20px" onclick="showScreen('medicatie')"><span class="card-icon">💊</span><span class="card-label">Medicatie</span><span class="card-sub">Zorg voor jezelf</span></button>
-      <button class="card" style="background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:20px" onclick="showScreen('agenda')"><span class="card-icon">📅</span><span class="card-label">Agenda</span><span class="card-sub">Wat staat je te wachten?</span></button>
+      <button class="card" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)" onclick="showScreen('medicatie')"><span class="card-icon">💊</span><span class="card-label">Medicatie</span><span class="card-sub">Zorg voor jezelf</span></button>
+      <button class="card" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)" onclick="showScreen('agenda')"><span class="card-icon">📅</span><span class="card-label">Agenda</span><span class="card-sub">Wat staat je te wachten?</span></button>
     </div>
     <div class="grid" style="margin-top:-4px">
-      <button class="card" style="background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:20px" onclick="showScreen('weekplanning')"><span class="card-icon">🗓️</span><span class="card-label">Weekplanning</span><span class="card-sub">Plan je dag</span></button>
-      <button class="card" style="background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:20px" onclick="showScreen('dagboek')"><span class="card-icon">📓</span><span class="card-label">Dagboek</span><span class="card-sub">Hoe gaat het met je?</span></button>
+      <button class="card" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)" onclick="showScreen('weekplanning')"><span class="card-icon">🗓️</span><span class="card-label">Weekplanning</span><span class="card-sub">Plan je dag</span></button>
+      <button class="card" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)" onclick="showScreen('dagboek')"><span class="card-icon">📓</span><span class="card-label">Dagboek</span><span class="card-sub">Hoe gaat het met je?</span></button>
     </div>
     <div class="grid" style="margin-top:-4px">
-      <button class="card" style="background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:18px;display:flex;gap:16px;align-items:center;grid-column:1/-1;width:100%" onclick="showScreen('gereedschappen')"><span class="card-icon">🧰</span><span class="card-label">Gereedschappen</span><span class="card-sub">Oefeningen, hulp & meer</span></button>
+      <button class="card" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:18px;display:flex;gap:16px;align-items:center;grid-column:1/-1;width:100%;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)" onclick="showScreen('gereedschappen')"><span class="card-icon">🧰</span><span class="card-label">Gereedschappen</span><span class="card-sub">Oefeningen, hulp & meer</span></button>
     </div>
     <div class="grid" style="margin-top:-4px">
-      <button class="card" style="background:linear-gradient(135deg,rgba(212,132,92,0.2),rgba(212,132,92,0.1));border:1.5px solid rgba(212,132,92,0.4);border-radius:16px;padding:18px;display:flex;gap:16px;align-items:center;grid-column:1/-1;width:100%" onclick="showScreen('acuut')"><span class="card-icon">🆘</span><span class="card-label">Acuut</span><span class="card-sub">Je bent niet alleen nodig?</span></button>
+      <button class="card" style="background:linear-gradient(135deg,rgba(220,38,38,0.3),rgba(185,28,28,0.2));border:none;border-radius:28px;padding:18px;display:flex;gap:16px;align-items:center;grid-column:1/-1;width:100%;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(220,38,38,0.08)" onclick="showScreen('acuut')"><span class="card-icon">🆘</span><span class="card-label">Acuut</span><span class="card-sub">Je hoeft dit niet alleen te doen</span></button>
     </div>
     <p class="greeting">Made by JW Design - MijnAnker</p>
   </div>
@@ -589,7 +850,6 @@ input:focus, textarea:focus, select:focus{
 
   <!-- PLAN -->
   <div class="screen" id="screen-plan">
-    <h2 class="section-title">Mijn Signaleringsplan</h2>
     <div class="plan-tab-btns">
       <button class="plan-tab active" id="tab-bekijk" onclick="switchPlanTab('bekijk')">👁 Bekijken</button>
       <button class="plan-tab" id="tab-bewerk" onclick="switchPlanTab('bewerk')">✏️ Bewerken</button>
@@ -616,31 +876,26 @@ input:focus, textarea:focus, select:focus{
 
   <!-- GEREEDSCHAPPEN -->
   <div class="screen" id="screen-gereedschappen">
-    <div style="text-align:center;margin-bottom:20px;padding-top:12px">
-      <div class="logo" style="width:60px;height:60px;font-size:32px;margin:0 auto 12px">🧰</div>
-      <h2 style="background:none;-webkit-text-fill-color:var(--text-primary);color:var(--text-primary);font-size:28px;font-weight:700;margin-bottom:4px">Gereedschappen</h2>
-      <p class="app-sub" style="margin-bottom:0;font-size:13px;color:var(--text-muted)">Hulpmiddelen voor moeilijke momenten</p>
-    </div>
     <div class="grid">
-      <button class="card" onclick="showScreen('checkin')" style="background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:20px"><span class="card-icon">🌡️</span><span class="card-label">Check-in</span><span class="card-sub">Check je gevoel</span></button>
-      <button class="card" onclick="showScreen('oefeningen')" style="background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:20px"><span class="card-icon">🧘</span><span class="card-label">Oefeningen</span><span class="card-sub">Adem in, ontspan</span></button>
+      <button class="card" onclick="showScreen('checkin')" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)"><span class="card-icon">🌡️</span><span class="card-label">Check-in</span><span class="card-sub">Check je gevoel</span></button>
+      <button class="card" onclick="showScreen('oefeningen')" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)"><span class="card-icon">🧘</span><span class="card-label">Oefeningen</span><span class="card-sub">Adem in, ontspan</span></button>
     </div>
     <div class="grid" style="margin-top:-4px">
-      <button class="card" onclick="showScreen('goedmoment')" style="background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:20px"><span class="card-icon">💛</span><span class="card-label">Goed Moment</span><span class="card-sub">Wat je sterker maakt</span></button>
-      <button class="card" onclick="showScreen('plan')" style="background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:20px"><span class="card-icon">📋</span><span class="card-label">Mijn Plan</span><span class="card-sub">Jouw voorzorgsmaatregel</span></button>
+      <button class="card" onclick="showScreen('goedmoment')" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)"><span class="card-icon">💛</span><span class="card-label">Goed Moment</span><span class="card-sub">Wat je sterker maakt</span></button>
+      <button class="card" onclick="showScreen('plan')" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)"><span class="card-icon">📋</span><span class="card-label">Mijn Plan</span><span class="card-sub">Jouw voorzorgsmaatregel</span></button>
     </div>
     <div class="grid" style="margin-top:-4px">
-      <button class="card" onclick="showScreen('contacten')" style="background:linear-gradient(135deg,rgba(26,35,50,0.6),rgba(26,35,50,0.3));border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:20px;grid-column:1/-1;width:100%"><span class="card-icon">☎️</span><span class="card-label">Contacten</span><span class="card-sub">Bel iemand die luistert</span></button>
+      <button class="card" onclick="showScreen('contacten')" style="background:linear-gradient(135deg,rgba(74,155,127,0.25) 0%,rgba(60,90,110,0.3) 50%,rgba(35,50,80,0.6) 100%);border:none;border-radius:28px;padding:20px;grid-column:1/-1;width:100%;box-shadow:0 12px 24px rgba(0,0,0,0.3),0 4px 8px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -2px 4px rgba(0,0,0,0.2),inset 0 0 20px rgba(74,155,127,0.06)"><span class="card-icon">☎️</span><span class="card-label">Contacten</span><span class="card-sub">Bel iemand die luistert</span></button>
     </div>
     <p class="greeting">Made by JW Design - MijnAnker</p>
   </div>
 
   <!-- OEFENINGEN -->
-  <div class="screen" id="screen-oefeningen"><h2 class="section-title">Oefeningen</h2><div id="oef-list"></div>
+  <div class="screen" id="screen-oefeningen"><div id="oef-list"></div>
     <p class="greeting">Made by JW Design - MijnAnker</p>
   </div>
   <div class="screen" id="screen-oefening-detail">
-    <h2 class="section-title" id="oef-detail-title"></h2>
+    <h2 class="section-title" id="oef-detail-title" style="display:none"></h2>
     <div class="step-card"><div class="step-num" id="step-num"></div><p class="step-tekst" id="step-tekst"></p><div class="step-btns" id="step-btns"></div></div>
   
     <p class="greeting">Made by JW Design - MijnAnker</p>
@@ -648,7 +903,6 @@ input:focus, textarea:focus, select:focus{
 
   <!-- CONTACTEN -->
   <div class="screen" id="screen-contacten">
-    <h2 class="section-title">Contacten uit je plan</h2>
     <div id="contacten-lijst" style="display:flex;flex-direction:column;gap:12px;margin-top:16px"></div>
     <p id="contacten-empty" style="color:var(--text-muted);text-align:center;margin-top:20px;font-size:14px">Nog geen contacten toegevoegd</p>
   
@@ -666,7 +920,7 @@ input:focus, textarea:focus, select:focus{
 
   <!-- DAGBOEK -->
   <div class="screen" id="screen-dagboek">
-    <h2 class="section-title">Dagboek</h2>
+    
     <div class="plan-tab-btns">
       <button class="plan-tab active" id="dag-tab-invoer" onclick="switchDagboekTab('invoer')">📝 Invoer</button>
       <button class="plan-tab" id="dag-tab-grafiek" onclick="switchDagboekTab('grafiek')">📊 Grafiek</button>
@@ -683,7 +937,7 @@ input:focus, textarea:focus, select:focus{
       </div>
       <textarea id="dagboek-tekst" rows="4" placeholder="Wat speelt er? (optioneel)"></textarea>
       <button class="save-btn" id="dagboek-save-btn" onclick="saveDagboek()">💾 Opslaan</button>
-      <button class="save-btn" id="dagboek-cancel-btn" onclick="cancelEdit()" style="display:none;background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);color:var(--text-muted)">✕ Annuleren</button>
+      <button class="save-btn" id="dagboek-cancel-btn" onclick="cancelEdit()" style="display:none;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;color:var(--text-muted)">✕ Annuleren</button>
     </div>
     <div id="dag-grafiek" style="display:none;flex-direction:column;gap:14px">
       <div class="plan-tab-btns" style="margin-bottom:0">
@@ -705,7 +959,7 @@ input:focus, textarea:focus, select:focus{
 
   <!-- GOED MOMENT -->
   <div class="screen" id="screen-goedmoment">
-    <h2 class="section-title">Goed Moment</h2>
+    
     <div class="plan-tab-btns">
       <button class="plan-tab active" id="gm-tab-lezen" onclick="switchGMTab('lezen')">💚 Lezen</button>
       <button class="plan-tab" id="gm-tab-schrijven" onclick="switchGMTab('schrijven')">✍️ Schrijven</button>
@@ -725,11 +979,12 @@ input:focus, textarea:focus, select:focus{
 
   <!-- AGENDA -->
   <div class="screen" id="screen-agenda">
-    <h2 class="section-title">Agenda</h2>
+    
     <div class="plan-block">
       <div class="plan-head">➕ Afspraak toevoegen</div>
       <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;width:100%;align-items:center;max-width:380px;margin-left:auto;margin-right:auto">
         <input class="edit-input" id="agenda-titel" placeholder="Omschrijving bijv. Afspraak behandelaar" style="width:100%"/>
+        <input class="edit-input" id="agenda-locatie" placeholder="Plaats/Locatie bijv. Thuis, Kantoor, Stad" style="width:100%"/>
         <div style="display:flex;gap:8px;width:100%">
           <input class="edit-input" id="agenda-datum" type="date" style="flex:1"/>
           <input class="edit-input" id="agenda-tijd" type="time" style="flex:1"/>
@@ -744,7 +999,7 @@ input:focus, textarea:focus, select:focus{
 
   <!-- MEDICATIE -->
   <div class="screen" id="screen-medicatie">
-    <h2 class="section-title">Medicatie</h2>
+    
     <div class="plan-tab-btns">
       <button class="plan-tab active" id="med-tab-vandaag" onclick="switchMedTab('vandaag')">✅ Vandaag</button>
       <button class="plan-tab" id="med-tab-lijst" onclick="switchMedTab('lijst')">💊 Mijn medicatie</button>
@@ -772,7 +1027,7 @@ input:focus, textarea:focus, select:focus{
 
   <!-- WEEKPLANNING -->
   <div class="screen" id="screen-weekplanning">
-    <h2 class="section-title">Weekplanning</h2>
+    
     <div class="week-nav">
       <button class="week-nav-btn" onclick="navigateWeek(-1)">‹</button>
       <span class="week-label" id="week-label"></span>
@@ -800,7 +1055,7 @@ input:focus, textarea:focus, select:focus{
         </div>
         <div style="display:flex;gap:8px">
           <button class="save-btn" onclick="saveTaak()" style="flex:1">💾 Opslaan</button>
-          <button class="save-btn" onclick="toggleTaakForm()" style="flex:0 0 auto;width:auto;padding:15px 16px;background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);color:var(--text-muted)">✕</button>
+          <button class="save-btn" onclick="toggleTaakForm()" style="flex:0 0 auto;width:auto;padding:15px 16px;background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;color:var(--text-muted)">✕</button>
         </div>
       </div>
       <div id="dag-taken-lijst"></div>
@@ -851,13 +1106,16 @@ function showScreen(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
   document.getElementById('header').style.display='flex';
+  document.getElementById('header-divider').style.display='block';
+  const titles={checkin:'Check-in',dagboek:'Dagboek',oefeningen:'Oefeningen','oefening-detail':'Oefeningen','mijn-plan':'Mijn Plan',plan:'Mijn Plan',gereedschappen:'Gereedschappen',acuut:'Acuut',contacten:'Contacten',agenda:'Agenda',weekplanning:'Week Planner',medicatie:'Medicatie',result:'Resultaat','goedmoment':'Goed Moment'};
+  document.getElementById('header-title').textContent=titles[name]||'Pagina';
   if(name==='checkin')initCheckin();if(name==='plan')renderPlan();if(name==='oefeningen')renderOefeningen();if(name==='acuut')renderAcuut();if(name==='contacten')renderContacten();
   if(name==='dagboek')renderDagboek();if(name==='goedmoment'){renderGoedMomenten();switchGMTab('lezen');}
   if(name==='agenda')renderAgenda();if(name==='medicatie'){renderMedVandaag();switchMedTab('vandaag');}if(name==='gereedschappen'){} if(name==='weekplanning')initWeekplanning();
   window.scrollTo(0,0);
 }
-function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-home').classList.add('active');document.getElementById('header').style.display='none';currentQ=0;scores=[];lastScreen='home';updateWelcomeText();window.scrollTo(0,0);}
-function updateWelcomeText(){const naam=localStorage.getItem('mijnAnker_username')||'';if(naam&&lastScreen==='home'){document.getElementById('welcome-text').textContent='Welkom '+naam+'!';}else if(lastScreen==='home'){document.getElementById('welcome-text').textContent='Hé, goed je te zien!';}updateDateDisplay();}
+function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-home').classList.add('active');document.getElementById('header').style.display='none';document.getElementById('header-divider').style.display='none';currentQ=0;scores=[];lastScreen='home';updateWelcomeText();window.scrollTo(0,0);}
+function updateWelcomeText(){const naam=localStorage.getItem('mijnAnker_username')||'';if(naam&&lastScreen==='home'){document.getElementById('welcome-text').textContent='Welkom terug, '+naam+'!';}else if(lastScreen==='home'){document.getElementById('welcome-text').textContent='Welkom terug!';}updateDateDisplay();}
 function updateDateDisplay(){const days=['Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag'];const months=['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];const now=new Date();const dayName=days[now.getDay()];const date=now.getDate();const monthName=months[now.getMonth()];const dayEl=document.getElementById('date-day');const monthEl=document.getElementById('date-month');if(dayEl)dayEl.textContent=dayName;if(monthEl)monthEl.textContent=date+' '+monthName;}
 function goBack(){
   const currentScreen = document.querySelector('.screen.active')?.id.replace('screen-', '');
@@ -865,8 +1123,13 @@ function goBack(){
     goHome();
   } else if(currentScreen === 'home'){
     goHome();
+  } else if(currentScreen === 'oefening-detail' && parentScreen === 'oefeningen'){
+    parentScreen='gereedschappen';
+    showScreen('oefeningen');
   } else if(parentScreen === 'gereedschappen'){
     showScreen('gereedschappen');
+  } else if(parentScreen === 'oefeningen'){
+    showScreen('oefeningen');
   } else {
     goHome();
   }
@@ -891,11 +1154,11 @@ function addItem(key){syncInputsToEditPlan();editPlan[key].push('');renderEditPl
 function addContact(){syncInputsToEditPlan();editPlan.contacten.push({naam:'',tel:''});renderEditPlan();}
 function savePlan(){syncInputsToEditPlan();['signalen','triggers','helpend'].forEach(key=>{editPlan[key]=editPlan[key].filter(v=>v.trim()!=='');});editPlan.contacten=editPlan.contacten.filter(c=>c.naam.trim()!==''||c.tel.trim()!=='');localStorage.setItem('mijnAnker_plan',JSON.stringify(editPlan));renderPlan();showToast('Plan opgeslagen 💙');}
 function renderOefeningen(){document.getElementById('oef-list').innerHTML=oefeningen.map((o,i)=>`<button class="oef-card" onclick="startOefening(${i})"><span class="oef-icon">${o.icon}</span><div><div class="oef-titel">${o.titel}</div><div class="oef-duur">${o.duur}</div></div><span class="arrow">›</span></button>`).join('');}
-function startOefening(i){activeOef=oefeningen[i];activeStep=0;document.getElementById('oef-detail-title').textContent=activeOef.icon+' '+activeOef.titel;renderStep();showScreen('oefening-detail');}
+function startOefening(i){activeOef=oefeningen[i];activeStep=0;parentScreen='oefeningen';document.getElementById('oef-detail-title').textContent=activeOef.icon+' '+activeOef.titel;renderStep();showScreen('oefening-detail');}
 function renderStep(){document.getElementById('step-num').textContent=`Stap ${activeStep+1} van ${activeOef.stappen.length}`;document.getElementById('step-tekst').textContent=activeOef.stappen[activeStep];let h='';if(activeStep>0)h+=`<button class="nav-btn" onclick="prevStep()">← Terug</button>`;if(activeStep<activeOef.stappen.length-1)h+=`<button class="nav-btn primary" onclick="nextStep()">Volgende →</button>`;else h+=`<button class="nav-btn done" onclick="showScreen('oefeningen')">✓ Klaar</button>`;document.getElementById('step-btns').innerHTML=h;}
 function nextStep(){activeStep++;renderStep();}function prevStep(){activeStep--;renderStep();}
-function renderAcuut(){const p=loadPlan();document.getElementById('acuut-contacten').innerHTML=p.contacten.map((c,i)=>{const is113=c.tel.includes('113');const style=is113?'background:linear-gradient(135deg,rgba(212,132,92,0.2),rgba(212,132,92,0.1));border:1.5px solid rgba(212,132,92,0.4)':'background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2)';return`<a href="tel:${c.tel}" style="${style};border-radius:16px;padding:16px 14px;display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--text-primary);transition:all 0.2s;box-shadow:0 4px 12px rgba(0,0,0,0.15)"><div style="display:flex;flex-direction:column;gap:4px"><div style="font-weight:bold">${escHtml(c.naam)}</div><div style="font-size:13px;color:var(--text-muted)">${c.tel}</div></div><div style="font-size:18px">📞</div></a>`;}).join('');}
-function renderContacten(){const p=loadPlan();const lijst=document.getElementById('contacten-lijst');const empty=document.getElementById('contacten-empty');if(p.contacten.length===0){lijst.innerHTML='';empty.style.display='block';}else{empty.style.display='none';lijst.innerHTML=p.contacten.map(c=>`<a href="tel:${c.tel}" style="background:rgba(26,35,50,0.6);border:1px solid rgba(212,132,92,0.2);border-radius:16px;padding:16px 14px;display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--text-primary);transition:background 0.2s"><div style="display:flex;flex-direction:column;gap:4px"><div style="font-weight:bold">${escHtml(c.naam)}</div><div style="font-size:13px;color:var(--text-muted)">${c.tel}</div></div><div style="font-size:18px">📞</div></a>`).join('');}}
+function renderAcuut(){const p=loadPlan();document.getElementById('acuut-contacten').innerHTML=p.contacten.map((c,i)=>{const is113=c.tel.includes('113');const style=is113?'background:linear-gradient(135deg,rgba(212,132,92,0.2),rgba(212,132,92,0.1));border:none':'background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none';return`<a href="tel:${c.tel}" style="${style};border-radius:16px;padding:16px 14px;display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--text-primary);transition:all 0.2s;box-shadow:0 2px 4px rgba(0,0,0,0.1);pointer-events:auto;cursor:pointer"><div style="display:flex;flex-direction:column;gap:4px;pointer-events:none"><div style="font-weight:bold">${escHtml(c.naam)}</div><div style="font-size:13px;color:var(--text-muted)">${c.tel}</div></div><div style="font-size:18px;pointer-events:none">📞</div></a>`;}).join('');}
+function renderContacten(){const p=loadPlan();const lijst=document.getElementById('contacten-lijst');const empty=document.getElementById('contacten-empty');if(p.contacten.length===0){lijst.innerHTML='';empty.style.display='block';}else{empty.style.display='none';lijst.innerHTML=p.contacten.map(c=>`<a href="tel:${c.tel}" style="background:linear-gradient(135deg,rgba(74,155,127,0.15) 0%,rgba(60,90,110,0.2) 50%,rgba(35,50,80,0.4) 100%);border:none;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,0.2),0 2px 4px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 15px rgba(74,155,127,0.03);position:relative;overflow:hidden;padding:16px 14px;display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--text-primary);transition:background 0.2s;pointer-events:auto;cursor:pointer"><div style="display:flex;flex-direction:column;gap:4px;pointer-events:none"><div style="font-weight:bold">${escHtml(c.naam)}</div><div style="font-size:13px;color:var(--text-muted)">${c.tel}</div></div><div style="font-size:18px;pointer-events:none">📞</div></a>`).join('');}}
 function switchDagboekTab(tab){dagboekTab=tab;['invoer','grafiek','lijst'].forEach(t=>{document.getElementById('dag-'+t).style.display='none';document.getElementById('dag-tab-'+t).classList.remove('active');});document.getElementById('dag-'+tab).style.display='flex';document.getElementById('dag-'+tab).style.flexDirection='column';document.getElementById('dag-tab-'+tab).classList.add('active');if(tab==='grafiek')renderGrafiek();if(tab==='lijst')renderEntries();}
 function switchRange(range){activeRange=range;['week','maand','jaar'].forEach(r=>document.getElementById('range-'+r).classList.toggle('active',r===range));renderGrafiek();}
 function selectMood(btn){document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedMood=btn.dataset.mood;}
@@ -915,24 +1178,24 @@ function renderGoedMomenten(){const m=loadGoedMomenten();const el=document.getEl
 function saveKladblok(){const titel=document.getElementById('kladblok-titel').value.trim();const tekst=document.getElementById('kladblok-tekst').value.trim();if(!titel&&!tekst){showToast('Vul een titel of tekst in');return;}const n=loadKladblok();n.unshift({id:Date.now(),titel:titel||'Notitie',tekst,datum:new Date().toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'})});saveKladblokToStorage(n);document.getElementById('kladblok-titel').value='';document.getElementById('kladblok-tekst').value='';renderKladblok();showToast('Kladblok opgeslagen 💙');}
 function deleteKladblok(id){if(!confirm('Kladblok verwijderen?'))return;saveKladblokToStorage(loadKladblok().filter(n=>n.id!==id));renderKladblok();showToast('Verwijderd');}
 function renderKladblok(){const n=loadKladblok();const el=document.getElementById('kladblok-lijst');if(!n.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:16px 0">Nog geen kladblok aantekeningen</p>';return;}el.innerHTML=n.map(x=>`<div class="notitie-card"><div class="notitie-header"><span class="notitie-titel-txt">${escHtml(x.titel)}</span><span class="notitie-datum">${x.datum}</span></div>${x.tekst?`<div class="notitie-inhoud">${escHtml(x.tekst)}</div>`:''}<div class="notitie-actions"><button class="entry-action-btn delete" onclick="deleteKladblok(${x.id})">🗑 Verwijderen</button></div></div>`).join('');}
-function saveAfspraak(){const titel=document.getElementById('agenda-titel').value.trim();const datum=document.getElementById('agenda-datum').value;const tijd=document.getElementById('agenda-tijd').value;if(!titel||!datum||!tijd){showToast('Vul alle velden in');return;}const ts=new Date(datum+'T'+tijd).getTime();const a=loadAfspraken();a.push({id:Date.now(),titel,datum,tijd,ts,datumStr:new Date(datum+'T'+tijd).toLocaleDateString('nl-NL',{weekday:'short',day:'numeric',month:'long',year:'numeric'})});a.sort((x,y)=>x.ts-y.ts);saveAfsprakenToStorage(a);document.getElementById('agenda-titel').value='';document.getElementById('agenda-datum').value='';document.getElementById('agenda-tijd').value='';renderAgenda();showToast('Afspraak opgeslagen 📅');}
-function deleteAfspraak(id){if(!confirm('Afspraak verwijderen?'))return;saveAfsprakenToStorage(loadAfspraken().filter(a=>a.id!==id));renderAgenda();if(selectedDayKey)renderWeekDay(selectedDayKey);showToast('Verwijderd');}
-function renderAgenda(){const a=loadAfspraken();const el=document.getElementById('agenda-lijst');const now=Date.now();if(!a.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:16px 0">Nog geen afspraken</p>';return;}el.innerHTML=a.map(x=>`<div class="afspraak-card ${x.ts<now?'verlopen':''}"><div class="afspraak-titel">${escHtml(x.titel)}</div><div class="afspraak-tijd">📅 ${x.datumStr} · ${x.tijd}</div>${x.ts<now?'<div style="color:var(--text-muted);font-size:11px;margin-top:3px">Verlopen</div>':''}<div class="afspraak-actions"><button class="entry-action-btn delete" onclick="deleteAfspraak(${x.id})">🗑 Verwijderen</button></div></div>`).join('');}
+function saveAfspraak(){const titel=document.getElementById('agenda-titel').value.trim();const locatie=document.getElementById('agenda-locatie').value.trim();const datum=document.getElementById('agenda-datum').value;const tijd=document.getElementById('agenda-tijd').value;if(!titel||!datum||!tijd){showToast('Vul alle velden in');return;}const parts=datum.split('-');const datumStr=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2])).toLocaleDateString('nl-NL',{weekday:'short',day:'numeric',month:'long',year:'numeric'});const a=loadAfspraken();a.push({id:Date.now(),titel,locatie,datum,tijd,ts:Date.now(),datumStr});a.sort((x,y)=>x.datum.localeCompare(y.datum));saveAfsprakenToStorage(a);document.getElementById('agenda-titel').value='';document.getElementById('agenda-locatie').value='';document.getElementById('agenda-datum').value='';document.getElementById('agenda-tijd').value='';renderAgenda();showToast('Afspraak opgeslagen 📅');}
+function deleteAfspraak(id){if(!confirm('Afspraak verwijderen?'))return;const numId=parseInt(id);saveAfsprakenToStorage(loadAfspraken().filter(a=>a.id!==numId));renderAgenda();if(selectedDayKey)renderWeekDay(selectedDayKey);showToast('Verwijderd');}
+function renderAgenda(){const a=loadAfspraken();const el=document.getElementById('agenda-lijst');const today=new Date().toISOString().slice(0,10);if(!a.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:16px 0">Nog geen afspraken</p>';return;}el.innerHTML=a.map(x=>`<div class="afspraak-card ${x.datum<today?'verlopen':''}"><div class="afspraak-titel">${escHtml(x.titel)}</div>${x.locatie?`<div style="color:var(--text-muted);font-size:12px;margin-top:2px">📍 ${escHtml(x.locatie)}</div>`:''}<div class="afspraak-tijd">📅 ${x.datumStr} · ${x.tijd}</div>${x.datum<today?'<div style="color:var(--text-muted);font-size:11px;margin-top:3px">Verlopen</div>':''}<div class="afspraak-actions"><button class="entry-action-btn delete" onclick="deleteAfspraak('${x.id}')">🗑 Verwijderen</button></div></div>`).join('');};
 function switchMedTab(tab){document.getElementById('med-tab-vandaag').classList.toggle('active',tab==='vandaag');document.getElementById('med-tab-lijst').classList.toggle('active',tab==='lijst');document.getElementById('med-vandaag').style.display=tab==='vandaag'?'flex':'none';document.getElementById('med-lijst').style.display=tab==='lijst'?'flex':'none';if(tab==='vandaag')renderMedVandaag();if(tab==='lijst')renderMedBeheer();}
 function saveMedicatie(){const naam=document.getElementById('med-naam').value.trim();const dosering=document.getElementById('med-dosering').value.trim();const moment=document.getElementById('med-moment').value.trim();const info=document.getElementById('med-info').value.trim();if(!naam){showToast('Vul een naam in');return;}const l=loadMedicatie();l.push({id:Date.now(),naam,dosering,moment,info});saveMedicatieToStorage(l);document.getElementById('med-naam').value='';document.getElementById('med-dosering').value='';document.getElementById('med-moment').value='';document.getElementById('med-info').value='';renderMedBeheer();showToast('Medicatie toegevoegd 💊');}
 function deleteMedicatie(id){if(!confirm('Medicatie verwijderen?'))return;saveMedicatieToStorage(loadMedicatie().filter(m=>m.id!==id));renderMedBeheer();renderMedVandaag();showToast('Verwijderd');}
 function toggleMedCheck(id){const s=loadCheckState();s[id]=!s[id];saveCheckState(s);renderMedVandaag();}
-function renderMedVandaag(){const lijst=loadMedicatie();const state=loadCheckState();const el=document.getElementById('med-check-lijst');document.getElementById('med-datum-label').textContent=new Date().toLocaleDateString('nl-NL',{weekday:'long',day:'numeric',month:'long'});if(!lijst.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:12px 0">Voeg medicatie toe via het tabblad "Mijn medicatie"</p>';return;}const genomen=lijst.filter(m=>state[m.id]).length;el.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"><span style="color:var(--text-muted);font-size:13px">${genomen} van ${lijst.length} genomen</span><span style="font-size:13px">${genomen===lijst.length?'🎉 Alles genomen!':''}</span></div><div style="background:rgba(255,255,255,.06);border-radius:8px;height:6px;overflow:hidden;margin-bottom:12px"><div style="background:var(--green);height:100%;width:${lijst.length?(genomen/lijst.length*100):0}%;border-radius:8px;transition:width .4s"></div></div>`+lijst.map(m=>{const g=!!state[m.id];return`<div onclick="toggleMedCheck(${m.id})" style="display:flex;align-items:center;gap:12px;padding:12px;background:${g?'rgba(16,185,129,.12)':'rgba(255,255,255,.04)'};border:1px solid ${g?'rgba(16,185,129,.3)':'rgba(255,255,255,.1)'};border-radius:14px;cursor:pointer;margin-bottom:6px"><div style="width:26px;height:26px;border-radius:8px;border:2px solid ${g?'#10b981':'rgba(255,255,255,.2)'};background:${g?'#10b981':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">${g?'✓':''}</div><div style="flex:1"><div style="color:${g?'#94a3b8':'var(--text-primary)'};font-size:15px;${g?'text-decoration:line-through':''}">${escHtml(m.naam)}${m.dosering?` <span style="color:var(--purple);font-size:13px">${escHtml(m.dosering)}</span>`:''}</div>${m.moment?`<div style="color:var(--text-muted);font-size:12px;margin-top:2px">🕐 ${escHtml(m.moment)}</div>`:''}</div></div>`;}).join('');}
+function renderMedVandaag(){const lijst=loadMedicatie();const state=loadCheckState();const el=document.getElementById('med-check-lijst');document.getElementById('med-datum-label').textContent=new Date().toLocaleDateString('nl-NL',{weekday:'long',day:'numeric',month:'long'});if(!lijst.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:12px 0">Voeg medicatie toe via het tabblad "Mijn medicatie"</p>';return;}const genomen=lijst.filter(m=>state[m.id]).length;el.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"><span style="color:var(--text-muted);font-size:13px">${genomen} van ${lijst.length} genomen</span><span style="font-size:13px">${genomen===lijst.length?'🎉 Alles genomen!':''}</span></div><div style="background:rgba(255,255,255,.06);border-radius:8px;height:6px;overflow:hidden;margin-bottom:12px"><div style="background:var(--green);height:100%;width:${lijst.length?(genomen/lijst.length*100):0}%;border-radius:8px;transition:width .4s"></div></div>`+lijst.map(m=>{const g=!!state[m.id];return`<div onclick="toggleMedCheck(${m.id})" style="display:flex;align-items:center;gap:12px;padding:12px;background:${g?'rgba(16,185,129,.12)':'rgba(255,255,255,.04)'};border:none;box-shadow:0 4px 8px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1);border-radius:14px;cursor:pointer;margin-bottom:6px"><div style="width:26px;height:26px;border-radius:8px;border:1px solid ${g?'#10b981':'rgba(255,255,255,.2)'};background:${g?'#10b981':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">${g?'✓':''}</div><div style="flex:1"><div style="color:${g?'#94a3b8':'var(--text-primary)'};font-size:15px;${g?'text-decoration:line-through':''}">${escHtml(m.naam)}${m.dosering?` <span style="color:var(--purple);font-size:13px">${escHtml(m.dosering)}</span>`:''}</div>${m.moment?`<div style="color:var(--text-muted);font-size:12px;margin-top:2px">🕐 ${escHtml(m.moment)}</div>`:''}</div></div>`;}).join('');}
 function renderMedBeheer(){const l=loadMedicatie();const el=document.getElementById('med-beheer-lijst');if(!l.length){el.innerHTML='<p style="color:var(--text-muted);font-size:13px;text-align:center;padding:12px 0">Nog geen medicatie toegevoegd</p>';return;}el.innerHTML=l.map(m=>`<div class="notitie-card"><div class="notitie-header"><span class="notitie-titel-txt">💊 ${escHtml(m.naam)}</span>${m.dosering?`<span style="color:var(--purple);font-size:13px">${escHtml(m.dosering)}</span>`:''}</div>${m.moment?`<div style="color:var(--text-muted);font-size:13px;margin-bottom:3px">🕐 ${escHtml(m.moment)}</div>`:''}${m.info?`<div class="notitie-inhoud">ℹ️ ${escHtml(m.info)}</div>`:''}<div class="notitie-actions"><button class="entry-action-btn delete" onclick="deleteMedicatie(${m.id})">🗑 Verwijderen</button></div></div>`).join('');}
 const DAGEN=['zo','ma','di','wo','do','vr','za'];const DAGEN_LANG=['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];const MAANDEN=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
-function getWeekStart(offset){const now=new Date();const day=now.getDay();const monday=new Date(now);monday.setDate(now.getDate()-((day+6)%7)+offset*7);monday.setHours(0,0,0,0);return monday;}
-function dateToKey(d){return d.toISOString().slice(0,10);}
+function getWeekStart(offset){const today=new Date();const day=today.getDay();const diff=today.getDate()-day+(day===0?-6:1);const monday=new Date(today.getFullYear(),today.getMonth(),diff);monday.setDate(monday.getDate()+offset*7);return monday;}
+function dateToKey(d){const year=d.getFullYear();const month=String(d.getMonth()+1).padStart(2,'0');const date=String(d.getDate()).padStart(2,'0');return `${year}-${month}-${date}`;}
 function initWeekplanning(){const ws=getWeekStart(weekOffset);const we=new Date(ws);we.setDate(ws.getDate()+6);document.getElementById('week-label').textContent=`${ws.getDate()} ${MAANDEN[ws.getMonth()]} – ${we.getDate()} ${MAANDEN[we.getMonth()]}`;const container=document.getElementById('week-days');const today=dateToKey(new Date());if(!selectedDayKey||!isInWeek(selectedDayKey,ws))selectedDayKey=today;container.innerHTML='';for(let i=0;i<7;i++){const d=new Date(ws);d.setDate(ws.getDate()+i);const key=dateToKey(d);const taken=loadTaken(key);const afspraken=getAfsprakenForDay(key);const hasItems=taken.length>0||afspraken.length>0;const btn=document.createElement('button');btn.className=`week-day-btn${key===selectedDayKey?' active':''}${key===today?' today':''}${hasItems?' has-items':''}`;btn.innerHTML=`<span>${DAGEN[d.getDay()]}</span><span class="day-num">${d.getDate()}</span><div class="day-dot"></div>`;btn.onclick=()=>selectDay(key,btn);container.appendChild(btn);}renderWeekDay(selectedDayKey);}
-function isInWeek(key,ws){const d=new Date(key);const we=new Date(ws);we.setDate(ws.getDate()+6);return d>=ws&&d<=we;}
+function isInWeek(key,ws){const wsKey=dateToKey(ws);const weKey=dateToKey(new Date(ws.getFullYear(),ws.getMonth(),ws.getDate()+6));return key>=wsKey&&key<=weKey;}
 function selectDay(key,btn){selectedDayKey=key;document.querySelectorAll('.week-day-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderWeekDay(key);if(taakFormOpen)toggleTaakForm();}
 function navigateWeek(dir){weekOffset+=dir;initWeekplanning();}
 function getAfsprakenForDay(dayKey){return loadAfspraken().filter(a=>a.datum===dayKey);}
-function renderWeekDay(dayKey){const d=new Date(dayKey);const afspraken=getAfsprakenForDay(dayKey);const afsprEl=document.getElementById('dag-afspraken-lijst');if(!afspraken.length){afsprEl.innerHTML=`<p class="week-leeg">Geen afspraken</p>`;}else{afsprEl.innerHTML=afspraken.map(a=>`<div class="afspraak-item"><span class="afspraak-tijd-badge">${a.tijd}</span><div class="afspraak-info"><div class="afspraak-naam">${escHtml(a.titel)}</div></div><button class="afspraak-del" onclick="deleteAfspraakFromWeek(${a.id})">×</button></div>`).join('');}const taken=loadTaken(dayKey);const takenEl=document.getElementById('dag-taken-lijst');if(!taken.length){takenEl.innerHTML=`<p class="week-leeg">Geen taken — voeg er een toe!</p>`;}else{takenEl.innerHTML=taken.map((t,i)=>`<div class="taak-item${t.gedaan?' gedaan':''}" onclick="toggleTaak('${dayKey}',${i})"><div class="taak-check">${t.gedaan?'✓':''}</div><div class="taak-tekst">${escHtml(t.tekst)}</div><span class="taak-cat" style="background:${t.color}22;color:${t.color}">${t.cat}</span><button class="taak-del" onclick="event.stopPropagation();deleteTaak('${dayKey}',${i})">×</button>
+function renderWeekDay(dayKey){const d=new Date(dayKey);const afspraken=getAfsprakenForDay(dayKey);const afsprEl=document.getElementById('dag-afspraken-lijst');if(!afspraken.length){afsprEl.innerHTML=`<p class="week-leeg">Geen afspraken</p>`;}else{afsprEl.innerHTML=afspraken.map(a=>`<div class="afspraak-item"><span class="afspraak-tijd-badge">${a.tijd}</span><div class="afspraak-info"><div class="afspraak-naam">${escHtml(a.titel)}</div></div><button class="afspraak-del" onclick="deleteAfspraakFromWeek('${a.id}')">×</button></div>`).join('');}const taken=loadTaken(dayKey);const takenEl=document.getElementById('dag-taken-lijst');if(!taken.length){takenEl.innerHTML=`<p class="week-leeg">Geen taken — voeg er een toe!</p>`;}else{takenEl.innerHTML=taken.map((t,i)=>`<div class="taak-item${t.gedaan?' gedaan':''}" onclick="toggleTaak('${dayKey}',${i})"><div class="taak-check">${t.gedaan?'✓':''}</div><div class="taak-tekst">${escHtml(t.tekst)}</div><span class="taak-cat" style="background:${t.color}22;color:${t.color}">${t.cat}</span><button class="taak-del" onclick="event.stopPropagation();deleteTaak('${dayKey}',${i})">×</button>
     <p class="greeting">Made by JW Design - MijnAnker</p>
   </div>`).join('');}}
 function toggleTaakForm(){taakFormOpen=!taakFormOpen;document.getElementById('taak-form').style.display=taakFormOpen?'flex':'none';if(taakFormOpen)setTimeout(()=>document.getElementById('taak-input').focus(),50);}
@@ -940,16 +1203,15 @@ function selectCat(btn){document.querySelectorAll('.cat-btn').forEach(b=>b.class
 function saveTaak(){const tekst=document.getElementById('taak-input').value.trim();if(!tekst){showToast('Vul een taak in');return;}if(!selectedCat){showToast('Kies een categorie');return;}const taken=loadTaken(selectedDayKey);taken.push({tekst,cat:selectedCat.cat,color:selectedCat.color,gedaan:false});saveTaken(selectedDayKey,taken);document.getElementById('taak-input').value='';document.querySelectorAll('.cat-btn').forEach(b=>{b.classList.remove('selected');b.style.background='';b.style.borderColor='';b.style.color='';});selectedCat=null;toggleTaakForm();renderWeekDay(selectedDayKey);initWeekplanning();showToast('Taak toegevoegd ✅');}
 function toggleTaak(dayKey,i){const taken=loadTaken(dayKey);taken[i].gedaan=!taken[i].gedaan;saveTaken(dayKey,taken);renderWeekDay(dayKey);}
 function deleteTaak(dayKey,i){const taken=loadTaken(dayKey);taken.splice(i,1);saveTaken(dayKey,taken);renderWeekDay(dayKey);initWeekplanning();showToast('Taak verwijderd');}
-function deleteAfspraakFromWeek(id){if(!confirm('Afspraak verwijderen?'))return;saveAfsprakenToStorage(loadAfspraken().filter(a=>a.id!==id));renderWeekDay(selectedDayKey);initWeekplanning();showToast('Verwijderd');}
+function deleteAfspraakFromWeek(id){if(!confirm('Afspraak verwijderen?'))return;const numId=parseInt(id);saveAfsprakenToStorage(loadAfspraken().filter(a=>a.id!==numId));renderWeekDay(selectedDayKey);initWeekplanning();showToast('Verwijderd');}
 function selectOS(os){document.getElementById('os-iphone').classList.toggle('active',os==='iphone');document.getElementById('os-android').classList.toggle('active',os==='android');document.getElementById('steps-iphone').style.display=os==='iphone'?'flex':'none';document.getElementById('steps-android').style.display=os==='android'?'flex':'none';}
-function enterApp(){document.getElementById('install-screen').classList.remove('active');localStorage.setItem('mijnAnker_seen_install','1');}
+function enterApp(){document.getElementById('install-screen').classList.remove('active');document.getElementById('naam-modal').classList.add('active');localStorage.setItem('mijnAnker_seen_install','1');}
 function checkInstallScreen(){const seen=localStorage.getItem('mijnAnker_seen_install');const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;if(isStandalone)return;if(!seen){document.getElementById('install-screen').classList.add('active');if(/android/i.test(navigator.userAgent))selectOS('android');}}
 
 let disclaimerShown = false;
-function acceptDisclaimer(){localStorage.setItem('mijnAnker_disclaimer_accepted','1');document.getElementById('disclaimer-modal').classList.remove('active');checkNaam()?goHome():checkDisclaimer();}
 function saveNaamAndContinue(){const naam=document.getElementById('naam-input-modal').value.trim();if(!naam){alert('Vul alsjeblieft je naam in');return;}localStorage.setItem('mijnAnker_username',naam);document.getElementById('naam-modal').classList.remove('active');goHome();updateWelcomeText();}
 function checkNaam(){if(!localStorage.getItem('mijnAnker_username')){return false;}return true;}
-function checkDisclaimer(){if(!localStorage.getItem('mijnAnker_disclaimer_accepted') && !disclaimerShown){document.getElementById('disclaimer-modal').classList.add('active');disclaimerShown=true;}else if(!checkNaam()){document.getElementById('naam-modal').classList.add('active');}}
+function checkDisclaimer(){if(!localStorage.getItem('mijnAnker_seen_install')){document.getElementById('install-screen').classList.add('active');}else if(!checkNaam()){document.getElementById('naam-modal').classList.add('active');}}
 
 
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});window.addEventListener('appinstalled',()=>showToast('MijnAnker toegevoegd 🎉'));checkInstallScreen();
