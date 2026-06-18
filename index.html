@@ -564,6 +564,35 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
 .item-delete-btn:active{background:var(--warm-bg);color:var(--warm);}
 .contact-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;gap:8px;}
 .mood-tooltip{position:absolute;display:none;transform:translate(-50%,-115%);background:var(--card);border:1px solid rgba(74,122,92,0.18);border-radius:12px;padding:8px 12px;box-shadow:0 4px 14px rgba(74,122,92,0.12);font-size:12.5px;white-space:nowrap;pointer-events:none;z-index:5;}
+
+/* Pincode scherm */
+.pin-screen{display:none;position:fixed;inset:0;z-index:1000;background:var(--cream);flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;}
+.pin-screen.active{display:flex;}
+.pin-anchor{width:46px;height:46px;color:var(--green-deep);margin-bottom:18px;}
+.pin-title{font-family:'Fraunces',serif;font-size:21px;font-weight:600;color:var(--ink);margin-bottom:6px;text-align:center;}
+.pin-sub{color:var(--ink-soft);font-size:13px;margin-bottom:28px;text-align:center;max-width:280px;}
+.pin-dots{display:flex;gap:14px;margin-bottom:32px;height:16px;align-items:center;}
+.pin-dot{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line);background:transparent;transition:background .15s,border-color .15s,transform .15s;}
+.pin-dot.filled{background:var(--green);border-color:var(--green);}
+.pin-dots.shake{animation:pinShake .4s;}
+@keyframes pinShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-6px);}80%{transform:translateX(6px);}}
+.pin-error{color:var(--warm);font-size:12.5px;height:16px;margin-bottom:14px;text-align:center;}
+.pin-pad{display:grid;grid-template-columns:repeat(3,64px);gap:14px;justify-content:center;}
+.pin-key{width:64px;height:64px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:22px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.pin-key:active{background:var(--moss);}
+.pin-key.ghost{background:transparent;border:none;cursor:default;}
+.pin-key.del{font-size:18px;color:var(--ink-soft);}
+.pin-forgot{margin-top:26px;color:var(--ink-soft);font-size:12.5px;text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;}
+.pin-skip{margin-top:14px;color:var(--ink-soft);font-size:12.5px;text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;}
+
+/* Beveiliging instellingen */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px;}
+.toggle-row .text{flex:1;}
+.toggle-row .card-label{margin-bottom:2px;}
+.toggle-switch{width:46px;height:27px;border-radius:30px;background:var(--line);position:relative;cursor:pointer;flex-shrink:0;border:none;padding:0;transition:background .2s;}
+.toggle-switch.on{background:var(--green);}
+.toggle-switch .knob{position:absolute;top:2.5px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform .2s;}
+.toggle-switch.on .knob{transform:translateX(19px);}
 </style>
 </head>
 <body>
@@ -612,6 +641,46 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
     <p class="disclaimer-footnote">Door op "App starten" te klikken, ga je akkoord met de disclaimer en ben je je bewust van je eigen verantwoordelijkheid voor je gezondheid.</p>
     <button class="save-btn" onclick="saveNaamAndContinue()" style="margin-top:14px">App starten</button>
   </div>
+</div>
+
+<!-- Pincode instellen (eerste keer) -->
+<div class="pin-screen" id="pin-setup-screen">
+  <svg class="pin-anchor" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="16" r="7" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="50" y1="23" x2="50" y2="82" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="36" y1="34" x2="64" y2="34" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 C16 75, 31 88, 50 88 C 69 88, 84 75, 84 56" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 L 24 50 M16 56 L 24 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M84 56 L 76 50 M84 56 L 76 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+  </svg>
+  <div class="pin-title" id="pin-setup-title">Stel een pincode in</div>
+  <div class="pin-sub">Bescherm je persoonlijke gegevens met een pincode van 4 cijfers. Je hebt deze nodig om de app te openen.</div>
+  <div class="pin-dots" id="pin-setup-dots">
+    <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+  </div>
+  <div class="pin-error" id="pin-setup-error"></div>
+  <div class="pin-pad" id="pin-setup-pad"></div>
+  <button class="pin-skip" onclick="skipPinSetup()">Later instellen</button>
+</div>
+
+<!-- Pincode invoeren (vergrendelscherm) -->
+<div class="pin-screen" id="pin-lock-screen">
+  <svg class="pin-anchor" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="16" r="7" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="50" y1="23" x2="50" y2="82" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="36" y1="34" x2="64" y2="34" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 C16 75, 31 88, 50 88 C 69 88, 84 75, 84 56" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 L 24 50 M16 56 L 24 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M84 56 L 76 50 M84 56 L 76 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+  </svg>
+  <div class="pin-title">Welkom terug</div>
+  <div class="pin-sub">Voer je pincode in om MijnAnker te openen.</div>
+  <div class="pin-dots" id="pin-lock-dots">
+    <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+  </div>
+  <div class="pin-error" id="pin-lock-error">&nbsp;</div>
+  <div class="pin-pad" id="pin-lock-pad"></div>
+  <button class="pin-forgot" onclick="forgotPin()">Pincode vergeten?</button>
 </div>
 
 <div class="screen active" id="screen-home">
@@ -724,6 +793,31 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l4.5-7 4 4 4.5-9 5 6"/></svg>
       <div class="card-label">Stemming Meter</div><div class="card-sub">Bekijk je trend over tijd</div>
     </button>
+    <button class="card" onclick="goTo('instellingen')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      <div class="card-label">Instellingen</div><div class="card-sub">Pincode en beveiliging</div>
+    </button>
+  </div>
+</div>
+
+<div class="screen" id="screen-instellingen">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Instellingen</h2></div>
+  <div style="padding:0 18px 32px">
+    <div class="section-label" style="margin-bottom:10px">Beveiliging</div>
+    <div class="toggle-row">
+      <div class="text">
+        <div class="card-label">Pincode vergrendeling</div>
+        <div class="card-sub" id="pin-toggle-sub">Uit</div>
+      </div>
+      <button class="toggle-switch" id="pin-toggle" onclick="togglePinLock()"><div class="knob"></div></button>
+    </div>
+    <button class="card" id="pin-change-btn" onclick="startChangePin()" style="display:none">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+      <div class="card-label">Pincode wijzigen</div><div class="card-sub">Stel een nieuwe code in</div>
+    </button>
+    <div style="margin-top:18px;padding:14px 16px;background:var(--moss);border-radius:14px">
+      <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.6">Je pincode wordt alleen op dit apparaat opgeslagen, niet verstuurd of gedeeld. Vergeet je de code, dan kun je 'm resetten — let op: je gegevens blijven dan gewoon bewaard.</div>
+    </div>
   </div>
 </div>
 
@@ -1064,6 +1158,7 @@ function saveNaamAndContinue(){
   saveData('username',naam);
   document.getElementById('naam-modal').classList.remove('active');
   document.getElementById('home-greeting').textContent='Welkom terug, '+naam;
+  openPinSetup();
 }
 
 let screenHistory=['home'];
@@ -1096,6 +1191,7 @@ function goTo(screen, fromBack){
   if(screen==='goedmoment')renderGoedMomenten();
   if(screen==='stemmingmeter')renderStemmingMeter();
   if(screen==='weekoverzicht'){ weekOvzOffset=0; renderWeekOvz(); }
+  if(screen==='instellingen')renderPinSettings();
   if(screen==='home')renderHomeMoodTile();
 }
 function goBack(){
@@ -1881,6 +1977,143 @@ function renderWeekOvz() {
 function weekOvzPrev() { weekOvzOffset--; renderWeekOvz(); }
 function weekOvzNext() { if (weekOvzOffset < 0) { weekOvzOffset++; renderWeekOvz(); } }
 
+/* ===== Pincode beveiliging ===== */
+let pinEntryBuffer='';
+let pinSetupBuffer='';
+let pinSetupStage='create'; // 'create' of 'confirm'
+let pinFirstEntry='';
+
+function getStoredPin(){ return loadData('appPin', null); }
+function isPinEnabled(){ return !!getStoredPin(); }
+
+function buildPinPad(padId, buffer, onDigit){
+  const pad=document.getElementById(padId);
+  const layout=['1','2','3','4','5','6','7','8','9','','0','del'];
+  pad.innerHTML=layout.map(function(k){
+    if(k===''){return '<div class="pin-key ghost"></div>';}
+    if(k==='del'){return '<button class="pin-key del" onclick="'+onDigit+'(\'del\')">⌫</button>';}
+    return '<button class="pin-key" onclick="'+onDigit+'(\''+k+'\')">'+k+'</button>';
+  }).join('');
+}
+
+function updatePinDots(dotsId, length){
+  const dots=document.querySelectorAll('#'+dotsId+' .pin-dot');
+  dots.forEach(function(d,i){ d.classList.toggle('filled', i<length); });
+}
+
+function shakeDots(dotsId){
+  const el=document.getElementById(dotsId);
+  el.classList.add('shake');
+  setTimeout(function(){ el.classList.remove('shake'); },400);
+}
+
+/* --- Setup flow (eerste keer of wijzigen) --- */
+let pinSetupContext='onboarding'; // 'onboarding' | 'settings-new' | 'settings-change'
+function openPinSetup(context){
+  pinSetupContext=context||'onboarding';
+  pinSetupStage='create';
+  pinSetupBuffer='';
+  pinFirstEntry='';
+  document.getElementById('pin-setup-title').textContent='Stel een pincode in';
+  document.getElementById('pin-setup-error').textContent='';
+  updatePinDots('pin-setup-dots',0);
+  buildPinPad('pin-setup-pad','pinSetupBuffer','pinSetupDigit');
+  document.getElementById('pin-setup-screen').classList.add('active');
+}
+function skipPinSetup(){
+  document.getElementById('pin-setup-screen').classList.remove('active');
+  if(pinSetupContext==='settings-new'||pinSetupContext==='settings-change'){
+    renderPinSettings();
+  }
+}
+function pinSetupDigit(k){
+  const errEl=document.getElementById('pin-setup-error');
+  if(k==='del'){ pinSetupBuffer=pinSetupBuffer.slice(0,-1); updatePinDots('pin-setup-dots',pinSetupBuffer.length); return; }
+  if(pinSetupBuffer.length>=4) return;
+  pinSetupBuffer+=k;
+  updatePinDots('pin-setup-dots',pinSetupBuffer.length);
+  if(pinSetupBuffer.length===4){
+    if(pinSetupStage==='create'){
+      pinFirstEntry=pinSetupBuffer;
+      pinSetupStage='confirm';
+      pinSetupBuffer='';
+      errEl.textContent='';
+      document.getElementById('pin-setup-title').textContent='Bevestig je pincode';
+      setTimeout(function(){ updatePinDots('pin-setup-dots',0); },150);
+    } else {
+      if(pinSetupBuffer===pinFirstEntry){
+        saveData('appPin', pinFirstEntry);
+        document.getElementById('pin-setup-screen').classList.remove('active');
+        if(pinSetupContext==='settings-new'||pinSetupContext==='settings-change'){
+          renderPinSettings();
+        }
+      } else {
+        errEl.textContent='Pincodes komen niet overeen, probeer opnieuw';
+        shakeDots('pin-setup-dots');
+        pinSetupStage='create';
+        pinSetupBuffer='';
+        pinFirstEntry='';
+        document.getElementById('pin-setup-title').textContent='Stel een pincode in';
+        setTimeout(function(){ updatePinDots('pin-setup-dots',0); },400);
+      }
+    }
+  }
+}
+
+/* --- Lock flow (bij elke opstart) --- */
+function openPinLock(){
+  pinEntryBuffer='';
+  updatePinDots('pin-lock-dots',0);
+  document.getElementById('pin-lock-error').innerHTML='&nbsp;';
+  buildPinPad('pin-lock-pad','pinEntryBuffer','pinLockDigit');
+  document.getElementById('pin-lock-screen').classList.add('active');
+}
+function pinLockDigit(k){
+  const errEl=document.getElementById('pin-lock-error');
+  if(k==='del'){ pinEntryBuffer=pinEntryBuffer.slice(0,-1); updatePinDots('pin-lock-dots',pinEntryBuffer.length); return; }
+  if(pinEntryBuffer.length>=4) return;
+  pinEntryBuffer+=k;
+  updatePinDots('pin-lock-dots',pinEntryBuffer.length);
+  if(pinEntryBuffer.length===4){
+    if(pinEntryBuffer===getStoredPin()){
+      document.getElementById('pin-lock-screen').classList.remove('active');
+    } else {
+      errEl.textContent='Onjuiste pincode, probeer opnieuw';
+      shakeDots('pin-lock-dots');
+      pinEntryBuffer='';
+      setTimeout(function(){ updatePinDots('pin-lock-dots',0); },400);
+    }
+  }
+}
+function forgotPin(){
+  if(confirm('Pincode resetten? Je gegevens blijven bewaard, maar je moet een nieuwe pincode instellen.')){
+    saveData('appPin', null);
+    document.getElementById('pin-lock-screen').classList.remove('active');
+    openPinSetup();
+  }
+}
+
+/* --- Instellingen scherm --- */
+function renderPinSettings(){
+  const enabled=isPinEnabled();
+  document.getElementById('pin-toggle').classList.toggle('on',enabled);
+  document.getElementById('pin-toggle-sub').textContent=enabled?'Aan':'Uit';
+  document.getElementById('pin-change-btn').style.display=enabled?'flex':'none';
+}
+function togglePinLock(){
+  if(isPinEnabled()){
+    if(confirm('Pincode-vergrendeling uitschakelen?')){
+      saveData('appPin', null);
+      renderPinSettings();
+    }
+  } else {
+    openPinSetup('settings-new');
+  }
+}
+function startChangePin(){
+  openPinSetup('settings-change');
+}
+
 function initOnboarding(){
   const seenInstall=loadData('seenInstall',false);
   const savedNaam=loadData('username',null);
@@ -1891,6 +2124,8 @@ function initOnboarding(){
     document.getElementById('install-screen').classList.add('active');
   } else if(!savedNaam){
     document.getElementById('naam-modal').classList.add('active');
+  } else if(isPinEnabled()){
+    openPinLock();
   }
 }
 /* ===== PDF Export (Noodplan) ===== */
