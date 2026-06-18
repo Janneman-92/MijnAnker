@@ -582,7 +582,6 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
 .pin-key:active{background:var(--moss);}
 .pin-key.ghost{background:transparent;border:none;cursor:default;}
 .pin-key.del{font-size:18px;color:var(--ink-soft);}
-.pin-forgot{margin-top:26px;color:var(--ink-soft);font-size:12.5px;text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;}
 .pin-skip{margin-top:14px;color:var(--ink-soft);font-size:12.5px;text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;}
 
 /* Beveiliging instellingen */
@@ -680,7 +679,6 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
   </div>
   <div class="pin-error" id="pin-lock-error">&nbsp;</div>
   <div class="pin-pad" id="pin-lock-pad"></div>
-  <button class="pin-forgot" onclick="forgotPin()">Pincode vergeten?</button>
 </div>
 
 <div class="screen active" id="screen-home">
@@ -833,7 +831,7 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       <div class="card-label">Pincode wijzigen</div><div class="card-sub">Stel een nieuwe code in</div>
     </button>
     <div style="margin-top:18px;padding:14px 16px;background:var(--moss);border-radius:14px">
-      <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.6">Je pincode wordt alleen op dit apparaat opgeslagen, niet verstuurd of gedeeld. Vergeet je de code, dan kun je 'm resetten — let op: je gegevens blijven dan gewoon bewaard.</div>
+      <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.6">Je pincode wordt alleen op dit apparaat opgeslagen, niet verstuurd of gedeeld. Onthoud 'm goed: er is geen "vergeten"-optie. Ben je de code kwijt, dan kun je alleen verder door je browsergegevens te wissen — daarmee verdwijnt helaas ook al je opgeslagen informatie in de app.</div>
     </div>
   </div>
 </div>
@@ -2100,13 +2098,6 @@ function pinLockDigit(k){
       pinEntryBuffer='';
       setTimeout(function(){ updatePinDots('pin-lock-dots',0); },400);
     }
-  }
-}
-function forgotPin(){
-  if(confirm('Pincode resetten? Je gegevens blijven bewaard, maar je moet een nieuwe pincode instellen.')){
-    saveData('appPin', null);
-    document.getElementById('pin-lock-screen').classList.remove('active');
-    openPinSetup();
   }
 }
 
