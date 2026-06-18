@@ -793,9 +793,9 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l4.5-7 4 4 4.5-9 5 6"/></svg>
       <div class="card-label">Stemming Meter</div><div class="card-sub">Bekijk je trend over tijd</div>
     </button>
-    <button class="card" onclick="goTo('instellingen')">
+    <button class="card wide-card" onclick="goTo('instellingen')">
       <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-      <div class="card-label">Instellingen</div><div class="card-sub">Pincode en beveiliging</div>
+      <div class="text"><div class="card-label">Instellingen</div><div class="card-sub">Naam en beveiliging</div></div>
     </button>
   </div>
 </div>
@@ -803,7 +803,24 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
 <div class="screen" id="screen-instellingen">
   <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Instellingen</h2></div>
   <div style="padding:0 18px 32px">
-    <div class="section-label" style="margin-bottom:10px">Beveiliging</div>
+    <div class="section-label" style="margin-bottom:10px">Account</div>
+    <div class="toggle-row" id="naam-display-row">
+      <div class="text">
+        <div class="card-label">Naam</div>
+        <div class="card-sub" id="naam-huidig-sub">Jan</div>
+      </div>
+      <button class="nav-btn" onclick="startChangeNaam()">Wijzigen</button>
+    </div>
+    <div id="naam-edit-row" style="display:none;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px">
+      <div class="card-label" style="margin-bottom:10px">Naam wijzigen</div>
+      <input class="text-input" id="naam-input-instellingen" placeholder="Vul je naam in" style="margin-bottom:10px"/>
+      <div style="display:flex;gap:8px">
+        <button class="nav-btn" style="flex:1" onclick="cancelChangeNaam()">Annuleren</button>
+        <button class="nav-btn primary" style="flex:1" onclick="saveChangeNaam()">Opslaan</button>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-bottom:10px;margin-top:22px">Beveiliging</div>
     <div class="toggle-row">
       <div class="text">
         <div class="card-label">Pincode vergrendeling</div>
@@ -1191,7 +1208,7 @@ function goTo(screen, fromBack){
   if(screen==='goedmoment')renderGoedMomenten();
   if(screen==='stemmingmeter')renderStemmingMeter();
   if(screen==='weekoverzicht'){ weekOvzOffset=0; renderWeekOvz(); }
-  if(screen==='instellingen')renderPinSettings();
+  if(screen==='instellingen'){ renderPinSettings(); renderNaamSettings(); }
   if(screen==='home')renderHomeMoodTile();
 }
 function goBack(){
@@ -2094,6 +2111,31 @@ function forgotPin(){
 }
 
 /* --- Instellingen scherm --- */
+function renderNaamSettings(){
+  const naam=loadData('username','');
+  document.getElementById('naam-huidig-sub').textContent=naam||'—';
+  document.getElementById('naam-display-row').style.display='flex';
+  document.getElementById('naam-edit-row').style.display='none';
+}
+function startChangeNaam(){
+  const naam=loadData('username','');
+  document.getElementById('naam-input-instellingen').value=naam;
+  document.getElementById('naam-display-row').style.display='none';
+  document.getElementById('naam-edit-row').style.display='block';
+  document.getElementById('naam-input-instellingen').focus();
+}
+function cancelChangeNaam(){
+  document.getElementById('naam-display-row').style.display='flex';
+  document.getElementById('naam-edit-row').style.display='none';
+}
+function saveChangeNaam(){
+  const naam=document.getElementById('naam-input-instellingen').value.trim();
+  if(!naam){alert('Vul alsjeblieft je naam in');return;}
+  saveData('username',naam);
+  document.getElementById('home-greeting').textContent='Welkom terug, '+naam;
+  renderNaamSettings();
+}
+
 function renderPinSettings(){
   const enabled=isPinEnabled();
   document.getElementById('pin-toggle').classList.toggle('on',enabled);
