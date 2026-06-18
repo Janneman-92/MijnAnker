@@ -254,6 +254,13 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </span>
   </button>
+  <button class="card wide-card" id="home-mood-tile" onclick="goTo('stemmingmeter')" style="margin-bottom:22px">
+    <div class="text" style="flex:1">
+      <div class="card-label">Stemming Meter</div>
+      <div class="card-sub" id="home-mood-sub">Nog geen data vandaag</div>
+    </div>
+    <div id="home-mood-sparkline" style="width:88px;height:42px;flex-shrink:0"></div>
+  </button>
   <div class="section-label">Overzicht</div>
   <div class="grid">
     <button class="card" onclick="goTo('medicatie')">
@@ -272,9 +279,13 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h11a2 2 0 012 2v14l-4-2-4 2-4-2-2 1V6a2 2 0 012-2z"/></svg>
       <div class="card-label">Dagboek</div><div class="card-sub">Hoe gaat het met je</div>
     </button>
-    <button class="card wide-card" onclick="goTo('gereedschappen')">
+    <button class="card" onclick="goTo('stemmingmeter')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l4.5-7 4 4 4.5-9 5 6"/></svg>
+      <div class="card-label">Stemming Meter</div><div class="card-sub">Bekijk je trend over tijd</div>
+    </button>
+    <button class="card" onclick="goTo('gereedschappen')">
       <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
-      <div class="text"><div class="card-label">Gereedschappen</div><div class="card-sub">Oefeningen, hulp en meer</div></div>
+      <div class="card-label">Gereedschappen</div><div class="card-sub">Oefeningen, hulp en meer</div>
     </button>
     <button class="card wide-card acuut-card" onclick="goTo('acuut')">
       <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.35-9.33-9.3C1.4 8.93 3 6 6 6c2 0 3.3 1.2 4 2.2.7-1 2-2.2 4-2.2 3 0 4.6 2.93 3.33 5.7C19 16.65 12 21 12 21z"/></svg>
@@ -342,53 +353,29 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
 
 <div class="screen" id="screen-plan">
   <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Mijn Plan</h2></div>
-  <div class="plan-tabs">
-    <button class="plan-tab active" id="plan-tab-overzicht" onclick="switchPlanTab('overzicht')">Overzicht</button>
-    <button class="plan-tab" id="plan-tab-aanpassen" onclick="switchPlanTab('aanpassen')">Aanpassen</button>
+  <div class="plan-block">
+    <div class="plan-head">Vroege signalen</div>
+    <div id="plan-signalen"></div>
+    <div class="add-row"><input class="text-input" id="plan-signalen-input" placeholder="Nieuw signaal..."/><button class="add-icon-btn" onclick="addPlanItem('signalen')">+</button></div>
   </div>
-  <div id="plan-overzicht" class="plan-view-content">
-    <div class="plan-block">
-      <div class="plan-head">Vroege signalen</div>
-      <div id="plan-signalen-view"></div>
-    </div>
-    <div class="plan-block">
-      <div class="plan-head">Mijn triggers</div>
-      <div id="plan-triggers-view"></div>
-    </div>
-    <div class="plan-block">
-      <div class="plan-head">Wat helpt mij</div>
-      <div id="plan-helpend-view"></div>
-    </div>
-    <div class="plan-block">
-      <div class="plan-head">Mijn contacten</div>
-      <div id="plan-contacten-view"></div>
-    </div>
+  <div class="plan-block">
+    <div class="plan-head">Mijn triggers</div>
+    <div id="plan-triggers"></div>
+    <div class="add-row"><input class="text-input" id="plan-triggers-input" placeholder="Nieuwe trigger..."/><button class="add-icon-btn" onclick="addPlanItem('triggers')">+</button></div>
   </div>
-  <div id="plan-aanpassen" class="plan-view-content" style="display:none;">
-    <div class="plan-block">
-      <div class="plan-head">Vroege signalen</div>
-      <div id="plan-signalen"></div>
-      <div class="add-row"><input class="text-input" id="plan-signalen-input" placeholder="Nieuw signaal..."/><button class="add-icon-btn" onclick="addPlanItem('signalen')">+</button></div>
-    </div>
-    <div class="plan-block">
-      <div class="plan-head">Mijn triggers</div>
-      <div id="plan-triggers"></div>
-      <div class="add-row"><input class="text-input" id="plan-triggers-input" placeholder="Nieuwe trigger..."/><button class="add-icon-btn" onclick="addPlanItem('triggers')">+</button></div>
-    </div>
-    <div class="plan-block">
-      <div class="plan-head">Wat helpt mij</div>
-      <div id="plan-helpend"></div>
-      <div class="add-row"><input class="text-input" id="plan-helpend-input" placeholder="Wat helpt jou..."/><button class="add-icon-btn" onclick="addPlanItem('helpend')">+</button></div>
-    </div>
-    <div class="plan-block">
-      <div class="plan-head">Mijn contacten</div>
-      <div id="plan-contacten"></div>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
-        <input class="text-input" id="plan-contact-naam-input" placeholder="Naam"/>
-        <div style="display:flex;gap:8px">
-          <input class="text-input" id="plan-contact-tel-input" placeholder="Telefoonnummer"/>
-          <button class="add-icon-btn" style="flex-shrink:0" onclick="addPlanContact()">+</button>
-        </div>
+  <div class="plan-block">
+    <div class="plan-head">Wat helpt mij</div>
+    <div id="plan-helpend"></div>
+    <div class="add-row"><input class="text-input" id="plan-helpend-input" placeholder="Wat helpt jou..."/><button class="add-icon-btn" onclick="addPlanItem('helpend')">+</button></div>
+  </div>
+  <div class="plan-block">
+    <div class="plan-head">Mijn contacten</div>
+    <div id="plan-contacten"></div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+      <input class="text-input" id="plan-contact-naam-input" placeholder="Naam"/>
+      <div style="display:flex;gap:8px">
+        <input class="text-input" id="plan-contact-tel-input" placeholder="Telefoonnummer"/>
+        <button class="add-icon-btn" style="flex-shrink:0" onclick="addPlanContact()">+</button>
       </div>
     </div>
   </div>
@@ -507,9 +494,40 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
   </div>
 </div>
 
+<div class="screen" id="screen-stemmingmeter">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Stemming Meter</h2></div>
+  <div class="plan-tabs">
+    <button class="plan-tab active" id="sm-tab-dag" onclick="switchStemmingTab('dag')">Per dag</button>
+    <button class="plan-tab" id="sm-tab-week" onclick="switchStemmingTab('week')">Per week</button>
+    <button class="plan-tab" id="sm-tab-maand" onclick="switchStemmingTab('maand')">Per maand</button>
+  </div>
+  <div class="plan-block" style="padding:18px 10px 14px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;padding:0 8px">
+      <span class="plan-head" id="sm-chart-title" style="margin-bottom:0">Vandaag</span>
+      <span id="sm-chart-avg" style="font-size:13px;color:var(--green-deep);font-weight:700"></span>
+    </div>
+    <div id="sm-chart-container" style="width:100%;height:230px"></div>
+    <div id="sm-chart-empty" class="empty-state" style="display:none;padding-top:30px">
+      Nog geen stemmingen vastgelegd voor deze periode.<br>
+      <button class="nav-btn primary" style="margin-top:14px" onclick="goTo('checkin')">Start de check-in</button>
+    </div>
+  </div>
 </div>
 
+</div>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
 <script>
+const moodVraag={tekst:"Hoe is je stemming op dit moment?",opties:[
+  {label:"Heel slecht",score:1,emoji:"😞"},
+  {label:"Slecht",score:2,emoji:"🙁"},
+  {label:"Neutraal",score:3,emoji:"😐"},
+  {label:"Goed",score:4,emoji:"🙂"},
+  {label:"Heel goed",score:5,emoji:"😄"}
+]};
+const stemmingLabels=["Heel slecht","Slecht","Neutraal","Goed","Heel goed"];
 const vragen=[
   {tekst:"Hoe gespannen voel je je op dit moment?",opties:[{label:"Licht gespannen",score:1},{label:"Behoorlijk gespannen",score:2},{label:"Heel gespannen",score:3},{label:"Ondraaglijk gespannen",score:4}]},
   {tekst:"Heb je controle over je gedachten?",opties:[{label:"Ja, redelijk goed",score:1},{label:"Een beetje moeilijk",score:2},{label:"Nauwelijks",score:3},{label:"Nee, helemaal niet",score:4}]},
@@ -560,6 +578,15 @@ function todayKey(){return new Date().toISOString().slice(0,10);}
 let medChecked=loadData('medChecked_'+todayKey(),{});
 let medTab='vandaag';
 
+let stemmingen=loadData('stemmingen',[]);
+let stemmingNextId=(function(){let max=0;stemmingen.forEach(function(s){if(s.id>max)max=s.id;});return max+1;})();
+function saveStemming(score){
+  const nu=new Date();
+  stemmingen.push({id:stemmingNextId++,datum:nu.toISOString(),score:score});
+  saveData('stemmingen',stemmingen);
+  renderHomeMoodTile();
+}
+
 function selectOS(os){
   document.getElementById('os-iphone').classList.toggle('active',os==='iphone');
   document.getElementById('os-android').classList.toggle('active',os==='android');
@@ -600,6 +627,8 @@ function goTo(screen, fromBack){
   if(screen==='weekplanning')renderWeek();
   if(screen==='medicatie')renderMedicatie();
   if(screen==='goedmoment')renderGoedMomenten();
+  if(screen==='stemmingmeter')renderStemmingMeter();
+  if(screen==='home')renderHomeMoodTile();
 }
 function goBack(){
   screenHistory.pop();
@@ -610,14 +639,26 @@ function goBack(){
 let ciIndex=0, ciScores=[];
 function initCheckin(){ciIndex=0;ciScores=[];renderQuestion();}
 function renderQuestion(){
-  const q=vragen[ciIndex];
-  document.getElementById('ci-progress').innerHTML=vragen.map(function(_,i){return '<div class="dot '+(i<=ciIndex?'active':'')+'"></div>';}).join('');
+  const totalSteps=vragen.length+1;
+  document.getElementById('ci-progress').innerHTML=Array.from({length:totalSteps},function(_,i){return '<div class="dot '+(i<=ciIndex?'active':'')+'"></div>';}).join('');
+  if(ciIndex===0){
+    document.getElementById('ci-question').textContent=moodVraag.tekst;
+    document.getElementById('ci-options').innerHTML=moodVraag.opties.map(function(o){return '<button class="opt-btn" onclick="answerCheckin('+o.score+')">'+o.emoji+'&nbsp;&nbsp;'+o.label+'</button>';}).join('');
+    return;
+  }
+  const q=vragen[ciIndex-1];
   document.getElementById('ci-question').textContent=q.tekst;
   document.getElementById('ci-options').innerHTML=q.opties.map(function(o){return '<button class="opt-btn" onclick="answerCheckin('+o.score+')">'+o.label+'</button>';}).join('');
 }
 function answerCheckin(score){
+  if(ciIndex===0){
+    saveStemming(score);
+    ciIndex++;
+    renderQuestion();
+    return;
+  }
   ciScores.push(score);
-  if(ciIndex<vragen.length-1){ciIndex++;renderQuestion();}else{showResult();}
+  if(ciIndex<vragen.length){ciIndex++;renderQuestion();}else{showResult();}
 }
 function showResult(){
   const total=ciScores.reduce(function(a,b){return a+b;},0);
@@ -666,17 +707,7 @@ function renderPlanList(key, containerId){
     return;
   }
   document.getElementById(containerId).innerHTML=items.map(function(item){
-    return '<div class="plan-item-row"><div class="plan-item">· '+item.tekst+'</div><button class="med-delete-btn" onclick="deletePlanItem(\''+key+'\','+item.id+')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m2 0l-1 13a1 1 0 01-1 1H8a1 1 0 01-1-1L6 7"/></svg></button></div>';
-  }).join('');
-}
-function renderPlanListView(key, containerId){
-  const items=plan[key];
-  if(items.length===0){
-    document.getElementById(containerId).innerHTML='<div class="empty-state">Nog niets toegevoegd</div>';
-    return;
-  }
-  document.getElementById(containerId).innerHTML=items.map(function(item){
-    return '<div class="plan-item"><div class="plan-item">· '+item.tekst+'</div></div>';
+    return '<div class="plan-item-row"><div class="plan-item">· '+item.tekst+'</div><button class="item-delete-btn" onclick="deletePlanItem(\''+key+'\','+item.id+')">×</button></div>';
   }).join('');
 }
 function renderPlan(){
@@ -684,18 +715,11 @@ function renderPlan(){
   renderPlanList('signalen','plan-signalen');
   renderPlanList('triggers','plan-triggers');
   renderPlanList('helpend','plan-helpend');
-  renderPlanListView('signalen','plan-signalen-view');
-  renderPlanListView('triggers','plan-triggers-view');
-  renderPlanListView('helpend','plan-helpend-view');
   if(plan.contacten.length===0){
     document.getElementById('plan-contacten').innerHTML='<div class="empty-state">Nog geen contacten toegevoegd</div>';
-    document.getElementById('plan-contacten-view').innerHTML='<div class="empty-state">Nog geen contacten toegevoegd</div>';
   } else {
     document.getElementById('plan-contacten').innerHTML=plan.contacten.map(function(c){
-      return '<div class="contact-row"><span class="contact-name">'+c.naam+'</span><div style="display:flex;align-items:center;gap:8px"><a class="tel-btn" href="tel:'+c.tel+'">'+c.tel+'</a><button class="med-delete-btn" onclick="deletePlanContact('+c.id+')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m2 0l-1 13a1 1 0 01-1 1H8a1 1 0 01-1-1L6 7"/></svg></button></div></div>';
-    }).join('');
-    document.getElementById('plan-contacten-view').innerHTML=plan.contacten.map(function(c){
-      return '<div class="contact-row"><span class="contact-name">'+c.naam+'</span><div style="display:flex;align-items:center"><a class="tel-btn" href="tel:'+c.tel+'">'+c.tel+'</a></div></div>';
+      return '<div class="contact-row"><span class="contact-name">'+c.naam+'</span><div style="display:flex;align-items:center;gap:8px"><a class="tel-btn" href="tel:'+c.tel+'">'+c.tel+'</a><button class="item-delete-btn" onclick="deletePlanContact('+c.id+')">×</button></div></div>';
     }).join('');
   }
 }
@@ -744,7 +768,7 @@ function renderContacten(){
     return;
   }
   document.getElementById('contacten-lijst').innerHTML=plan.contacten.map(function(c){
-    return '<div class="acuut-contact"><a href="tel:'+c.tel+'" style="text-decoration:none;flex:1;display:flex;justify-content:space-between;align-items:center"><div><div class="name">'+c.naam+'</div><div class="num">'+c.tel+'</div></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg></a><button class="med-delete-btn" style="margin-left:8px" onclick="deleteContactFromScreen('+c.id+')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m2 0l-1 13a1 1 0 01-1 1H8a1 1 0 01-1-1L6 7"/></svg></button></div>';
+    return '<div class="acuut-contact"><a href="tel:'+c.tel+'" style="text-decoration:none;flex:1;display:flex;justify-content:space-between;align-items:center"><div><div class="name">'+c.naam+'</div><div class="num">'+c.tel+'</div></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg></a><button class="item-delete-btn" style="margin-left:8px" onclick="deleteContactFromScreen('+c.id+')">×</button></div>';
   }).join('');
 }
 function renderAcuut(){
@@ -951,12 +975,6 @@ function renderWeek(){
     : '<div class="empty-state">Geen taken op deze dag — voeg er een toe</div>';
 }
 
-function switchPlanTab(tab){
-  document.getElementById('plan-tab-overzicht').classList.toggle('active',tab==='overzicht');
-  document.getElementById('plan-tab-aanpassen').classList.toggle('active',tab==='aanpassen');
-  document.getElementById('plan-overzicht').style.display=tab==='overzicht'?'block':'none';
-  document.getElementById('plan-aanpassen').style.display=tab==='aanpassen'?'block':'none';
-}
 function switchMedTab(tab){
   medTab=tab;
   document.getElementById('med-tab-vandaag').classList.toggle('active',tab==='vandaag');
@@ -1043,6 +1061,127 @@ function renderGoedMomenten(){
   }).join('');
 }
 
+/* ===== Stemming Meter ===== */
+const h=React.createElement;
+function startOfDay(d){const x=new Date(d);x.setHours(0,0,0,0);return x;}
+function isSameDay(d1,d2){return startOfDay(d1).getTime()===startOfDay(d2).getTime();}
+function gemiddelde(arr){return arr.length?Math.round(arr.reduce(function(a,b){return a+b;},0)/arr.length*10)/10:null;}
+
+function getDagData(){
+  const vandaag=new Date();
+  return stemmingen
+    .filter(function(s){return isSameDay(new Date(s.datum),vandaag);})
+    .sort(function(a,b){return new Date(a.datum)-new Date(b.datum);})
+    .map(function(s){
+      const d=new Date(s.datum);
+      return {label:String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'),score:s.score};
+    });
+}
+function getWeekData(){
+  const vandaag=startOfDay(new Date());
+  const dagen=[];
+  for(let i=6;i>=0;i--){const d=new Date(vandaag);d.setDate(vandaag.getDate()-i);dagen.push(d);}
+  return dagen.map(function(d){
+    const scores=stemmingen.filter(function(s){return isSameDay(new Date(s.datum),d);}).map(function(s){return s.score;});
+    const naam=weekDagenKort[(d.getDay()+6)%7];
+    return {label:naam.charAt(0).toUpperCase()+naam.slice(1)+' '+d.getDate(),score:gemiddelde(scores)};
+  });
+}
+function getMaandData(){
+  const vandaag=startOfDay(new Date());
+  const aantalWeken=4;
+  const buckets=[];
+  for(let w=aantalWeken-1;w>=0;w--){
+    const eind=new Date(vandaag);eind.setDate(vandaag.getDate()-w*7);
+    const start=new Date(eind);start.setDate(eind.getDate()-6);
+    buckets.push({start:start,eind:eind});
+  }
+  return buckets.map(function(b,i){
+    const eindGrens=new Date(b.eind.getFullYear(),b.eind.getMonth(),b.eind.getDate(),23,59,59);
+    const scores=stemmingen.filter(function(s){const d=new Date(s.datum);return d>=b.start&&d<=eindGrens;}).map(function(s){return s.score;});
+    const label=i===buckets.length-1?'Deze week':(b.start.getDate()+' '+maandenLang[b.start.getMonth()].slice(0,3));
+    return {label:label,score:gemiddelde(scores)};
+  });
+}
+
+function StemmingTooltip(props){
+  if(!props.active||!props.payload||!props.payload.length)return null;
+  const waarde=props.payload[0].value;
+  if(waarde===null||waarde===undefined)return null;
+  const idx=Math.max(0,Math.min(4,Math.round(waarde)-1));
+  return h('div',{style:{background:'#FFFFFF',border:'1px solid rgba(74,122,92,0.18)',borderRadius:'12px',padding:'9px 13px',fontSize:'12.5px',fontFamily:"'Inter',sans-serif",boxShadow:'0 4px 14px rgba(74,122,92,0.12)'}},
+    h('div',{style:{color:'#8A8D85',marginBottom:'3px'}},props.label),
+    h('div',{style:{color:'#2C2E2B',fontWeight:600}},waarde+' · '+stemmingLabels[idx])
+  );
+}
+function buildStemmingChart(data){
+  const RC=Recharts;
+  return h(RC.ResponsiveContainer,{width:'100%',height:'100%'},
+    h(RC.LineChart,{data:data,margin:{top:8,right:10,left:-22,bottom:0}},
+      h(RC.CartesianGrid,{stroke:'rgba(74,122,92,0.1)',vertical:false}),
+      h(RC.XAxis,{dataKey:'label',tick:{fontSize:11,fill:'#8A8D85'},axisLine:{stroke:'rgba(74,122,92,0.14)'},tickLine:false}),
+      h(RC.YAxis,{domain:[1,5],ticks:[1,2,3,4,5],tick:{fontSize:11,fill:'#8A8D85'},axisLine:false,tickLine:false,width:30}),
+      h(RC.Tooltip,{content:StemmingTooltip}),
+      h(RC.Line,{type:'monotone',dataKey:'score',stroke:'#4A7A5C',strokeWidth:2.5,dot:{r:4,fill:'#4A7A5C',strokeWidth:0},activeDot:{r:6},connectNulls:true})
+    )
+  );
+}
+
+let smTab='dag';
+let smChartRoot=null;
+function switchStemmingTab(tab){
+  smTab=tab;
+  document.getElementById('sm-tab-dag').classList.toggle('active',tab==='dag');
+  document.getElementById('sm-tab-week').classList.toggle('active',tab==='week');
+  document.getElementById('sm-tab-maand').classList.toggle('active',tab==='maand');
+  renderStemmingMeter();
+}
+function renderStemmingMeter(){
+  let data,titel;
+  if(smTab==='dag'){data=getDagData();titel='Vandaag';}
+  else if(smTab==='week'){data=getWeekData();titel='Afgelopen 7 dagen';}
+  else{data=getMaandData();titel='Afgelopen 4 weken';}
+
+  document.getElementById('sm-chart-title').textContent=titel;
+  const metScore=data.filter(function(d){return d.score!==null&&d.score!==undefined;});
+  const container=document.getElementById('sm-chart-container');
+  const leeg=document.getElementById('sm-chart-empty');
+
+  if(metScore.length===0){
+    container.style.display='none';
+    leeg.style.display='block';
+    document.getElementById('sm-chart-avg').textContent='';
+    return;
+  }
+  container.style.display='block';
+  leeg.style.display='none';
+  document.getElementById('sm-chart-avg').textContent='Gem. '+gemiddelde(metScore.map(function(d){return d.score;}))+' / 5';
+  if(!smChartRoot)smChartRoot=ReactDOM.createRoot(container);
+  smChartRoot.render(buildStemmingChart(data));
+}
+
+let homeMoodRoot=null;
+function renderHomeMoodTile(){
+  const sub=document.getElementById('home-mood-sub');
+  const container=document.getElementById('home-mood-sparkline');
+  if(!sub||!container)return;
+  const data=getDagData();
+  if(data.length===0){
+    sub.textContent='Nog geen data vandaag';
+    container.innerHTML='';
+    return;
+  }
+  sub.textContent='Gem. vandaag: '+gemiddelde(data.map(function(d){return d.score;}))+' / 5';
+  const RC=Recharts;
+  const chartEl=h(RC.ResponsiveContainer,{width:'100%',height:'100%'},
+    h(RC.LineChart,{data:data,margin:{top:4,right:3,left:3,bottom:4}},
+      h(RC.Line,{type:'monotone',dataKey:'score',stroke:'#4A7A5C',strokeWidth:2,dot:false})
+    )
+  );
+  if(!homeMoodRoot)homeMoodRoot=ReactDOM.createRoot(container);
+  homeMoodRoot.render(chartEl);
+}
+
 function initOnboarding(){
   const seenInstall=loadData('seenInstall',false);
   const savedNaam=loadData('username',null);
@@ -1056,6 +1195,7 @@ function initOnboarding(){
   }
 }
 initOnboarding();
+renderHomeMoodTile();
 
 </script>
 </body>
