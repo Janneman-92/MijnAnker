@@ -472,6 +472,18 @@ footer.app-footer{margin-top:30px;text-align:center;}
 .step-num{color:var(--ink-soft);font-size:12.5px;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:22px;}
 .step-tekst{font-family:'Fraunces',serif;color:var(--ink);font-size:19px;line-height:1.6;margin-bottom:30px;}
 .step-btns{display:flex;gap:10px;justify-content:center;}
+
+/* Ademhalingsoefening (4-7-8) */
+.adem-wrap{padding:20px 24px 40px;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:62vh;justify-content:center;}
+.adem-intro-text{font-size:15px;color:var(--ink);line-height:1.7;margin-bottom:26px;max-width:300px;}
+.adem-cyclus-label{font-size:12.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;margin-bottom:28px;}
+.adem-circle-wrap{width:220px;height:220px;display:flex;align-items:center;justify-content:center;margin-bottom:26px;}
+.adem-circle{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#71a085,var(--green-deep));display:flex;align-items:center;justify-content:center;transition:transform 4s ease-in-out;box-shadow:0 10px 32px rgba(58,98,73,0.32);}
+.adem-count{font-family:'Fraunces',serif;font-size:38px;font-weight:600;color:#fff;}
+.adem-fase-label{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--ink);min-height:30px;}
+.adem-klaar-titel{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--ink);margin-top:16px;}
+.adem-klaar-sub{font-size:14px;color:var(--ink-soft);margin-top:6px;}
+.adem-checkmark{width:60px;height:60px;color:var(--green-deep);}
 .nav-btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 20px;font-size:14px;cursor:pointer;font-family:inherit;font-weight:600;}
 .nav-btn.primary{background:var(--green);border-color:var(--green);color:#fff;}
 .acuut-banner{text-align:center;padding:10px 0 26px;}
@@ -907,6 +919,30 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
   </div>
 </div>
 
+<div class="screen" id="screen-ademhaling">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>4-7-8 Ademhaling</h2></div>
+  <div class="adem-wrap">
+    <div id="adem-intro">
+      <div class="adem-intro-text">Ga comfortabel zitten en sluit eventueel je ogen. We doorlopen samen 4 rondes: adem in via je neus, houd je adem vast, en adem rustig uit via je mond. Volg het ritme van de cirkel.</div>
+      <button class="actie-btn primary" onclick="startAdemhalingCyclus()">Start</button>
+    </div>
+    <div id="adem-actief" style="display:none">
+      <div class="adem-cyclus-label" id="adem-cyclus-label">Cyclus 1 van 4</div>
+      <div class="adem-circle-wrap">
+        <div class="adem-circle" id="adem-circle"><div class="adem-count" id="adem-count">4</div></div>
+      </div>
+      <div class="adem-fase-label" id="adem-fase-label">Adem in</div>
+      <button class="nav-btn" style="margin-top:30px" onclick="stopAdemhaling()">Stoppen</button>
+    </div>
+    <div id="adem-klaar" style="display:none;text-align:center">
+      <svg class="adem-checkmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
+      <div class="adem-klaar-titel">Goed gedaan.</div>
+      <div class="adem-klaar-sub">Je hebt de oefening afgerond.</div>
+      <button class="actie-btn primary" style="margin-top:22px" onclick="goTo('oefeningen')">Terug naar oefeningen</button>
+    </div>
+  </div>
+</div>
+
 <div class="screen" id="screen-plan">
   <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Mijn Plan</h2></div>
   <div class="plan-intro">
@@ -1210,7 +1246,7 @@ const vragen=[
   {tekst:"Heb je gedachten aan jezelf iets aandoen?",opties:[{label:"Nee",score:1},{label:"Lichte gedachten, geen plannen",score:2},{label:"Sterke gedachten",score:3},{label:"Ik heb een plan of sterke drang",score:4}]}
 ];
 const oefeningen=[
-  {titel:"4-7-8 Ademhaling",duur:"3 min",icon:'<path d="M12 2c-2 4-2 6 0 8s2 4 0 8M8 6c-1 3-1 5 0 7M16 6c1 3 1 5 0 7"/>',stappen:["Ga comfortabel zitten en sluit je ogen","Adem in via je neus — tel langzaam tot 4","Houd je adem vast — tel tot 7","Adem langzaam uit via je mond — tel tot 8","Herhaal dit nog 3 keer. Goed gedaan."]},
+  {titel:"4-7-8 Ademhaling",duur:"3 min",interactief:"ademhaling",icon:'<path d="M12 2c-2 4-2 6 0 8s2 4 0 8M8 6c-1 3-1 5 0 7M16 6c1 3 1 5 0 7"/>',stappen:["Ga comfortabel zitten en sluit je ogen","Adem in via je neus — tel langzaam tot 4","Houd je adem vast — tel tot 7","Adem langzaam uit via je mond — tel tot 8","Herhaal dit nog 3 keer. Goed gedaan."]},
   {titel:"5-4-3-2-1 Grounding",duur:"5 min",icon:'<path d="M12 22s-7-4.5-7-10a7 7 0 0114 0c0 5.5-7 10-7 10z"/><circle cx="12" cy="11" r="2.5"/>',stappen:["Kijk om je heen. Noem 5 dingen die je kunt zien","Noem 4 dingen die je fysiek kunt voelen","Luister. Noem 3 dingen die je kunt horen","Noem 2 dingen die je kunt ruiken","Noem 1 ding dat je kunt proeven. Je bent hier, je bent veilig."]},
   {titel:"Koude water techniek",duur:"1 min",icon:'<path d="M12 2v6M9 5l3-3 3 3"/><path d="M5 14c0 4 3 7 7 7s7-3 7-7c0-3-3-6-7-12-4 6-7 9-7 12z"/>',stappen:["Ga naar de kraan of pak een ijsblokje","Houd je polsen onder koud stromend water","Focus volledig op het koude gevoel in je handen","Adem rustig door. Je lichaam kalmeert vanzelf."]},
   {titel:"Veilige plek visualisatie",duur:"5 min",icon:'<path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 001 1h12a1 1 0 001-1v-9"/><path d="M9 20v-6h6v6"/>',stappen:["Sluit je ogen en adem een paar keer rustig in en uit","Stel je een plek voor waar je je volkomen veilig voelt","Kijk goed rond. Wat zie je? Wat hoor je? Wat ruik je?","Voel hoe je lichaam ontspant terwijl je hier bent","Blijf hier zo lang als je wilt. Je kunt hier altijd naartoe."]}
@@ -1286,6 +1322,10 @@ function saveNaamAndContinue(){
 let screenHistory=['home'];
 let screenScrollPositions={};
 function goTo(screen, fromBack){
+  const huidigeActief=document.querySelector('.screen.active');
+  if(huidigeActief && huidigeActief.id==='screen-ademhaling' && screen!=='ademhaling' && typeof clearAdemTimers==='function'){
+    clearAdemTimers();
+  }
   if(!fromBack){
     const current=document.querySelector('.screen.active');
     const currentId=current?current.id.replace('screen-',''):null;
@@ -1370,6 +1410,11 @@ function renderOefeningen(){
 }
 function startOefening(i){
   activeOef=oefeningen[i]; activeStep=0;
+  if(activeOef.interactief==='ademhaling'){
+    resetAdemUI();
+    goTo('ademhaling');
+    return;
+  }
   document.getElementById('oef-detail-title').textContent=activeOef.titel;
   renderStep();
   goTo('oefening-detail');
@@ -1385,6 +1430,90 @@ function renderStep(){
 }
 function nextStep(){activeStep++;renderStep();}
 function prevStep(){activeStep--;renderStep();}
+
+/* ===== Interactieve ademhalingsoefening (4-7-8) ===== */
+let ademTimers=[];
+let ademCycleCount=0;
+const ADEM_TOTAAL_CYCLI=4;
+
+function clearAdemTimers(){
+  ademTimers.forEach(function(t){clearTimeout(t);clearInterval(t);});
+  ademTimers=[];
+}
+function resetAdemUI(){
+  clearAdemTimers();
+  ademCycleCount=0;
+  const intro=document.getElementById('adem-intro');
+  const actief=document.getElementById('adem-actief');
+  const klaar=document.getElementById('adem-klaar');
+  if(!intro)return;
+  intro.style.display='block';
+  actief.style.display='none';
+  klaar.style.display='none';
+  const circle=document.getElementById('adem-circle');
+  circle.style.transitionDuration='0.6s';
+  circle.style.transform='scale(1)';
+}
+function startAdemhalingCyclus(){
+  document.getElementById('adem-intro').style.display='none';
+  document.getElementById('adem-klaar').style.display='none';
+  document.getElementById('adem-actief').style.display='block';
+  ademCycleCount=0;
+  runAdemCyclus();
+}
+function runAdemCyclus(){
+  if(ademCycleCount>=ADEM_TOTAAL_CYCLI){
+    afgerondAdemhaling();
+    return;
+  }
+  ademCycleCount++;
+  document.getElementById('adem-cyclus-label').textContent='Cyclus '+ademCycleCount+' van '+ADEM_TOTAAL_CYCLI;
+  ademFase('in',4,function(){
+    ademFase('hold',7,function(){
+      ademFase('out',8,function(){
+        runAdemCyclus();
+      });
+    });
+  });
+}
+function ademFase(type,duur,callback){
+  const circle=document.getElementById('adem-circle');
+  const label=document.getElementById('adem-fase-label');
+  const countEl=document.getElementById('adem-count');
+  if(type==='in'){
+    label.textContent='Adem in';
+    circle.style.transitionDuration=duur+'s';
+    circle.style.transform='scale(1.55)';
+  } else if(type==='hold'){
+    label.textContent='Houd vast';
+    circle.style.transitionDuration='0.4s';
+  } else {
+    label.textContent='Adem uit';
+    circle.style.transitionDuration=duur+'s';
+    circle.style.transform='scale(1)';
+  }
+  let remaining=duur;
+  countEl.textContent=remaining;
+  const interval=setInterval(function(){
+    remaining--;
+    if(remaining>0){countEl.textContent=remaining;}
+  },1000);
+  ademTimers.push(interval);
+  const timeout=setTimeout(function(){
+    clearInterval(interval);
+    callback();
+  },duur*1000);
+  ademTimers.push(timeout);
+}
+function afgerondAdemhaling(){
+  clearAdemTimers();
+  document.getElementById('adem-actief').style.display='none';
+  document.getElementById('adem-klaar').style.display='block';
+}
+function stopAdemhaling(){
+  resetAdemUI();
+  goTo('oefeningen');
+}
 
 function renderPlanList(key, containerId){
   const items=plan[key];
