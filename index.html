@@ -425,6 +425,8 @@ h1.title{font-family:'Fraunces',serif;font-optical-sizing:auto;font-weight:600;f
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 16px;display:flex;flex-direction:column;gap:10px;cursor:pointer;box-shadow:0 2px 8px rgba(74,122,92,0.06);transition:transform .15s ease;font-family:inherit;text-align:left;}
 .card:active{transform:scale(0.98);}
 .card-icon{width:34px;height:34px;color:var(--green);}
+.card-icon,.oef-icon,.acuut-icon,.picker-icon,.plan-head-icon{stroke-linecap:round;stroke-linejoin:round;stroke-width:1.6;}
+.plan-head-icon{width:15px;height:15px;flex-shrink:0;}
 .card-label{font-size:15px;font-weight:600;color:var(--ink);}
 .card-sub{font-size:12px;color:var(--ink-soft);line-height:1.4;}
 .wide-card{grid-column:1/-1;flex-direction:row;align-items:center;gap:14px;}
@@ -453,7 +455,11 @@ footer.app-footer{margin-top:30px;text-align:center;}
 .plan-tab{flex:1;padding:11px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
 .plan-tab.active{background:var(--moss);border-color:var(--green);color:var(--green-deep);}
 .plan-block{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 2px 8px rgba(74,122,92,0.06);}
-.plan-head{color:var(--green-deep);font-size:12px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:10px;}
+.plan-intro{display:flex;align-items:flex-start;gap:13px;background:var(--moss);border-radius:18px;padding:16px 18px;margin-bottom:18px;}
+.plan-intro svg{width:26px;height:26px;color:var(--green-deep);flex-shrink:0;margin-top:1px;}
+.plan-intro-title{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.plan-intro-sub{font-size:12.5px;color:var(--ink-soft);line-height:1.5;}
+.plan-head{color:var(--green-deep);font-size:12px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
 .plan-item{color:var(--ink);font-size:14px;line-height:1.9;}
 .contact-name{color:var(--ink);font-size:14px;}
 .tel-btn{background:var(--green);color:#fff;padding:7px 14px;border-radius:20px;text-decoration:none;font-size:12.5px;font-weight:600;}
@@ -555,6 +561,13 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
 .med-delete-btn:active{background:var(--warm-bg);color:var(--warm);}
 .med-delete-btn svg{width:17px;height:17px;}
 .empty-state{color:var(--ink-soft);font-size:13px;text-align:center;padding:18px 0;}
+.sm-single-entry{display:none;text-align:center;padding:22px 16px 8px;}
+.sm-single-emoji{font-size:48px;line-height:1;margin-bottom:8px;}
+.sm-single-score{font-family:'Fraunces',serif;font-size:32px;font-weight:600;color:var(--ink);line-height:1.1;}
+.sm-single-label{font-size:14px;color:var(--green-deep);font-weight:600;margin-top:4px;}
+.sm-single-time{font-size:12.5px;color:var(--ink-soft);margin-top:10px;}
+.sm-single-hint{font-size:12.5px;color:var(--ink-soft);margin-top:18px;padding-top:14px;border-top:1px solid var(--line);}
+.sm-single-hint a,.sm-single-hint span.link{color:var(--green-deep);font-weight:600;cursor:pointer;text-decoration:underline;}
 .add-row{display:flex;gap:8px;margin-top:10px;}
 .add-row .text-input{flex:1;}
 .add-icon-btn{flex-shrink:0;width:48px;background:var(--green);border:none;color:#fff;border-radius:14px;font-size:22px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;}
@@ -592,6 +605,34 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
 .toggle-switch.on{background:var(--green);}
 .toggle-switch .knob{position:absolute;top:2.5px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform .2s;}
 .toggle-switch.on .knob{transform:translateX(19px);}
+
+/* Datum & tijd kiezer (vervangt native browser widgets) */
+.picker-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;}
+.picker-btn .picker-icon{width:18px;height:18px;color:var(--ink-soft);flex-shrink:0;}
+.picker-btn .picker-label{color:var(--ink-soft);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.picker-btn .picker-label.filled{color:var(--ink);}
+
+.sheet-overlay{display:none;position:fixed;inset:0;z-index:1001;background:rgba(44,46,43,0.4);align-items:flex-end;justify-content:center;}
+.sheet-overlay.active{display:flex;}
+.sheet-box{background:var(--cream);width:100%;max-width:430px;border-radius:26px 26px 0 0;padding:22px 20px 28px;box-shadow:0 -10px 30px rgba(0,0,0,0.18);max-height:78vh;overflow-y:auto;}
+.sheet-handle{width:36px;height:4px;background:var(--line);border-radius:10px;margin:0 auto 18px;}
+
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.cal-title{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--ink);}
+.cal-nav-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--green-deep);flex-shrink:0;}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:8px;}
+.cal-weekday{text-align:center;font-size:11px;color:var(--ink-soft);font-weight:600;}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.cal-day{aspect-ratio:1;border-radius:12px;border:none;background:none;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--ink);cursor:pointer;font-family:inherit;}
+.cal-day.other-month{color:var(--line);pointer-events:none;}
+.cal-day.today{box-shadow:inset 0 0 0 1.5px var(--green);}
+.cal-day.selected{background:var(--green);color:#fff;font-weight:600;}
+
+.time-sheet-row{display:flex;gap:10px;margin-bottom:16px;}
+.time-col-label{font-size:11px;color:var(--ink-soft);font-weight:600;text-align:center;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;}
+.time-scroll{max-height:200px;overflow-y:auto;border:1px solid var(--line);border-radius:14px;background:var(--card);scroll-behavior:smooth;}
+.time-opt{padding:11px;text-align:center;font-size:15px;color:var(--ink);cursor:pointer;}
+.time-opt.selected{background:var(--moss);color:var(--green-deep);font-weight:600;}
 </style>
 </head>
 <body>
@@ -826,12 +867,29 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       </div>
       <button class="toggle-switch" id="pin-toggle" onclick="togglePinLock()"><div class="knob"></div></button>
     </div>
-    <button class="card" id="pin-change-btn" onclick="startChangePin()" style="display:none">
-      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
-      <div class="card-label">Pincode wijzigen</div><div class="card-sub">Stel een nieuwe code in</div>
+    <button class="card" id="pin-change-btn" onclick="startChangePin()" style="display:none;flex-direction:row;align-items:center;gap:14px;padding:16px">
+      <svg class="card-icon" style="flex-shrink:0;margin-bottom:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+      <div class="text" style="flex:1;text-align:left"><div class="card-label">Pincode wijzigen</div><div class="card-sub">Stel een nieuwe code in</div></div>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--ink-soft);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
     </button>
     <div style="margin-top:18px;padding:14px 16px;background:var(--moss);border-radius:14px">
       <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.6">Je pincode wordt alleen op dit apparaat opgeslagen, niet verstuurd of gedeeld. Onthoud 'm goed: er is geen "vergeten"-optie. Ben je de code kwijt, dan kun je alleen verder door je browsergegevens te wissen — daarmee verdwijnt helaas ook al je opgeslagen informatie in de app.</div>
+    </div>
+
+    <div class="section-label" style="margin-bottom:10px;margin-top:22px">Gegevens</div>
+    <div class="grid" style="margin-bottom:14px">
+      <button class="card" onclick="exportAppData()">
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M5 17v2a2 2 0 002 2h10a2 2 0 002-2v-2"/></svg>
+        <div class="card-label">Exporteren</div><div class="card-sub">Back-up opslaan</div>
+      </button>
+      <button class="card" onclick="document.getElementById('import-file-input').click()">
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V8"/><path d="M7 13l5-5 5 5"/><path d="M5 20h14"/></svg>
+        <div class="card-label">Importeren</div><div class="card-sub">Back-up herstellen</div>
+      </button>
+    </div>
+    <input type="file" id="import-file-input" accept="application/json,.json" style="display:none" onchange="importAppData(event)"/>
+    <div style="margin-top:0;padding:14px 16px;background:var(--moss);border-radius:14px">
+      <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.6">MijnAnker werkt volledig lokaal — er is geen cloud-back-up. Maak zelf af en toe een export, zodat je niets kwijtraakt als je van toestel wisselt of je browsergegevens wist.</div>
     </div>
   </div>
 </div>
@@ -851,23 +909,27 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
 
 <div class="screen" id="screen-plan">
   <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Mijn Plan</h2></div>
+  <div class="plan-intro">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/></svg>
+    <div><div class="plan-intro-title">Je eigen veiligheidsplan</div><div class="plan-intro-sub">Signalen, triggers en wat jou helpt — op één plek, voor jezelf en om te delen.</div></div>
+  </div>
   <div class="plan-block">
-    <div class="plan-head">Vroege signalen</div>
+    <div class="plan-head"><svg class="plan-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 12h4l1.5-4L11 18l2.5-10L15 12h7"/></svg>Vroege signalen</div>
     <div id="plan-signalen"></div>
     <div class="add-row"><input class="text-input" id="plan-signalen-input" placeholder="Nieuw signaal..."/><button class="add-icon-btn" onclick="addPlanItem('signalen')">+</button></div>
   </div>
   <div class="plan-block">
-    <div class="plan-head">Mijn triggers</div>
+    <div class="plan-head"><svg class="plan-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4l9 15.5H3L12 4z"/><path d="M12 10.5v3.5"/><path d="M12 17h.01"/></svg>Mijn triggers</div>
     <div id="plan-triggers"></div>
     <div class="add-row"><input class="text-input" id="plan-triggers-input" placeholder="Nieuwe trigger..."/><button class="add-icon-btn" onclick="addPlanItem('triggers')">+</button></div>
   </div>
   <div class="plan-block">
-    <div class="plan-head">Wat helpt mij</div>
+    <div class="plan-head"><svg class="plan-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 21c8-1 13-6 14-14-8 1-13 6-14 14z"/><path d="M6 20c2-5 5-8 9-10"/></svg>Wat helpt mij</div>
     <div id="plan-helpend"></div>
     <div class="add-row"><input class="text-input" id="plan-helpend-input" placeholder="Wat helpt jou..."/><button class="add-icon-btn" onclick="addPlanItem('helpend')">+</button></div>
   </div>
   <div class="plan-block">
-    <div class="plan-head">Mijn contacten</div>
+    <div class="plan-head"><svg class="plan-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg>Mijn contacten</div>
     <div id="plan-contacten"></div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
       <input class="text-input" id="plan-contact-naam-input" placeholder="Naam"/>
@@ -1001,13 +1063,54 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
     <div style="display:flex;flex-direction:column;gap:8px">
       <input class="text-input" id="ag-titel" placeholder="Omschrijving"/>
       <div style="display:flex;gap:8px">
-        <input class="text-input" id="ag-datum" type="date"/>
-        <input class="text-input" id="ag-tijd" type="time"/>
+        <button class="text-input picker-btn" id="ag-datum-btn" onclick="openDatePicker()">
+          <span class="picker-label" id="ag-datum-label">Kies een datum</span>
+          <svg class="picker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+        </button>
+        <button class="text-input picker-btn" id="ag-tijd-btn" onclick="openTimePicker()">
+          <span class="picker-label" id="ag-tijd-label">Tijd</span>
+          <svg class="picker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        </button>
       </div>
       <button class="save-btn" style="margin-top:4px" onclick="saveAfspraak()">Opslaan</button>
     </div>
   </div>
   <div id="agenda-lijst"></div>
+</div>
+
+<!-- Datumkiezer bottom sheet -->
+<div class="sheet-overlay" id="date-sheet" onclick="if(event.target===this)closeDatePicker()">
+  <div class="sheet-box">
+    <div class="sheet-handle"></div>
+    <div class="cal-header">
+      <button class="cal-nav-btn" onclick="calPrevMonth()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="cal-title" id="cal-title">—</div>
+      <button class="cal-nav-btn" onclick="calNextMonth()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+    <div class="cal-weekdays">
+      <div class="cal-weekday">ma</div><div class="cal-weekday">di</div><div class="cal-weekday">wo</div><div class="cal-weekday">do</div><div class="cal-weekday">vr</div><div class="cal-weekday">za</div><div class="cal-weekday">zo</div>
+    </div>
+    <div class="cal-days" id="cal-days"></div>
+  </div>
+</div>
+
+<!-- Tijdkiezer bottom sheet -->
+<div class="sheet-overlay" id="time-sheet" onclick="if(event.target===this)closeTimePicker()">
+  <div class="sheet-box">
+    <div class="sheet-handle"></div>
+    <div class="cal-title" style="margin-bottom:16px;text-align:center">Kies een tijd</div>
+    <div class="time-sheet-row">
+      <div style="flex:1">
+        <div class="time-col-label">Uur</div>
+        <div class="time-scroll" id="time-hours"></div>
+      </div>
+      <div style="flex:1">
+        <div class="time-col-label">Minuut</div>
+        <div class="time-scroll" id="time-minutes"></div>
+      </div>
+    </div>
+    <button class="save-btn" onclick="confirmTimePicker()">Gereed</button>
+  </div>
 </div>
 
 <div class="screen" id="screen-weekplanning">
@@ -1034,6 +1137,9 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
   <div id="med-vandaag">
     <div class="plan-block">
       <div class="plan-head" id="med-datum-label"></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+        <span id="med-progress-label" style="font-size:12.5px;color:var(--ink-soft)"></span>
+      </div>
       <div class="progress-bar"><div class="progress-bar-fill" id="med-progress-fill" style="width:0%"></div></div>
       <div id="med-lijst"></div>
     </div>
@@ -1078,6 +1184,7 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       <span id="sm-chart-avg" style="font-size:13px;color:var(--green-deep);font-weight:700"></span>
     </div>
     <div id="sm-chart-container" style="width:100%;height:230px;position:relative"></div>
+    <div id="sm-chart-single" class="sm-single-entry"></div>
     <div id="sm-chart-empty" class="empty-state" style="display:none;padding-top:30px">
       Nog geen stemmingen vastgelegd voor deze periode.<br>
       <button class="nav-btn primary" style="margin-top:14px" onclick="goTo('checkin')">Start de check-in</button>
@@ -1439,16 +1546,21 @@ function formatAfspraakDatum(datumStr){
 const defaultAfspraken=[{id:1,titel:"Afspraak behandelaar",datum:"2026-06-19",tijd:"14:00"}];
 let afspraken=loadData('afspraken',defaultAfspraken);
 let afspraakNextId=(function(){let max=0;afspraken.forEach(function(a){if(a.id>max)max=a.id;});return max+1;})();
+let agSelectedDatum='';
+let agSelectedTijd='';
 function saveAfspraak(){
   const titel=document.getElementById('ag-titel').value.trim();
-  const datum=document.getElementById('ag-datum').value;
-  const tijd=document.getElementById('ag-tijd').value;
   if(!titel){alert('Vul een omschrijving in');return;}
-  afspraken.push({id:afspraakNextId++,titel:titel,datum:datum,tijd:tijd||'--:--'});
+  if(!agSelectedDatum){alert('Kies een datum');return;}
+  afspraken.push({id:afspraakNextId++,titel:titel,datum:agSelectedDatum,tijd:agSelectedTijd||'--:--'});
   afspraken.sort(function(a,b){return (a.datum||'').localeCompare(b.datum||'');});
   document.getElementById('ag-titel').value='';
-  document.getElementById('ag-datum').value='';
-  document.getElementById('ag-tijd').value='';
+  agSelectedDatum='';
+  agSelectedTijd='';
+  document.getElementById('ag-datum-label').textContent='Kies een datum';
+  document.getElementById('ag-datum-label').classList.remove('filled');
+  document.getElementById('ag-tijd-label').textContent='Tijd';
+  document.getElementById('ag-tijd-label').classList.remove('filled');
   renderAgenda();
 }
 function deleteAfspraak(id){
@@ -1466,6 +1578,122 @@ function renderAgenda(){
   }).join('');
 }
 renderAgenda();
+
+/* ===== Custom datum- & tijdkiezer ===== */
+let calViewYear, calViewMonth;
+function openDatePicker(){
+  const base=agSelectedDatum?new Date(agSelectedDatum+'T00:00:00'):new Date();
+  calViewYear=base.getFullYear();
+  calViewMonth=base.getMonth();
+  renderCalendar();
+  document.getElementById('date-sheet').classList.add('active');
+}
+function closeDatePicker(){
+  document.getElementById('date-sheet').classList.remove('active');
+}
+function calPrevMonth(){
+  calViewMonth--; if(calViewMonth<0){calViewMonth=11;calViewYear--;}
+  renderCalendar();
+}
+function calNextMonth(){
+  calViewMonth++; if(calViewMonth>11){calViewMonth=0;calViewYear++;}
+  renderCalendar();
+}
+function renderCalendar(){
+  const naam=maandenLang[calViewMonth];
+  document.getElementById('cal-title').textContent=naam.charAt(0).toUpperCase()+naam.slice(1)+' '+calViewYear;
+  const firstDay=new Date(calViewYear,calViewMonth,1);
+  const startWeekday=(firstDay.getDay()+6)%7;
+  const daysInMonth=new Date(calViewYear,calViewMonth+1,0).getDate();
+  const daysInPrevMonth=new Date(calViewYear,calViewMonth,0).getDate();
+  const todayKey=dateToKey(new Date());
+  let html='';
+  for(let i=startWeekday-1;i>=0;i--){
+    html+='<button class="cal-day other-month">'+(daysInPrevMonth-i)+'</button>';
+  }
+  for(let d=1; d<=daysInMonth; d++){
+    const key=dateToKey(new Date(calViewYear,calViewMonth,d));
+    let cls='cal-day';
+    if(key===todayKey) cls+=' today';
+    if(key===agSelectedDatum) cls+=' selected';
+    html+='<button class="'+cls+'" onclick="selectCalDay(\''+key+'\')">'+d+'</button>';
+  }
+  const totalCells=startWeekday+daysInMonth;
+  const remainder=totalCells%7;
+  if(remainder>0){
+    const fillCount=7-remainder;
+    for(let d=1; d<=fillCount; d++){
+      html+='<button class="cal-day other-month">'+d+'</button>';
+    }
+  }
+  document.getElementById('cal-days').innerHTML=html;
+}
+function selectCalDay(key){
+  agSelectedDatum=key;
+  const d=new Date(key+'T00:00:00');
+  const label=document.getElementById('ag-datum-label');
+  label.textContent=weekdagenLang[d.getDay()].slice(0,2)+' '+d.getDate()+' '+maandenLang[d.getMonth()];
+  label.classList.add('filled');
+  closeDatePicker();
+}
+
+let timePickerHour=null, timePickerMinute=null;
+function openTimePicker(){
+  if(agSelectedTijd && agSelectedTijd!=='--:--'){
+    const parts=agSelectedTijd.split(':');
+    timePickerHour=parseInt(parts[0],10);
+    timePickerMinute=parseInt(parts[1],10);
+  } else {
+    const nu=new Date();
+    timePickerHour=nu.getHours();
+    timePickerMinute=Math.round(nu.getMinutes()/15)*15%60;
+  }
+  buildTimeColumns();
+  document.getElementById('time-sheet').classList.add('active');
+}
+function closeTimePicker(){
+  document.getElementById('time-sheet').classList.remove('active');
+}
+function buildTimeColumns(){
+  const hoursEl=document.getElementById('time-hours');
+  let hHtml='';
+  for(let h=0; h<24; h++){
+    const sel=h===timePickerHour?' selected':'';
+    hHtml+='<div class="time-opt'+sel+'" id="time-h-'+h+'" onclick="pickTimeHour('+h+')">'+String(h).padStart(2,'0')+'</div>';
+  }
+  hoursEl.innerHTML=hHtml;
+  const minutesEl=document.getElementById('time-minutes');
+  const minuteOpts=[0,5,10,15,20,25,30,35,40,45,50,55];
+  let mHtml='';
+  minuteOpts.forEach(function(m){
+    const sel=m===timePickerMinute?' selected':'';
+    mHtml+='<div class="time-opt'+sel+'" id="time-m-'+m+'" onclick="pickTimeMinute('+m+')">'+String(m).padStart(2,'0')+'</div>';
+  });
+  minutesEl.innerHTML=mHtml;
+  setTimeout(function(){
+    const hSel=document.getElementById('time-h-'+timePickerHour);
+    if(hSel) hSel.scrollIntoView({block:'center'});
+    const mSel=document.getElementById('time-m-'+timePickerMinute);
+    if(mSel) mSel.scrollIntoView({block:'center'});
+  },50);
+}
+function pickTimeHour(h){
+  timePickerHour=h;
+  document.querySelectorAll('#time-hours .time-opt').forEach(function(el){el.classList.remove('selected');});
+  document.getElementById('time-h-'+h).classList.add('selected');
+}
+function pickTimeMinute(m){
+  timePickerMinute=m;
+  document.querySelectorAll('#time-minutes .time-opt').forEach(function(el){el.classList.remove('selected');});
+  document.getElementById('time-m-'+m).classList.add('selected');
+}
+function confirmTimePicker(){
+  agSelectedTijd=String(timePickerHour).padStart(2,'0')+':'+String(timePickerMinute).padStart(2,'0');
+  const label=document.getElementById('ag-tijd-label');
+  label.textContent=agSelectedTijd;
+  label.classList.add('filled');
+  closeTimePicker();
+}
 
 const weekDagenKort=['ma','di','wo','do','vr','za','zo'];
 let weekOffset=0;
@@ -1569,10 +1797,12 @@ function renderMedicatie(){
   document.getElementById('med-datum-label').textContent=weekdagenLang[nu.getDay()]+' '+nu.getDate()+' '+maandenLang[nu.getMonth()];
   if(medicatie.length===0){
     document.getElementById('med-progress-fill').style.width='0%';
+    document.getElementById('med-progress-label').textContent='';
     document.getElementById('med-lijst').innerHTML='<div class="empty-state">Nog geen medicatie toegevoegd. Voeg medicatie toe via "Mijn medicatie".</div>';
   } else {
     const genomen=medicatie.filter(function(m){return medChecked[m.id];}).length;
     document.getElementById('med-progress-fill').style.width=(genomen/medicatie.length*100)+'%';
+    document.getElementById('med-progress-label').textContent=genomen+' van '+medicatie.length+' genomen';
     document.getElementById('med-lijst').innerHTML=medicatie.map(function(m){
       const isChecked=!!medChecked[m.id];
       return '<div class="med-item '+(isChecked?'genomen':'')+'" onclick="toggleMed('+m.id+')"><div class="med-check">'+(isChecked?'✓':'')+'</div><div><div class="med-naam">'+m.naam+' '+m.dosering+'</div><div class="med-moment">'+m.moment+'</div></div></div>';
@@ -1827,19 +2057,37 @@ function renderStemmingMeter(){
   document.getElementById('sm-chart-title').textContent=titel;
   const metScore=data.filter(function(d){return d.score!==null&&d.score!==undefined;});
   const container=document.getElementById('sm-chart-container');
+  const single=document.getElementById('sm-chart-single');
   const leeg=document.getElementById('sm-chart-empty');
 
   if(metScore.length===0){
     container.style.display='none';
+    single.style.display='none';
     leeg.style.display='block';
     document.getElementById('sm-chart-avg').textContent='';
+  } else if(smTab==='dag' && metScore.length===1){
+    container.style.display='none';
+    leeg.style.display='none';
+    single.style.display='block';
+    document.getElementById('sm-chart-avg').textContent='';
+    renderSingleMoodEntry(single,metScore[0]);
   } else {
     container.style.display='block';
+    single.style.display='none';
     leeg.style.display='none';
     document.getElementById('sm-chart-avg').textContent='Gem. '+gemiddelde(metScore.map(function(d){return d.score;}))+' / 5';
     renderMoodChart(container,data);
   }
   renderStemmingLijst();
+}
+function renderSingleMoodEntry(container,entry){
+  const idx=Math.max(0,Math.min(4,Math.round(entry.score)-1));
+  const opt=moodVraag.opties[idx];
+  container.innerHTML='<div class="sm-single-emoji">'+opt.emoji+'</div>'
+    +'<div class="sm-single-score">'+entry.score+' / 5</div>'
+    +'<div class="sm-single-label">'+opt.label+'</div>'
+    +'<div class="sm-single-time">Vastgelegd om '+entry.label+'</div>'
+    +'<div class="sm-single-hint">Nog een check-in vandaag? <span class="link" onclick="goTo(\'checkin\')">Start de check-in</span></div>';
 }
 
 function renderHomeMoodTile(){
@@ -2125,6 +2373,73 @@ function saveChangeNaam(){
   saveData('username',naam);
   document.getElementById('home-greeting').textContent='Welkom terug, '+naam;
   renderNaamSettings();
+}
+
+/* ===== Data export & import ===== */
+const EXPORT_KEYS=['username','plan','medicatie','stemmingen','dagboekEntries','afspraken','takenPerDag','goedMomenten'];
+
+function exportAppData(){
+  const data={};
+  EXPORT_KEYS.forEach(function(key){
+    data[key]=loadData(key,null);
+  });
+  const payload={
+    app:'MijnAnker',
+    versie:1,
+    geexporteerdOp:new Date().toISOString(),
+    data:data
+  };
+  const json=JSON.stringify(payload,null,2);
+  const blob=new Blob([json],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const datumStr=new Date().toISOString().slice(0,10);
+  a.href=url;
+  a.download='mijnanker-backup-'+datumStr+'.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(url);},1000);
+}
+
+function importAppData(event){
+  const file=event.target.files && event.target.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    let parsed;
+    try{
+      parsed=JSON.parse(e.target.result);
+    }catch(err){
+      alert('Dit bestand kon niet worden gelezen. Controleer of je het juiste back-upbestand hebt gekozen.');
+      event.target.value='';
+      return;
+    }
+    if(!parsed || parsed.app!=='MijnAnker' || !parsed.data){
+      alert('Dit lijkt geen geldig MijnAnker back-upbestand te zijn.');
+      event.target.value='';
+      return;
+    }
+    const datumLabel=parsed.geexporteerdOp ? new Date(parsed.geexporteerdOp).toLocaleDateString('nl-NL',{day:'numeric',month:'long',year:'numeric'}) : 'onbekende datum';
+    const bevestig=confirm('Gegevens importeren van back-up (' + datumLabel + ')?\n\nDit overschrijft je huidige plan, medicatie, stemmingen, afspraken en dagboek in deze app. Je pincode en naam-instelling blijven ongewijzigd tenzij ze in de back-up staan.');
+    if(!bevestig){
+      event.target.value='';
+      return;
+    }
+    EXPORT_KEYS.forEach(function(key){
+      if(Object.prototype.hasOwnProperty.call(parsed.data,key) && parsed.data[key]!==null){
+        saveData(key,parsed.data[key]);
+      }
+    });
+    event.target.value='';
+    alert('Gegevens zijn geïmporteerd. De app wordt opnieuw geladen.');
+    location.reload();
+  };
+  reader.onerror=function(){
+    alert('Er ging iets mis bij het lezen van het bestand. Probeer het opnieuw.');
+    event.target.value='';
+  };
+  reader.readAsText(file);
 }
 
 function renderPinSettings(){
