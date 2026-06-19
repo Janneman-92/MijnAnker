@@ -1320,9 +1320,9 @@ const moodVraag={tekst:"Hoe is je stemming op dit moment?",opties:[
 ]};
 const stemmingLabels=["Heel slecht","Slecht","Neutraal","Goed","Heel goed"];
 const vragen=[
-  {tekst:"Hoe gespannen voel je je op dit moment?",opties:[{label:"Licht gespannen",score:1},{label:"Behoorlijk gespannen",score:2},{label:"Heel gespannen",score:3},{label:"Ondraaglijk gespannen",score:4}]},
-  {tekst:"Heb je controle over je gedachten?",opties:[{label:"Ja, redelijk goed",score:1},{label:"Een beetje moeilijk",score:2},{label:"Nauwelijks",score:3},{label:"Nee, helemaal niet",score:4}]},
-  {tekst:"Heb je gedachten aan jezelf iets aandoen?",opties:[{label:"Nee",score:1},{label:"Lichte gedachten, geen plannen",score:2},{label:"Sterke gedachten",score:3},{label:"Ik heb een plan of sterke drang",score:4}]}
+  {tekst:"Hoe gespannen voel je je op dit moment?",opties:[{label:"Geen spanning",score:0},{label:"Licht gespannen",score:1},{label:"Behoorlijk gespannen",score:2},{label:"Heel gespannen",score:3},{label:"Ondraaglijk gespannen",score:4}]},
+  {tekst:"Heb je controle over je gedachten?",opties:[{label:"Ja, volledig",score:0},{label:"Ja, redelijk goed",score:1},{label:"Een beetje moeilijk",score:2},{label:"Nauwelijks",score:3},{label:"Nee, helemaal niet",score:4}]},
+  {tekst:"Heb je gedachten aan jezelf iets aandoen?",opties:[{label:"Nee",score:0},{label:"Lichte gedachten, geen plannen",score:1},{label:"Sterke gedachten",score:2},{label:"Ik heb een plan of sterke drang",score:3}]}
 ];
 const oefeningen=[
   {titel:"4-7-8 Ademhaling",duur:"3 min",interactief:"ademhaling",icon:'<path d="M12 2c-2 4-2 6 0 8s2 4 0 8M8 6c-1 3-1 5 0 7M16 6c1 3 1 5 0 7"/>',stappen:["Ga comfortabel zitten en sluit je ogen","Adem in via je neus — tel langzaam tot 4","Houd je adem vast — tel tot 7","Adem langzaam uit via je mond — tel tot 8","Herhaal dit nog 3 keer. Goed gedaan."]},
@@ -1473,10 +1473,17 @@ function answerCheckin(score){
 }
 function showResult(){
   const total=ciScores.reduce(function(a,b){return a+b;},0);
+  const zelfbeschadigingScore=ciScores[2]||0;
   let r;
-  if(total<=4) r={fase:"Gespannen",kleur:"#C9971F",tekst:"Je voelt spanning, maar je hebt nog grip. Probeer een oefening of kijk naar je plan.",acuut:false};
-  else if(total<=8) r={fase:"Hoge spanning",kleur:"#C46C4A",tekst:"De spanning loopt op. Gebruik je signaleringsplan en overweeg contact op te nemen.",acuut:false};
-  else r={fase:"Crisissituatie",kleur:"#B0432E",tekst:"Dit is een zware crisissituatie. Neem direct contact op met je behandelaar of bel 113.",acuut:true};
+  if(zelfbeschadigingScore>=2 || total>=10){
+    r={fase:"Crisissituatie",kleur:"#B0432E",tekst:"Dit is een zware crisissituatie. Neem direct contact op met je behandelaar of bel 113.",acuut:true};
+  } else if(total<=1){
+    r={fase:"Rustig",kleur:"#3A6249",tekst:"Je voelt op dit moment geen sterke spanning. Fijn dat het rustig aanvoelt — blijf goed voor jezelf zorgen.",acuut:false};
+  } else if(total<=5){
+    r={fase:"Gespannen",kleur:"#C9971F",tekst:"Je voelt spanning, maar je hebt nog grip. Probeer een oefening of kijk naar je plan.",acuut:false};
+  } else {
+    r={fase:"Hoge spanning",kleur:"#C46C4A",tekst:"De spanning loopt op. Gebruik je signaleringsplan en overweeg contact op te nemen.",acuut:false};
+  }
   document.getElementById('result-icon').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="'+r.kleur+'" stroke-width="1.6" width="46" height="46"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>';
   const faseEl=document.getElementById('result-fase');
   faseEl.textContent=r.fase; faseEl.style.color=r.kleur;
