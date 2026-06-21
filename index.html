@@ -382,6 +382,18 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
 //# sourceMappingURL=jspdf.umd.min.js.map
 
 </script>
+<script>
+(function(){
+  try{
+    var raw=localStorage.getItem('mijnAnker_darkMode');
+    if(raw && JSON.parse(raw)===true){
+      document.documentElement.classList.add('dark');
+      var tc=document.querySelector('meta[name="theme-color"]');
+      if(tc)tc.setAttribute('content','#1B201C');
+    }
+  }catch(e){}
+})();
+</script>
 <meta name="apple-mobile-web-app-title" content="MijnAnker"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="mobile-web-app-capable" content="yes"/>
@@ -392,7 +404,8 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-html{background:#FAF8F3;color-scheme:light;overflow-x:hidden;width:100%;overscroll-behavior-x:none;}
+html{background:var(--cream);color-scheme:light;overflow-x:hidden;width:100%;overscroll-behavior-x:none;}
+html.dark{color-scheme:dark;}
 :root{
   --cream:#FAF8F3; --card:#FFFFFF; --moss:#E8F0E4;
   --green:#4A7A5C; --green-deep:#3A6249;
@@ -400,6 +413,16 @@ html{background:#FAF8F3;color-scheme:light;overflow-x:hidden;width:100%;overscro
   --line:rgba(74,122,92,0.14);
   --warm:#C46C4A; --warm-bg:#FBF3EE; --warm-line:rgba(196,108,74,0.18);
 }
+html.dark{
+  --cream:#1B201C; --card:#252B25; --moss:#2E3A30;
+  --green:#7FB596; --green-deep:#9CCBAF;
+  --ink:#ECE9E1; --ink-soft:#9BA59B;
+  --line:rgba(255,255,255,0.10);
+  --warm:#E08A66; --warm-bg:#3A2A23; --warm-line:rgba(224,138,102,0.22);
+}
+html.dark body{background:var(--cream);}
+html.dark .card,html.dark .plan-block,html.dark .sheet-box,html.dark .pin-screen,html.dark .install-screen,html.dark .disclaimer-modal{box-shadow:0 2px 8px rgba(0,0,0,0.25);}
+html.dark img,html.dark .logo-icon{filter:brightness(0.92);}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 body{background:var(--cream);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink);display:flex;justify-content:center;min-height:100vh;overflow-x:hidden;width:100%;}
 #frame{width:100%;max-width:430px;min-height:100vh;position:relative;overflow-x:hidden;}
@@ -819,9 +842,9 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 10h18"/><path d="M8 14h2M14 14h2M8 17h2M14 17h2"/></svg>
       <div class="card-label">Weekplanning</div><div class="card-sub">Plan je dag</div>
     </button>
-    <button class="card" onclick="goTo('weekoverzicht')">
-      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="11" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="14" rx="1"/><rect x="16" y="14" width="4" height="6" rx="1"/></svg>
-      <div class="card-label">Weekoverzicht</div><div class="card-sub" id="home-week-sub">Hoe was jouw week?</div>
+    <button class="card" onclick="goTo('plan')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6v4H9z"/><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 12h6M9 16h6"/></svg>
+      <div class="card-label">Mijn Plan</div><div class="card-sub">Jouw voorzorgsmaatregel</div>
     </button>
     <button class="card" onclick="goTo('gereedschappen')">
       <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
@@ -873,9 +896,9 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6v4H9z"/><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 12h6M9 16h6"/></svg>
       <div class="card-label">Mijn Plan</div><div class="card-sub">Jouw voorzorgsmaatregel</div>
     </button>
-    <button class="card" onclick="goTo('contacten')">
-      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg>
-      <div class="card-label">Contacten</div><div class="card-sub">Bel iemand die luistert</div>
+    <button class="card" onclick="goTo('weekoverzicht')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="11" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="14" rx="1"/><rect x="16" y="14" width="4" height="6" rx="1"/></svg>
+      <div class="card-label">Weekoverzicht</div><div class="card-sub" id="home-week-sub">Hoe was jouw week?</div>
     </button>
     <button class="card" onclick="goTo('stemmingmeter')">
       <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l4.5-7 4 4 4.5-9 5 6"/></svg>
@@ -891,7 +914,16 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
 <div class="screen" id="screen-instellingen">
   <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Instellingen</h2></div>
   <div style="padding:0 18px 32px">
-    <div class="section-label" style="margin-bottom:10px">Account</div>
+    <div class="section-label" style="margin-bottom:10px">Weergave</div>
+    <div class="toggle-row">
+      <div class="text">
+        <div class="card-label">Donkere modus</div>
+        <div class="card-sub" id="dark-toggle-sub">Uit</div>
+      </div>
+      <button class="toggle-switch" id="dark-toggle" onclick="toggleDarkMode()"><div class="knob"></div></button>
+    </div>
+
+    <div class="section-label" style="margin-bottom:10px;margin-top:22px">Account</div>
     <div class="toggle-row" id="naam-display-row">
       <div class="text">
         <div class="card-label">Naam</div>
@@ -1034,17 +1066,17 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
   <div class="plan-block">
     <div class="plan-head"><svg class="plan-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 12h4l1.5-4L11 18l2.5-10L15 12h7"/></svg>Vroege signalen</div>
     <div id="plan-signalen"></div>
-    <div class="add-row"><input class="text-input" id="plan-signalen-input" placeholder="Nieuw signaal..."/><button class="add-icon-btn" onclick="addPlanItem('signalen')">+</button></div>
+    <div class="add-row"><input class="text-input" id="plan-signalen-input" placeholder="Bijv. Slecht slapen"/><button class="add-icon-btn" onclick="addPlanItem('signalen')">+</button></div>
   </div>
   <div class="plan-block">
     <div class="plan-head"><svg class="plan-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4l9 15.5H3L12 4z"/><path d="M12 10.5v3.5"/><path d="M12 17h.01"/></svg>Mijn triggers</div>
     <div id="plan-triggers"></div>
-    <div class="add-row"><input class="text-input" id="plan-triggers-input" placeholder="Nieuwe trigger..."/><button class="add-icon-btn" onclick="addPlanItem('triggers')">+</button></div>
+    <div class="add-row"><input class="text-input" id="plan-triggers-input" placeholder="Bijv. Conflicten"/><button class="add-icon-btn" onclick="addPlanItem('triggers')">+</button></div>
   </div>
   <div class="plan-block">
     <div class="plan-head"><svg class="plan-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 21c8-1 13-6 14-14-8 1-13 6-14 14z"/><path d="M6 20c2-5 5-8 9-10"/></svg>Wat helpt mij</div>
     <div id="plan-helpend"></div>
-    <div class="add-row"><input class="text-input" id="plan-helpend-input" placeholder="Wat helpt jou..."/><button class="add-icon-btn" onclick="addPlanItem('helpend')">+</button></div>
+    <div class="add-row"><input class="text-input" id="plan-helpend-input" placeholder="Bijv. Wandelen"/><button class="add-icon-btn" onclick="addPlanItem('helpend')">+</button></div>
   </div>
   <div class="plan-block">
     <div class="plan-head"><svg class="plan-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg>Mijn contacten</div>
@@ -1132,19 +1164,6 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
   </div>
 </div>
 
-<div class="screen" id="screen-contacten">
-  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Contacten</h2></div>
-  <div id="contacten-lijst"></div>
-  <div class="plan-block" style="margin-top:14px">
-    <div class="plan-head">Contact toevoegen</div>
-    <div style="display:flex;flex-direction:column;gap:8px">
-      <input class="text-input" id="contact-naam-input" placeholder="Naam"/>
-      <input class="text-input" id="contact-tel-input" placeholder="Telefoonnummer"/>
-      <button class="save-btn" style="margin-top:0" onclick="addContactFromScreen()">Toevoegen</button>
-    </div>
-  </div>
-</div>
-
 <div class="screen" id="screen-acuut">
   <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Acuut</h2></div>
   <div class="acuut-banner">
@@ -1152,8 +1171,12 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
     <div class="acuut-titel">Je bent niet alleen</div>
     <div class="acuut-sub">We helpen je erdoorheen</div>
   </div>
+  <a href="tel:113" class="acuut-contact crisis">
+    <div><div class="name">Crisislijn 113</div><div class="num">113 · 24/7 bereikbaar, ook chatten via 113.nl</div></div>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warm)" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg>
+  </a>
   <div id="acuut-contacten"></div>
-  <div class="acuut-note">113 is 24/7 bereikbaar · Ook chatten via 113.nl</div>
+  <div id="acuut-leeg-hint" class="acuut-note" style="display:none">Voeg je eigen vertrouwde contacten toe via <a href="javascript:void(0)" onclick="goTo('plan')" style="color:var(--green-deep);font-weight:600;text-decoration:underline">Mijn Plan</a>.</div>
 </div>
 
 <div class="screen" id="screen-dagboek">
@@ -1347,10 +1370,10 @@ function loadData(key,fallback){
 let planNextId=100;
 function withIds(arr){return arr.map(function(tekst){return {id:planNextId++,tekst:tekst};});}
 const defaultPlan={
-  signalen:withIds(["Slaapproblemen","Terugtrekken uit sociale contacten","Piekeren voor het slapen"]),
-  triggers:withIds(["Conflicten","Overprikkeling","Alleen zijn in de avond"]),
-  helpend:withIds(["Wandelen","Muziek luisteren","Tekenen","Bellen met een vriend"]),
-  contacten:[{id:1,naam:"Behandelaar",tel:"06-12345678"},{id:2,naam:"Vertrouwenspersoon",tel:"06-87654321"},{id:3,naam:"Crisislijn 113",tel:"113"}]
+  signalen:[],
+  triggers:[],
+  helpend:[],
+  contacten:[]
 };
 let plan=loadData('plan',defaultPlan);
 function recalcNextIds(){
@@ -1365,7 +1388,7 @@ function recalcNextIds(){
 }
 let contactNextId=4;
 recalcNextIds();
-const defaultMedicatie=[{id:1,naam:"Sertraline",dosering:"50mg",moment:"Ochtend"},{id:2,naam:"Mirtazapine",dosering:"15mg",moment:"Avond"}];
+const defaultMedicatie=[];
 let medicatie=loadData('medicatie',defaultMedicatie);
 let medNextId=(function(){let max=0;medicatie.forEach(function(m){if(m.id>max)max=m.id;});return max+1;})();
 function todayKey(){return new Date().toISOString().slice(0,10);}
@@ -1433,7 +1456,6 @@ function goTo(screen, fromBack){
   if(screen==='checkin')initCheckin();
   if(screen==='oefeningen')renderOefeningen();
   if(screen==='plan')renderPlan();
-  if(screen==='contacten')renderContacten();
   if(screen==='acuut')renderAcuut();
   if(screen==='dagboek')renderDagboek();
   if(screen==='weekplanning')renderWeek();
@@ -1441,7 +1463,7 @@ function goTo(screen, fromBack){
   if(screen==='goedmoment')renderGoedMomenten();
   if(screen==='stemmingmeter')renderStemmingMeter();
   if(screen==='weekoverzicht'){ weekOvzOffset=0; renderWeekOvz(); }
-  if(screen==='instellingen'){ renderPinSettings(); renderNaamSettings(); }
+  if(screen==='instellingen'){ renderPinSettings(); renderNaamSettings(); renderDarkModeSettings(); }
   if(screen==='home')renderHomeMoodTile();
 }
 function goBack(){
@@ -1787,42 +1809,17 @@ function deletePlanContact(id){
   plan.contacten=plan.contacten.filter(function(c){return c.id!==id;});
   renderPlan();
 }
-function addContactFromScreen(){
-  const naam=document.getElementById('contact-naam-input').value.trim();
-  const tel=document.getElementById('contact-tel-input').value.trim();
-  if(!naam||!tel){alert('Vul naam en telefoonnummer in');return;}
-  plan.contacten.push({id:contactNextId++,naam:naam,tel:tel});
-  document.getElementById('contact-naam-input').value='';
-  document.getElementById('contact-tel-input').value='';
-  renderContacten();
-}
-function deleteContactFromScreen(id){
-  plan.contacten=plan.contacten.filter(function(c){return c.id!==id;});
-  renderContacten();
-}
-function renderContacten(){
-  saveData('plan',plan);
-  if(plan.contacten.length===0){
-    document.getElementById('contacten-lijst').innerHTML='<div class="empty-state">Nog geen contacten toegevoegd</div>';
-    return;
-  }
-  document.getElementById('contacten-lijst').innerHTML=plan.contacten.map(function(c){
-    return '<div class="acuut-contact"><a href="tel:'+c.tel+'" style="text-decoration:none;flex:1;display:flex;justify-content:space-between;align-items:center"><div><div class="name">'+c.naam+'</div><div class="num">'+c.tel+'</div></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg></a><button class="item-delete-btn" style="margin-left:8px" onclick="deleteContactFromScreen('+c.id+')">×</button></div>';
-  }).join('');
-}
 function renderAcuut(){
   document.getElementById('acuut-contacten').innerHTML=plan.contacten.map(function(c){
     const isCrisis=c.tel.indexOf('113')>-1;
     return '<a href="tel:'+c.tel+'" class="acuut-contact '+(isCrisis?'crisis':'')+'"><div><div class="name">'+c.naam+'</div><div class="num">'+c.tel+'</div></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="'+(isCrisis?'var(--warm)':'var(--green)')+'" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg></a>';
   }).join('');
+  document.getElementById('acuut-leeg-hint').style.display = plan.contacten.length===0 ? 'block' : 'none';
 }
 
 let selectedMood=null;
 const moodOptions=[{e:'😊',l:'Goed'},{e:'😐',l:'Oké'},{e:'😟',l:'Moeilijk'},{e:'😰',l:'Zwaar'}];
-const defaultDagboekEntries=[
-  {id:1,datum:'16 juni, 21:40',mood:'😐',tekst:'Drukke dag gehad, maar de ademhalingsoefening hielp.'},
-  {id:2,datum:'15 juni, 09:15',mood:'😊',tekst:'Goed geslapen, voel me rustig.'}
-];
+const defaultDagboekEntries=[];
 let dagboekEntries=loadData('dagboekEntries',defaultDagboekEntries);
 let dagboekNextId=(function(){let max=0;dagboekEntries.forEach(function(e){if(e.id>max)max=e.id;});return max+1;})();
 let editingEntryId=null;
@@ -1896,7 +1893,7 @@ function formatAfspraakDatum(datumStr){
   if(isNaN(d.getTime())) return datumStr;
   return weekdagenLang[d.getDay()].slice(0,2)+' '+d.getDate()+' '+maandenLang[d.getMonth()];
 }
-const defaultAfspraken=[{id:1,titel:"Afspraak behandelaar",datum:"2026-06-19",tijd:"14:00"}];
+const defaultAfspraken=[];
 let afspraken=loadData('afspraken',defaultAfspraken);
 let afspraakNextId=(function(){let max=0;afspraken.forEach(function(a){if(a.id>max)max=a.id;});return max+1;})();
 let agSelectedDatum='';
@@ -2194,9 +2191,7 @@ function deleteMedicatie(id){
   renderMedicatie();
 }
 
-const defaultGoedMomenten=[
-  {id:1,datum:'10 juni',tekst:'Je hebt al zoveel moeilijke dagen overleefd. Dit is ook maar een moment — het gaat voorbij. Bel iemand, ga even naar buiten, en wees lief voor jezelf.'}
-];
+const defaultGoedMomenten=[];
 let goedMomenten=loadData('goedMomenten',defaultGoedMomenten);
 let goedMomentNextId=(function(){let max=0;goedMomenten.forEach(function(g){if(g.id>max)max=g.id;});return max+1;})();
 function saveGoedMoment(){
@@ -2278,31 +2273,38 @@ function bouwLijnPad(data,xForIdx,yForScore){
   });
   return {pad:pad,punten:punten};
 }
+function cssVar(name){
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
 function renderMoodChart(container,data){
   const W=300,H=210,padL=26,padR=10,padT=14,padB=24;
   const plotW=W-padL-padR,plotH=H-padT-padB;
   const n=data.length;
   function xForIdx(i){return padL+(n>1?i*(plotW/(n-1)):plotW/2);}
   function yForScore(s){return padT+(5-s)/4*plotH;}
+  const cGreen=cssVar('--green')||'#4A7A5C';
+  const cInkSoft=cssVar('--ink-soft')||'#8A8D85';
+  const cCard=cssVar('--card')||'#FFFFFF';
+  const cLine=cssVar('--line')||'rgba(74,122,92,0.12)';
 
   let grid='';
   for(let v=1;v<=5;v++){
     const y=yForScore(v);
-    grid+='<line x1="'+padL+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'" stroke="rgba(74,122,92,0.12)" stroke-width="1"/>';
-    grid+='<text x="'+(padL-7)+'" y="'+(y+3)+'" text-anchor="end" font-size="9" fill="#8A8D85">'+v+'</text>';
+    grid+='<line x1="'+padL+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'" stroke="'+cLine+'" stroke-width="1"/>';
+    grid+='<text x="'+(padL-7)+'" y="'+(y+3)+'" text-anchor="end" font-size="9" fill="'+cInkSoft+'">'+v+'</text>';
   }
   const lijn=bouwLijnPad(data,xForIdx,yForScore);
   const dots=lijn.punten.map(function(p){
-    return '<circle data-idx="'+p.i+'" cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="4" fill="#4A7A5C" stroke="#FAF8F3" stroke-width="1.5"/>'
+    return '<circle data-idx="'+p.i+'" cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="4" fill="'+cGreen+'" stroke="'+cCard+'" stroke-width="1.5"/>'
       +'<circle class="mood-hit" data-idx="'+p.i+'" cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="13" fill="transparent"/>';
   }).join('');
   const xLabels=data.map(function(d,i){
-    return '<text x="'+xForIdx(i).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle" font-size="9" fill="#8A8D85">'+d.label+'</text>';
+    return '<text x="'+xForIdx(i).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle" font-size="9" fill="'+cInkSoft+'">'+d.label+'</text>';
   }).join('');
 
   container.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="100%" preserveAspectRatio="none" style="font-family:Inter,sans-serif">'
     +grid
-    +'<path d="'+lijn.pad+'" fill="none" stroke="#4A7A5C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'
+    +'<path d="'+lijn.pad+'" fill="none" stroke="'+cGreen+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'
     +dots+xLabels+'</svg>';
 
   container.querySelectorAll('.mood-hit').forEach(function(hit){
@@ -2342,7 +2344,8 @@ function renderSparkline(container,data){
   function xForIdx(i){return pad+(n>1?i*(plotW/(n-1)):plotW/2);}
   function yForScore(s){return pad+(5-s)/4*plotH;}
   const lijn=bouwLijnPad(data,xForIdx,yForScore);
-  container.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="100%" preserveAspectRatio="none"><path d="'+lijn.pad+'" fill="none" stroke="#4A7A5C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const cGreen=cssVar('--green')||'#4A7A5C';
+  container.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="100%" preserveAspectRatio="none"><path d="'+lijn.pad+'" fill="none" stroke="'+cGreen+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 }
 
 function getDagEntriesRuw(){
@@ -2810,6 +2813,36 @@ function togglePinLock(){
 }
 function startChangePin(){
   openPinSetup('settings-change');
+}
+
+function isDarkModeOn(){return loadData('darkMode',false)===true;}
+function renderDarkModeSettings(){
+  const enabled=isDarkModeOn();
+  document.getElementById('dark-toggle').classList.toggle('on',enabled);
+  document.getElementById('dark-toggle-sub').textContent=enabled?'Aan':'Uit';
+}
+function applyDarkMode(on){
+  document.documentElement.classList.toggle('dark',on);
+  const tc=document.querySelector('meta[name="theme-color"]');
+  if(tc)tc.setAttribute('content', on?'#1B201C':'#FAF8F3');
+  rerenderActiveCharts();
+}
+function toggleDarkMode(){
+  const newState=!isDarkModeOn();
+  saveData('darkMode',newState);
+  applyDarkMode(newState);
+  renderDarkModeSettings();
+}
+function rerenderActiveCharts(){
+  try{
+    const actief=document.querySelector('.screen.active');
+    if(!actief)return;
+    if(actief.id==='screen-stemmingmeter' && typeof renderStemmingMeter==='function')renderStemmingMeter();
+    if(actief.id==='screen-weekoverzicht' && typeof renderWeekOvz==='function')renderWeekOvz();
+  }catch(e){}
+  try{
+    if(typeof renderHomeMoodTile==='function')renderHomeMoodTile();
+  }catch(e){}
 }
 
 function initOnboarding(){
