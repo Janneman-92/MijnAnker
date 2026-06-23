@@ -391,6 +391,10 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
       var tc=document.querySelector('meta[name="theme-color"]');
       if(tc)tc.setAttribute('content','#1B201C');
     }
+    var rawS=localStorage.getItem('mijnAnker_simpleMode');
+    if(rawS && JSON.parse(rawS)===true){
+      document.documentElement.classList.add('simple');
+    }
   }catch(e){}
 })();
 </script>
@@ -424,6 +428,28 @@ html.dark body{background:var(--cream);}
 html.dark .card,html.dark .plan-block,html.dark .sheet-box,html.dark .pin-screen,html.dark .install-screen,html.dark .disclaimer-modal{box-shadow:0 2px 8px rgba(0,0,0,0.25);}
 html.dark .checkin-strip{background:linear-gradient(135deg,#2E5C40 0%,#1E3D2A 100%);box-shadow:0 8px 24px rgba(0,0,0,0.35);}
 html.dark .reflectie-cta{background:linear-gradient(135deg,#2E5C40 0%,#1E3D2A 100%) !important;}
+
+/* ── Eenvoudige modus ─────────────────────────────────── */
+html.simple .grid{grid-template-columns:1fr;}
+html.simple .wide-card{flex-direction:column;align-items:flex-start;gap:8px;}
+html.simple .wide-card .card-icon{width:40px;height:40px;}
+html.simple .card{padding:22px 20px;gap:12px;}
+html.simple .card-icon{width:40px;height:40px;}
+html.simple .card-label{font-size:19px;}
+html.simple .card-sub{font-size:15px;}
+html.simple .section-label{font-size:14px;}
+html.simple .topbar h2{font-size:26px;}
+html.simple .actie-btn{padding:20px;font-size:17px;}
+html.simple .opt-btn{padding:20px 22px;font-size:17px;border-radius:16px;}
+html.simple .options{gap:10px;}
+html.simple .q-title{font-size:28px;}
+html.simple .toggle-row{padding:20px;}
+html.simple .toggle-switch{width:54px;height:32px;}
+html.simple .toggle-switch .knob{width:24px;height:24px;top:4px;left:4px;}
+html.simple .toggle-switch.on .knob{left:26px;}
+html.simple .text-input{padding:16px;font-size:16px;}
+html.simple .save-btn{padding:20px;font-size:17px;}
+html.simple .nav-btn{padding:12px 20px;font-size:15px;}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 body{background:var(--cream);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink);display:flex;justify-content:center;min-height:100vh;overflow-x:hidden;width:100%;}
 #frame{width:100%;max-width:430px;min-height:100vh;position:relative;overflow-x:hidden;}
@@ -923,6 +949,13 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       </div>
       <button class="toggle-switch" id="dark-toggle" onclick="toggleDarkMode()"><div class="knob"></div></button>
     </div>
+    <div class="toggle-row">
+      <div class="text">
+        <div class="card-label">Eenvoudige modus</div>
+        <div class="card-sub" id="simple-toggle-sub">Uit</div>
+      </div>
+      <button class="toggle-switch" id="simple-toggle" onclick="toggleSimpleMode()"><div class="knob"></div></button>
+    </div>
 
     <div class="section-label" style="margin-bottom:10px;margin-top:22px">Account</div>
     <div class="toggle-row" id="naam-display-row">
@@ -949,7 +982,7 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       </div>
       <button class="toggle-switch" id="pin-toggle" onclick="togglePinLock()"><div class="knob"></div></button>
     </div>
-    <button class="card" id="pin-change-btn" onclick="startChangePin()" style="display:none;flex-direction:row;align-items:center;gap:14px;padding:16px">
+    <button class="card" id="pin-change-btn" onclick="startChangePin()" style="display:none;flex-direction:row;align-items:center;gap:14px;padding:16px;width:100%">
       <svg class="card-icon" style="flex-shrink:0;margin-bottom:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
       <div class="text" style="flex:1;text-align:left"><div class="card-label">Pincode wijzigen</div><div class="card-sub">Stel een nieuwe code in</div></div>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--ink-soft);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
@@ -1090,7 +1123,16 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       </div>
     </div>
   </div>
-  <button class="actie-btn primary" style="margin-top:6px" onclick="exportNoodplanPDF()">Exporteer als PDF</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px">
+    <button class="actie-btn" onclick="exportNoodplanPDF()" style="display:flex;align-items:center;justify-content:center;gap:7px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v13M6 11l6 6 6-6"/><path d="M4 20h16"/></svg>
+      Downloaden
+    </button>
+    <button id="deel-pdf-btn" class="actie-btn primary" onclick="deelNoodplanPDF()" style="display:flex;align-items:center;justify-content:center;gap:7px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+      Delen
+    </button>
+  </div>
   <div style="text-align:center;color:var(--ink-soft);font-size:12px;margin-top:8px;padding:0 12px">Handig om te delen met je behandelaar, huisarts of een naaste.</div>
 </div>
 
@@ -1464,7 +1506,7 @@ function goTo(screen, fromBack){
   if(screen==='goedmoment')renderGoedMomenten();
   if(screen==='stemmingmeter')renderStemmingMeter();
   if(screen==='weekoverzicht'){ weekOvzOffset=0; renderWeekOvz(); }
-  if(screen==='instellingen'){ renderPinSettings(); renderNaamSettings(); renderDarkModeSettings(); }
+  if(screen==='instellingen'){ renderPinSettings(); renderNaamSettings(); renderDarkModeSettings(); renderSimpleModeSettings(); }
   if(screen==='home')renderHomeMoodTile();
 }
 function goBack(){
@@ -2834,6 +2876,18 @@ function toggleDarkMode(){
   applyDarkMode(newState);
   renderDarkModeSettings();
 }
+function isSimpleModeOn(){return loadData('simpleMode',false)===true;}
+function renderSimpleModeSettings(){
+  const enabled=isSimpleModeOn();
+  document.getElementById('simple-toggle').classList.toggle('on',enabled);
+  document.getElementById('simple-toggle-sub').textContent=enabled?'Aan':'Uit';
+}
+function toggleSimpleMode(){
+  const newState=!isSimpleModeOn();
+  saveData('simpleMode',newState);
+  document.documentElement.classList.toggle('simple',newState);
+  renderSimpleModeSettings();
+}
 function rerenderActiveCharts(){
   try{
     const actief=document.querySelector('.screen.active');
@@ -2861,8 +2915,8 @@ function initOnboarding(){
   }
 }
 /* ===== PDF Export (Noodplan) ===== */
-function exportNoodplanPDF(){
-  if(typeof window.jspdf==='undefined'){alert('PDF-bibliotheek kon niet laden. Controleer je internetverbinding en probeer opnieuw.');return;}
+function buildNoodplanPDF(){
+  if(typeof window.jspdf==='undefined'){alert('PDF-bibliotheek kon niet laden. Controleer je internetverbinding en probeer opnieuw.');return null;}
   const COL={
     inkSoft:[107,125,114], greenDark:[45,90,61], green:[74,124,89],
     greenPale:[238,243,236], warm:[181,101,74], warmBg:[246,236,231], line:[225,221,212], ink:[45,59,51]
@@ -3065,7 +3119,34 @@ function exportNoodplanPDF(){
   const footerLines=doc.splitTextToSize('Gegenereerd vanuit MijnAnker op '+datumStr+' om te delen met een behandelaar, huisarts of naaste. Vervangt geen professionele hulp.', CONTENT_W);
   footerLines.forEach(function(l,i){doc.text(l, MARGIN, y+i*4);});
 
+  return doc;
+}
+function exportNoodplanPDF(){
+  var doc=buildNoodplanPDF();
+  if(!doc)return;
   doc.save('noodplan-mijnanker.pdf');
+}
+async function deelNoodplanPDF(){
+  var doc=buildNoodplanPDF();
+  if(!doc)return;
+  var btn=document.getElementById('deel-pdf-btn');
+  var origTxt=btn?btn.textContent:null;
+  if(btn){btn.textContent='Even wachten…';btn.disabled=true;}
+  try{
+    if(navigator.canShare){
+      var blob=doc.output('blob');
+      var file=new File([blob],'noodplan-mijnanker.pdf',{type:'application/pdf'});
+      if(navigator.canShare({files:[file]})){
+        await navigator.share({files:[file],title:'Mijn noodplan',text:'Mijn persoonlijk veiligheidsplan vanuit MijnAnker.'});
+        if(btn){btn.textContent=origTxt;btn.disabled=false;}
+        return;
+      }
+    }
+  }catch(e){
+    if(e.name!=='AbortError') console.warn('Share mislukt, terugvallen op download',e);
+  }
+  doc.save('noodplan-mijnanker.pdf');
+  if(btn){btn.textContent=origTxt;btn.disabled=false;}
 }
 
 initOnboarding();
