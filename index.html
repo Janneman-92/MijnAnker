@@ -957,6 +957,23 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       <button class="toggle-switch" id="simple-toggle" onclick="toggleSimpleMode()"><div class="knob"></div></button>
     </div>
 
+    <div class="section-label" style="margin-bottom:10px;margin-top:22px">Herinnering</div>
+    <div class="toggle-row">
+      <div class="text">
+        <div class="card-label">Dagelijkse herinnering</div>
+        <div class="card-sub" id="reminder-toggle-sub">Uit</div>
+      </div>
+      <button class="toggle-switch" id="reminder-toggle" onclick="toggleReminder()"><div class="knob"></div></button>
+    </div>
+    <div id="reminder-time-row" style="display:none;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px">
+      <div class="card-label" style="margin-bottom:12px">Tijdstip</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <select id="reminder-hour-select" onchange="saveReminderTime()" style="flex:1;background:var(--moss);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:16px;font-family:inherit;color:var(--ink);cursor:pointer"></select>
+        <span style="font-size:20px;font-weight:600;color:var(--ink)">:</span>
+        <select id="reminder-min-select" onchange="saveReminderTime()" style="flex:1;background:var(--moss);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:16px;font-family:inherit;color:var(--ink);cursor:pointer"></select>
+      </div>
+    </div>
+
     <div class="section-label" style="margin-bottom:10px;margin-top:22px">Account</div>
     <div class="toggle-row" id="naam-display-row">
       <div class="text">
@@ -1506,7 +1523,7 @@ function goTo(screen, fromBack){
   if(screen==='goedmoment')renderGoedMomenten();
   if(screen==='stemmingmeter')renderStemmingMeter();
   if(screen==='weekoverzicht'){ weekOvzOffset=0; renderWeekOvz(); }
-  if(screen==='instellingen'){ renderPinSettings(); renderNaamSettings(); renderDarkModeSettings(); renderSimpleModeSettings(); }
+  if(screen==='instellingen'){ renderPinSettings(); renderNaamSettings(); renderDarkModeSettings(); renderSimpleModeSettings(); renderReminderSettings(); }
   if(screen==='home')renderHomeMoodTile();
 }
 function goBack(){
@@ -2888,6 +2905,75 @@ function toggleSimpleMode(){
   document.documentElement.classList.toggle('simple',newState);
   renderSimpleModeSettings();
 }
+
+function heeftVandaagIngecheckt(){
+  const key=todayKey();
+  return stemmingen.some(function(s){return s.datum&&s.datum.slice(0,10)===key;});
+}
+function isReminderOn(){return loadData('reminderEnabled',false)===true;}
+function getReminderTime(){return loadData('reminderTime','20:00');}
+function renderReminderSettings(){
+  const enabled=isReminderOn();
+  const toggle=document.getElementById('reminder-toggle');
+  const sub=document.getElementById('reminder-toggle-sub');
+  const timeRow=document.getElementById('reminder-time-row');
+  if(!toggle)return;
+  toggle.classList.toggle('on',enabled);
+  sub.textContent=enabled?'Aan':'Uit';
+  timeRow.style.display=enabled?'block':'none';
+  if(enabled){
+    const parts=getReminderTime().split(':');
+    const hSel=document.getElementById('reminder-hour-select');
+    const mSel=document.getElementById('reminder-min-select');
+    if(hSel&&hSel.options.length===0){
+      for(var h=0;h<24;h++){var o=document.createElement('option');o.value=String(h).padStart(2,'0');o.textContent=String(h).padStart(2,'0');hSel.appendChild(o);}
+    }
+    if(mSel&&mSel.options.length===0){
+      ['00','15','30','45'].forEach(function(m){var o=document.createElement('option');o.value=m;o.textContent=m;mSel.appendChild(o);});
+    }
+    if(hSel)hSel.value=parts[0]||'20';
+    if(mSel)mSel.value=parts[1]||'00';
+  }
+}
+function saveReminderTime(){
+  const h=document.getElementById('reminder-hour-select').value;
+  const m=document.getElementById('reminder-min-select').value;
+  saveData('reminderTime',h+':'+m);
+  planReminderVandaag();
+}
+var _reminderTimer=null;
+function planReminderVandaag(){
+  if(_reminderTimer){clearTimeout(_reminderTimer);_reminderTimer=null;}
+  if(!isReminderOn())return;
+  if(typeof Notification==='undefined'||Notification.permission!=='granted')return;
+  const parts=getReminderTime().split(':');
+  const nu=new Date();
+  const doel=new Date();
+  doel.setHours(parseInt(parts[0]||20),parseInt(parts[1]||0),0,0);
+  const ms=doel-nu;
+  if(ms>0){
+    _reminderTimer=setTimeout(function(){
+      if(!heeftVandaagIngecheckt()){
+        try{new Notification('MijnAnker',{body:'Hoe voel je je vandaag? Doe je dagelijkse check-in.',icon:'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚓</text></svg>',tag:'dagelijkse-checkin'});}catch(e){}
+      }
+    },ms);
+  }
+}
+async function toggleReminder(){
+  const newState=!isReminderOn();
+  if(newState && typeof Notification !== 'undefined' && Notification.permission==='default'){
+    try{
+      const result=await Notification.requestPermission();
+      if(result!=='granted'){
+        // Geen toestemming maar we slaan de voorkeur wél op — tijdkiezer blijft bruikbaar
+      }
+    }catch(e){}
+  }
+  saveData('reminderEnabled',newState);
+  renderReminderSettings();
+  if(newState) planReminderVandaag();
+  else if(_reminderTimer){clearTimeout(_reminderTimer);_reminderTimer=null;}
+}
 function rerenderActiveCharts(){
   try{
     const actief=document.querySelector('.screen.active');
@@ -3151,6 +3237,7 @@ async function deelNoodplanPDF(){
 
 initOnboarding();
 renderHomeMoodTile();
+planReminderVandaag();
 
 </script>
 </body>
