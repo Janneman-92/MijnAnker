@@ -768,15 +768,20 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
 
 <div class="disclaimer-modal" id="naam-modal">
   <div class="disclaimer-box">
-    <h2 class="disclaimer-title">Disclaimer &amp; Starten</h2>
-    <div class="disclaimer-text-box">
-      <p class="disclaimer-text"><strong>Disclaimer:</strong> MijnAnker is een persoonlijk hulpmiddel voor mentaal welzijn. Het vervangt geen professionele medische of psychologische hulp. Bij crisis of nood: bel 113 of ga naar de spoedopvang.</p>
-      <p class="disclaimer-text">Je bent verantwoordelijk voor je eigen gezondheid en veiligheid.</p>
+    <h2 class="disclaimer-title">Welkom bij MijnAnker</h2>
+    <div class="disclaimer-text-box" style="max-height:200px;overflow-y:auto">
+      <p class="disclaimer-text"><strong>Geen vervanging voor professionele hulp</strong><br/>MijnAnker is een persoonlijk hulpmiddel ter ondersteuning van je mentale welzijn. De app vervangt geen behandeling, therapie of medisch advies. Bij crisis: bel 113 (zelfmoordpreventie) of 112.</p>
+      <p class="disclaimer-text"><strong>Jouw gegevens, op jouw apparaat</strong><br/>Alles wat je invult blijft uitsluitend op dit apparaat staan. Er wordt niets naar een server verstuurd. Wij hebben geen toegang tot je gegevens. Je kunt je gegevens zelf exporteren of wissen via Instellingen.</p>
+      <p class="disclaimer-text"><strong>Eigen verantwoordelijkheid</strong><br/>Jij bent verantwoordelijk voor je eigen veiligheid en gezondheid. De app biedt ondersteuning, maar is geen vangnet in een noodsituatie.</p>
+      <p class="disclaimer-text" style="margin-bottom:0"><a href="javascript:void(0)" onclick="document.getElementById('naam-modal').classList.remove('active');goTo('privacybeleid');" style="color:var(--green-deep);font-weight:600;text-decoration:underline">Lees het volledige privacybeleid →</a></p>
     </div>
     <p class="disclaimer-label">Wat is je naam?</p>
     <input class="text-input" id="naam-input-modal" placeholder="Vul je naam in" style="margin-bottom:14px"/>
-    <p class="disclaimer-footnote">Door op "App starten" te klikken, ga je akkoord met de disclaimer en ben je je bewust van je eigen verantwoordelijkheid voor je gezondheid.</p>
-    <button class="save-btn" onclick="saveNaamAndContinue()" style="margin-top:14px">App starten</button>
+    <label style="display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;cursor:pointer">
+      <input type="checkbox" id="consent-checkbox" style="margin-top:3px;width:18px;height:18px;flex-shrink:0;accent-color:var(--green)"/>
+      <span style="font-size:12.5px;color:var(--ink-soft);line-height:1.5">Ik heb de bovenstaande informatie gelezen en begrepen. Ik ga akkoord met het gebruik van MijnAnker als persoonlijk hulpmiddel.</span>
+    </label>
+    <button class="save-btn" onclick="saveNaamAndContinue()" style="margin-top:0">App starten</button>
   </div>
 </div>
 
@@ -1020,12 +1025,50 @@ textarea{resize:none;line-height:1.6;min-height:100px;}
       </button>
     </div>
     <input type="file" id="import-file-input" accept="application/json,.json" style="display:none" onchange="importAppData(event)"/>
+    <button class="card" onclick="wisAlleGegevens()" style="width:100%;flex-direction:row;align-items:center;gap:14px;padding:16px;border-color:rgba(176,67,46,0.25);background:rgba(176,67,46,0.05);margin-bottom:14px">
+      <svg style="width:28px;height:28px;color:#B0432E;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+      <div style="text-align:left"><div class="card-label" style="color:#B0432E">Alles wissen</div><div class="card-sub">Verwijder alle gegevens permanent</div></div>
+    </button>
+    <button class="card" onclick="goTo('privacybeleid')" style="width:100%;flex-direction:row;align-items:center;gap:14px;padding:16px;margin-bottom:14px">
+      <svg style="width:28px;height:28px;color:var(--green);flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div style="text-align:left"><div class="card-label">Privacybeleid</div><div class="card-sub">Hoe we omgaan met je gegevens</div></div>
+    </button>
     <div style="margin-top:0;padding:14px 16px;background:var(--moss);border-radius:14px">
       <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.6">MijnAnker werkt volledig lokaal — er is geen cloud-back-up. Maak zelf af en toe een export, zodat je niets kwijtraakt als je van toestel wisselt of je browsergegevens wist.</div>
     </div>
   </div>
 </div>
 
+<div class="screen" id="screen-privacybeleid">
+  <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Privacybeleid</h2></div>
+  <div style="background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:16px">
+    <div style="font-size:12px;color:var(--ink-soft);margin-bottom:16px">Versie 1.0 · Laatst bijgewerkt: juni 2026</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">1. Wat is MijnAnker?</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">MijnAnker is een persoonlijke signaleringsplan-app voor mentale gezondheid. De app is bedoeld als hulpmiddel ter ondersteuning en vervangt geen professionele behandeling, therapie of medisch advies.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">2. Welke gegevens worden opgeslagen?</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">MijnAnker slaat de volgende gegevens lokaal op je apparaat op: je naam, je signaleringsplan (signalen, triggers, wat helpt, contacten), medicatie-overzicht, stemmingen, dagboekentries, afspraken, weekplanning en goede-momenten-berichten. Er worden geen medische diagnoses of gevoelige persoonsgegevens actief verzameld buiten wat jij zelf invoert.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">3. Waar worden je gegevens bewaard?</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">Alle gegevens worden uitsluitend lokaal opgeslagen in de browser op jouw apparaat (localStorage). Er worden geen gegevens naar externe servers, databases of derden verzonden. De ontwikkelaar heeft op geen enkele manier toegang tot jouw gegevens.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">4. Worden je gegevens gedeeld?</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">Nee. Gegevens worden nooit automatisch gedeeld. Als jij ervoor kiest je noodplan als PDF te exporteren en te delen met een behandelaar of naaste, doe je dat bewust en op eigen initiatief.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">5. Hoe verwijder je je gegevens?</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">Je kunt alle gegevens zelf verwijderen via Instellingen → Gegevens → Alles wissen. Daarnaast verdwijnen alle gegevens automatisch als je de browsergeschiedenis of app-gegevens van dit apparaat wist.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">6. Cookies en tracking</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">MijnAnker gebruikt geen cookies, analytics, advertenties of tracking van welke aard dan ook.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">7. Minderjarigen</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">De app is bedoeld voor gebruik onder begeleiding van een zorgprofessional. Bij gebruik door minderjarigen is betrokkenheid van een ouder, voogd of behandelaar aanbevolen.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">8. Wijzigingen</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:0">Dit privacybeleid kan worden bijgewerkt. De versiedatum bovenaan geeft aan wanneer het voor het laatst is gewijzigd.</div>
+  </div>
+</div>
 <div class="screen" id="screen-oefeningen">
   <div class="topbar"><button class="back-btn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Oefeningen</h2></div>
   <div id="oef-list"></div>
@@ -1478,7 +1521,10 @@ function enterApp(){
 function saveNaamAndContinue(){
   const naam=document.getElementById('naam-input-modal').value.trim();
   if(!naam){alert('Vul alsjeblieft je naam in');return;}
+  const checkbox=document.getElementById('consent-checkbox');
+  if(checkbox&&!checkbox.checked){alert('Vink het akkoordvakje aan om door te gaan.');return;}
   saveData('username',naam);
+  saveData('consentGiven',true);
   document.getElementById('naam-modal').classList.remove('active');
   document.getElementById('home-greeting').textContent='Welkom terug, '+naam;
   openPinSetup();
@@ -1516,6 +1562,7 @@ function goTo(screen, fromBack){
   if(screen==='checkin')initCheckin();
   if(screen==='oefeningen')renderOefeningen();
   if(screen==='plan')renderPlan();
+  if(screen==='privacybeleid'){/* statische pagina, geen render nodig */}
   if(screen==='acuut')renderAcuut();
   if(screen==='dagboek')renderDagboek();
   if(screen==='weekplanning')renderWeek();
@@ -2791,6 +2838,14 @@ function saveChangeNaam(){
 /* ===== Data export & import ===== */
 const EXPORT_KEYS=['username','plan','medicatie','stemmingen','dagboekEntries','afspraken','takenPerDag','goedMomenten'];
 
+function wisAlleGegevens(){
+  if(!confirm('Weet je zeker dat je ALLE gegevens wilt verwijderen?\n\nDit verwijdert:\n• Je naam en signaleringsplan\n• Alle stemmingen en dagboekentries\n• Medicatie, agenda en weekplanning\n• Je pincode en instellingen\n\nDit kan niet ongedaan worden gemaakt.')) return;
+  if(!confirm('Laatste bevestiging: alle gegevens worden permanent gewist. Doorgaan?')) return;
+  const prefix='mijnAnker_';
+  Object.keys(localStorage).filter(function(k){return k.startsWith(prefix);}).forEach(function(k){localStorage.removeItem(k);});
+  alert('Alle gegevens zijn verwijderd. De app wordt opnieuw gestart.');
+  location.reload();
+}
 function exportAppData(){
   const data={};
   EXPORT_KEYS.forEach(function(key){
