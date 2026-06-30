@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#FAF8F3"/>
+<title>MijnAnker</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MijnAnker">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="icon" type="image/png" href="./icon-192.png">
+<script>
+(function(){
+  try{
+    var raw=localStorage.getItem('mijnAnker_darkMode');
+    if(raw && JSON.parse(raw)===true){
+      document.documentElement.classList.add('dark');
+      var tc=document.querySelector('meta[name="theme-color"]');
+      if(tc)tc.setAttribute('content','#1B201C');
+    }
+    var rawS=localStorage.getItem('mijnAnker_simpleMode');
+    if(rawS && JSON.parse(rawS)===true){
+      document.documentElement.classList.add('simple');
+    }
+  }catch(e){}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div id="frame">
+
+<div class="install-screen" id="install-screen">
+  <svg style="width:64px;height:64px;margin:0 auto 20px;display:block;color:var(--green)" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="16" r="7" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="50" y1="23" x2="50" y2="82" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="36" y1="34" x2="64" y2="34" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 C16 75, 31 88, 50 88 C 69 88, 84 75, 84 56" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 L 24 50 M16 56 L 24 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M84 56 L 76 50 M84 56 L 76 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+  </svg>
+  <h1 class="install-title">MijnAnker</h1>
+  <p class="install-sub">Voeg de app toe aan je beginscherm<br>voor de beste ervaring</p>
+  <div class="install-os-btns">
+    <button class="os-btn active" id="os-iphone" onclick="selectOS('iphone')"><span>🍎</span><span>iPhone</span></button>
+    <button class="os-btn" id="os-android" onclick="selectOS('android')"><span>🤖</span><span>Android</span></button>
+  </div>
+  <div class="install-steps" id="steps-iphone">
+    <div class="install-step"><div class="install-step-num">1</div><div style="flex:1"><div class="install-step-text">Open deze pagina in <strong>Safari</strong>. Andere browsers werken niet voor installatie op iPhone.</div></div></div>
+    <div class="install-step"><div class="install-step-num">2</div><div style="flex:1"><div class="install-step-text">Tik onderaan op het <strong>deel-icoon</strong> — het vierkantje met een pijl omhoog.</div></div></div>
+    <div class="install-step"><div class="install-step-num">3</div><div style="flex:1"><div class="install-step-text">Scrol omlaag en tik op <strong>"Zet op beginscherm"</strong>.</div></div></div>
+    <div class="install-step"><div class="install-step-num">4</div><div style="flex:1"><div class="install-step-text">Tik op <strong>"Voeg toe"</strong> rechtsboven. Het anker-icoon staat nu op je beginscherm!</div></div></div>
+  </div>
+  <div class="install-steps" id="steps-android" style="display:none">
+    <div class="install-step"><div class="install-step-num">1</div><div style="flex:1"><div class="install-step-text">Open deze pagina in <strong>Chrome</strong>. Er verschijnt automatisch een banner onderaan.</div></div></div>
+    <div class="install-step"><div class="install-step-num">2</div><div style="flex:1"><div class="install-step-text">Zie je de banner niet? Tik op de <strong>drie puntjes</strong> rechtsboven in Chrome.</div></div></div>
+    <div class="install-step"><div class="install-step-num">3</div><div style="flex:1"><div class="install-step-text">Kies <strong>"Toevoegen aan startscherm"</strong> of <strong>"App installeren"</strong>.</div></div></div>
+    <div class="install-step"><div class="install-step-num">4</div><div style="flex:1"><div class="install-step-text">Tik op <strong>"Installeren"</strong>. Het anker-icoon staat nu op je beginscherm!</div></div></div>
+  </div>
+  <button class="install-enter-btn" onclick="enterApp()">Doorgaan naar de app →</button>
+  <span class="install-skip" onclick="enterApp()">Overslaan, gewoon in de browser gebruiken</span>
+</div>
+
+<div class="disclaimer-modal" id="naam-modal">
+  <div class="disclaimer-box">
+    <h2 class="disclaimer-title">Welkom bij MijnAnker</h2>
+    <div class="disclaimer-text-box" style="max-height:200px;overflow-y:auto">
+      <p class="disclaimer-text"><strong>Geen vervanging voor professionele hulp</strong><br/>MijnAnker is een persoonlijk hulpmiddel ter ondersteuning van je mentale welzijn. De app vervangt geen behandeling, therapie of medisch advies. Bij crisis: bel 113 (zelfmoordpreventie) of 112.</p>
+      <p class="disclaimer-text"><strong>Jouw gegevens, op jouw apparaat</strong><br/>Alles wat je invult blijft uitsluitend op dit apparaat staan. Er wordt niets naar een server verstuurd. Wij hebben geen toegang tot je gegevens. Je kunt je gegevens zelf exporteren of wissen via Instellingen.</p>
+      <p class="disclaimer-text"><strong>Eigen verantwoordelijkheid</strong><br/>Jij bent verantwoordelijk voor je eigen veiligheid en gezondheid. De app biedt ondersteuning, maar is geen vangnet in een noodsituatie.</p>
+      <p class="disclaimer-text" style="margin-bottom:0"><a href="javascript:void(0)" onclick="document.getElementById('naam-modal').classList.remove('active');goTo('privacybeleid');" style="color:var(--green-deep);font-weight:600;text-decoration:underline">Lees het volledige privacybeleid →</a></p>
+    </div>
+    <p class="disclaimer-label">Wat is je naam?</p>
+    <input class="text-input" id="naam-input-modal" placeholder="Vul je naam in" style="margin-bottom:14px"/>
+    <label style="display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;cursor:pointer">
+      <input type="checkbox" id="consent-checkbox" style="margin-top:3px;width:18px;height:18px;flex-shrink:0;accent-color:var(--green)"/>
+      <span style="font-size:12.5px;color:var(--ink-soft);line-height:1.5">Ik heb de bovenstaande informatie gelezen en begrepen. Ik ga akkoord met het gebruik van MijnAnker als persoonlijk hulpmiddel.</span>
+    </label>
+    <button class="save-btn" onclick="saveNaamAndContinue()" style="margin-top:0">App starten</button>
+  </div>
+</div>
+
+<!-- Pincode instellen (eerste keer) -->
+<div class="pin-screen" id="pin-setup-screen">
+  <svg class="pin-anchor" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="16" r="7" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="50" y1="23" x2="50" y2="82" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="36" y1="34" x2="64" y2="34" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 C16 75, 31 88, 50 88 C 69 88, 84 75, 84 56" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 L 24 50 M16 56 L 24 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M84 56 L 76 50 M84 56 L 76 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+  </svg>
+  <div class="pin-title" id="pin-setup-title">Stel een pincode in</div>
+  <div class="pin-sub">Bescherm je persoonlijke gegevens met een pincode van 4 cijfers. Je hebt deze nodig om de app te openen.</div>
+  <div class="pin-dots" id="pin-setup-dots">
+    <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+  </div>
+  <div class="pin-error" id="pin-setup-error"></div>
+  <div class="pin-pad" id="pin-setup-pad"></div>
+  <button class="pin-skip" onclick="skipPinSetup()">Later instellen</button>
+</div>
+
+<!-- Pincode invoeren (vergrendelscherm) -->
+<div class="pin-screen" id="pin-lock-screen">
+  <svg class="pin-anchor" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="16" r="7" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="50" y1="23" x2="50" y2="82" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="36" y1="34" x2="64" y2="34" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 C16 75, 31 88, 50 88 C 69 88, 84 75, 84 56" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 L 24 50 M16 56 L 24 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M84 56 L 76 50 M84 56 L 76 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+  </svg>
+  <div class="pin-title">Welkom terug</div>
+  <div class="pin-sub">Voer je pincode in om MijnAnker te openen.</div>
+  <div class="pin-dots" id="pin-lock-dots">
+    <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+  </div>
+  <div class="pin-error" id="pin-lock-error">&nbsp;</div>
+  <div class="pin-pad" id="pin-lock-pad"></div>
+</div>
+
+<div class="screen active" id="screen-home">
+  <svg class="anchor-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="16" r="7" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="50" y1="23" x2="50" y2="82" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="36" y1="34" x2="64" y2="34" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 C16 75, 31 88, 50 88 C 69 88, 84 75, 84 56" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M16 56 L 24 50 M16 56 L 24 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M84 56 L 76 50 M84 56 L 76 62" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+  </svg>
+  <header class="home-header">
+    <div class="eyebrow" id="home-greeting">Welkom terug, Jan</div>
+    <h1 class="title">Mijn&nbsp;Anker</h1>
+    <p class="sub">Een rustig moment voor jezelf, vandaag.</p>
+  </header>
+  <div class="divider"></div>
+  <button class="checkin-strip" onclick="goTo('checkin')">
+    <div class="checkin-label">Vandaag</div>
+    <div class="checkin-question">Hoe voel je je op dit moment?</div>
+    <span class="checkin-cta">Start de check-in
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </span>
+  </button>
+  <div class="grid" style="margin-bottom:22px">
+    <button class="card" id="home-mood-tile" onclick="goTo('stemmingmeter')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l4.5-7 4 4 4.5-9 5 6"/></svg>
+      <div class="card-label">Stemming Meter</div><div class="card-sub" id="home-mood-sub">Nog geen data vandaag</div>
+    </button>
+    <button class="card acuut-card" onclick="goTo('acuut')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.35-9.33-9.3C1.4 8.93 3 6 6 6c2 0 3.3 1.2 4 2.2.7-1 2-2.2 4-2.2 3 0 4.6 2.93 3.33 5.7C19 16.65 12 21 12 21z"/></svg>
+      <div class="card-label">Acuut</div><div class="card-sub">Je hoeft dit niet alleen te doen</div>
+    </button>
+  </div>
+  <div class="section-label">Overzicht</div>
+  <div class="grid grid-overzicht">
+    <button class="card" onclick="goTo('medicatie')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="3" width="8" height="18" rx="4" transform="rotate(45 12 12)"/><path d="M9 12.5l6-6"/></svg>
+      <div class="card-label">Medicatie</div><div class="card-sub">Zorg voor jezelf</div>
+    </button>
+    <button class="card" onclick="goTo('dagboek')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h11a2 2 0 012 2v14l-4-2-4 2-4-2-2 1V6a2 2 0 012-2z"/></svg>
+      <div class="card-label">Dagboek</div><div class="card-sub">Hoe gaat het met je</div>
+    </button>
+    <button class="card" onclick="goTo('agenda')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+      <div class="card-label">Agenda</div><div class="card-sub">Wat staat er te wachten</div>
+    </button>
+    <button class="card" onclick="goTo('weekplanning')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 10h18"/><path d="M8 14h2M14 14h2M8 17h2M14 17h2"/></svg>
+      <div class="card-label">Weekplanning</div><div class="card-sub">Plan je dag</div>
+    </button>
+    <button class="card" onclick="goTo('plan')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6v4H9z"/><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 12h6M9 16h6"/></svg>
+      <div class="card-label">Mijn Plan</div><div class="card-sub">Jouw voorzorgsmaatregel</div>
+    </button>
+    <button class="card" onclick="goTo('gereedschappen')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+      <div class="card-label">Gereedschappen</div><div class="card-sub">Oefeningen, hulp en meer</div>
+    </button>
+  </div>
+  <footer class="app-footer"><div class="footer-mark">© Mijn Anker v1.1</div></footer>
+</div>
+
+<div class="screen" id="screen-checkin" style="min-height:100vh">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Check-in</h2></div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+    <div class="progress" id="ci-progress"></div>
+    <div class="q-title" id="ci-question"></div>
+    <div class="options" id="ci-options"></div>
+  </div>
+</div>
+
+<div class="screen" id="screen-result">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Resultaat</h2></div>
+  <div class="result-card">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-fase" id="result-fase"></div>
+    <div class="result-tekst" id="result-tekst"></div>
+  </div>
+  <div class="acties" id="result-acties"></div>
+</div>
+
+<div class="screen" id="screen-gereedschappen">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Gereedschappen</h2></div>
+  <div class="section-label">In het moment</div>
+  <div class="grid" style="margin-bottom:24px">
+    <button class="card" onclick="goTo('checkin')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v4M12 17v4M5 12H3M21 12h-2"/><circle cx="12" cy="12" r="5"/></svg>
+      <div class="card-label">Check-in</div><div class="card-sub">Check je gevoel</div>
+    </button>
+    <button class="card" onclick="goTo('oefeningen')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c4-3 8-6 8-11a4 4 0 00-8-1 4 4 0 00-8 1c0 5 4 8 8 11z"/></svg>
+      <div class="card-label">Oefeningen</div><div class="card-sub">Adem in, ontspan</div>
+    </button>
+    <button class="card wide-card" onclick="goTo('goedmoment')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 17.3l-5.4 3 1-6-4.6-4 6-.6L12 4l3 5.7 6 .6-4.6 4 1 6z"/></svg>
+      <div class="text"><div class="card-label">Goed Moment</div><div class="card-sub">Wat je sterker maakt</div></div>
+    </button>
+  </div>
+  <div class="section-label">Plannen &amp; beheren</div>
+  <div class="grid">
+    <button class="card" onclick="goTo('plan')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6v4H9z"/><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 12h6M9 16h6"/></svg>
+      <div class="card-label">Mijn Plan</div><div class="card-sub">Jouw voorzorgsmaatregel</div>
+    </button>
+    <button class="card" onclick="goTo('weekoverzicht')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="11" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="14" rx="1"/><rect x="16" y="14" width="4" height="6" rx="1"/></svg>
+      <div class="card-label">Weekoverzicht</div><div class="card-sub" id="home-week-sub">Hoe was jouw week?</div>
+    </button>
+    <button class="card" onclick="goTo('stemmingmeter')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l4.5-7 4 4 4.5-9 5 6"/></svg>
+      <div class="card-label">Stemming Meter</div><div class="card-sub">Bekijk je trend over tijd</div>
+    </button>
+    <button class="card" onclick="goTo('instellingen')">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      <div class="card-label">Instellingen</div><div class="card-sub">Naam en beveiliging</div>
+    </button>
+  </div>
+</div>
+
+<div class="screen" id="screen-instellingen">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Instellingen</h2></div>
+  <div style="padding:0 18px 32px">
+    <div class="section-label" style="margin-bottom:10px">Weergave</div>
+    <div class="toggle-row">
+      <div class="text">
+        <div class="card-label">Donkere modus</div>
+        <div class="card-sub" id="dark-toggle-sub">Uit</div>
+      </div>
+      <button class="toggle-switch" id="dark-toggle" onclick="toggleDarkMode()" aria-label="Donkere modus"><div class="knob"></div></button>
+    </div>
+    <div class="toggle-row">
+      <div class="text">
+        <div class="card-label">Eenvoudige modus</div>
+        <div class="card-sub" id="simple-toggle-sub">Uit</div>
+      </div>
+      <button class="toggle-switch" id="simple-toggle" onclick="toggleSimpleMode()" aria-label="Eenvoudige modus"><div class="knob"></div></button>
+    </div>
+
+    <div class="section-label" style="margin-bottom:10px;margin-top:22px">Herinnering</div>
+    <div class="toggle-row">
+      <div class="text">
+        <div class="card-label">Dagelijkse herinnering</div>
+        <div class="card-sub" id="reminder-toggle-sub">Uit</div>
+      </div>
+      <button class="toggle-switch" id="reminder-toggle" onclick="toggleReminder()" aria-label="Herinneringen"><div class="knob"></div></button>
+    </div>
+    <div id="reminder-time-row" style="display:none;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px">
+      <div class="card-label" style="margin-bottom:12px">Tijdstip</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <select id="reminder-hour-select" onchange="saveReminderTime()" style="flex:1;background:var(--moss);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:16px;font-family:inherit;color:var(--ink);cursor:pointer"></select>
+        <span style="font-size:20px;font-weight:600;color:var(--ink)">:</span>
+        <select id="reminder-min-select" onchange="saveReminderTime()" style="flex:1;background:var(--moss);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:16px;font-family:inherit;color:var(--ink);cursor:pointer"></select>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-bottom:10px;margin-top:22px">Account</div>
+    <div class="toggle-row" id="naam-display-row">
+      <div class="text">
+        <div class="card-label">Naam</div>
+        <div class="card-sub" id="naam-huidig-sub">Jan</div>
+      </div>
+      <button class="nav-btn" onclick="startChangeNaam()">Wijzigen</button>
+    </div>
+    <div id="naam-edit-row" style="display:none;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px">
+      <div class="card-label" style="margin-bottom:10px">Naam wijzigen</div>
+      <input class="text-input" id="naam-input-instellingen" placeholder="Vul je naam in" style="margin-bottom:10px"/>
+      <div style="display:flex;gap:8px">
+        <button class="nav-btn" style="flex:1" onclick="cancelChangeNaam()">Annuleren</button>
+        <button class="nav-btn primary" style="flex:1" onclick="saveChangeNaam()">Opslaan</button>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-bottom:10px;margin-top:22px">Beveiliging</div>
+    <div class="toggle-row">
+      <div class="text">
+        <div class="card-label">Pincode vergrendeling</div>
+        <div class="card-sub" id="pin-toggle-sub">Uit</div>
+      </div>
+      <button class="toggle-switch" id="pin-toggle" onclick="togglePinLock()" aria-label="Pincode-vergrendeling"><div class="knob"></div></button>
+    </div>
+    <button class="card" id="pin-change-btn" onclick="startChangePin()" style="display:none;flex-direction:row;align-items:center;gap:14px;padding:16px;width:100%">
+      <svg class="card-icon" style="flex-shrink:0;margin-bottom:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+      <div class="text" style="flex:1;text-align:left"><div class="card-label">Pincode wijzigen</div><div class="card-sub">Stel een nieuwe code in</div></div>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--ink-soft);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <div style="margin-top:18px;padding:14px 16px;background:var(--moss);border-radius:14px">
+      <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.6">Je pincode wordt alleen op dit apparaat opgeslagen, niet verstuurd of gedeeld. Onthoud 'm goed: er is geen "vergeten"-optie. Ben je de code kwijt, dan kun je alleen verder door je browsergegevens te wissen — daarmee verdwijnt helaas ook al je opgeslagen informatie in de app.</div>
+    </div>
+
+    <div class="section-label" style="margin-bottom:10px;margin-top:22px">Gegevens</div>
+    <div class="grid" style="margin-bottom:14px">
+      <button class="card" onclick="exportAppData()">
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M5 17v2a2 2 0 002 2h10a2 2 0 002-2v-2"/></svg>
+        <div class="card-label">Exporteren</div><div class="card-sub">Back-up opslaan</div>
+      </button>
+      <button class="card" onclick="document.getElementById('import-file-input').click()">
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V8"/><path d="M7 13l5-5 5 5"/><path d="M5 20h14"/></svg>
+        <div class="card-label">Importeren</div><div class="card-sub">Back-up herstellen</div>
+      </button>
+    </div>
+    <input type="file" id="import-file-input" accept="application/json,.json" style="display:none" onchange="importAppData(event)"/>
+    <button class="card" onclick="wisAlleGegevens()" style="width:100%;flex-direction:row;align-items:center;gap:14px;padding:16px;border-color:rgba(176,67,46,0.25);background:rgba(176,67,46,0.05);margin-bottom:14px">
+      <svg style="width:28px;height:28px;color:#B0432E;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+      <div style="text-align:left"><div class="card-label" style="color:#B0432E">Alles wissen</div><div class="card-sub">Verwijder alle gegevens permanent</div></div>
+    </button>
+    <button class="card" onclick="goTo('privacybeleid')" style="width:100%;flex-direction:row;align-items:center;gap:14px;padding:16px;margin-bottom:14px">
+      <svg style="width:28px;height:28px;color:var(--green);flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div style="text-align:left"><div class="card-label">Privacybeleid</div><div class="card-sub">Hoe we omgaan met je gegevens</div></div>
+    </button>
+    <div style="margin-top:0;padding:14px 16px;background:var(--moss);border-radius:14px">
+      <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.6">MijnAnker werkt volledig lokaal — er is geen cloud-back-up. Maak zelf af en toe een export, zodat je niets kwijtraakt als je van toestel wisselt of je browsergegevens wist.</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="screen-privacybeleid">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Privacybeleid</h2></div>
+  <div style="background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:16px">
+    <div style="font-size:12px;color:var(--ink-soft);margin-bottom:16px">Versie 1.0 · Laatst bijgewerkt: juni 2026</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">1. Wat is MijnAnker?</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">MijnAnker is een persoonlijke signaleringsplan-app voor mentale gezondheid. De app is bedoeld als hulpmiddel ter ondersteuning en vervangt geen professionele behandeling, therapie of medisch advies.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">2. Welke gegevens worden opgeslagen?</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">MijnAnker slaat de volgende gegevens lokaal op je apparaat op: je naam, je signaleringsplan (signalen, triggers, wat helpt, contacten), medicatie-overzicht, stemmingen, dagboekentries, afspraken, weekplanning en goede-momenten-berichten. Er worden geen medische diagnoses of gevoelige persoonsgegevens actief verzameld buiten wat jij zelf invoert.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">3. Waar worden je gegevens bewaard?</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">Alle gegevens worden uitsluitend lokaal opgeslagen in de browser op jouw apparaat (localStorage). Er worden geen gegevens naar externe servers, databases of derden verzonden. De ontwikkelaar heeft op geen enkele manier toegang tot jouw gegevens.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">4. Worden je gegevens gedeeld?</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">Nee. Gegevens worden nooit automatisch gedeeld. Als jij ervoor kiest je noodplan als PDF te exporteren en te delen met een behandelaar of naaste, doe je dat bewust en op eigen initiatief.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">5. Hoe verwijder je je gegevens?</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">Je kunt alle gegevens zelf verwijderen via Instellingen → Gegevens → Alles wissen. Daarnaast verdwijnen alle gegevens automatisch als je de browsergeschiedenis of app-gegevens van dit apparaat wist.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">6. Cookies en tracking</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">MijnAnker gebruikt geen cookies, analytics, advertenties of tracking van welke aard dan ook.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">7. Minderjarigen</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:18px">De app is bedoeld voor gebruik onder begeleiding van een zorgprofessional. Bij gebruik door minderjarigen is betrokkenheid van een ouder, voogd of behandelaar aanbevolen.</div>
+
+    <div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px">8. Wijzigingen</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:0">Dit privacybeleid kan worden bijgewerkt. De versiedatum bovenaan geeft aan wanneer het voor het laatst is gewijzigd.</div>
+  </div>
+</div>
+<div class="screen" id="screen-oefeningen">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Oefeningen</h2></div>
+  <div id="oef-list"></div>
+</div>
+<div class="screen" id="screen-oefening-detail">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2 id="oef-detail-title"></h2></div>
+  <div class="step-card">
+    <div class="step-num" id="step-num"></div>
+    <div class="step-tekst" id="step-tekst"></div>
+    <div class="step-autopace" id="step-autopace" style="display:none"></div>
+    <div class="step-btns" id="step-btns"></div>
+    <div id="step-pause-wrap" style="text-align:center"></div>
+  </div>
+</div>
+
+<div class="screen" id="screen-ademhaling">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>4-7-8 Ademhaling</h2></div>
+  <div class="adem-wrap">
+    <div id="adem-intro">
+      <div class="adem-intro-text">Ga comfortabel zitten en sluit eventueel je ogen. We doorlopen samen 4 rondes: adem in via je neus, houd je adem vast, en adem rustig uit via je mond. Volg het ritme van de cirkel.</div>
+      <button class="actie-btn primary" onclick="startAdemhalingCyclus()">Start</button>
+    </div>
+    <div id="adem-actief" style="display:none">
+      <div class="adem-cyclus-label" id="adem-cyclus-label">Cyclus 1 van 4</div>
+      <div class="adem-circle-wrap">
+        <div class="adem-circle" id="adem-circle"><div class="adem-count" id="adem-count">4</div></div>
+      </div>
+      <div class="adem-fase-label" id="adem-fase-label">Adem in</div>
+      <button class="nav-btn" style="margin-top:30px" onclick="stopAdemhaling()">Stoppen</button>
+    </div>
+    <div id="adem-klaar" style="display:none;text-align:center">
+      <svg class="adem-checkmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
+      <div class="adem-klaar-titel">Goed gedaan.</div>
+      <div class="adem-klaar-sub">Je hebt de oefening afgerond.</div>
+      <button class="actie-btn primary" style="margin-top:22px" onclick="goTo('oefeningen')">Terug naar oefeningen</button>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="screen-grounding">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>5-4-3-2-1 Grounding</h2></div>
+  <div id="gr-actief" class="gr-wrap">
+    <svg class="gr-sense-icon" id="gr-sense-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"></svg>
+    <div class="gr-instructie" id="gr-instructie"></div>
+    <div class="gr-sub" id="gr-sub"></div>
+    <div class="gr-dots" id="gr-dots"></div>
+    <button class="gr-tap-btn" id="gr-tap-btn" onclick="grTik()">Tik hier</button>
+    <div class="gr-remaining" id="gr-remaining"></div>
+  </div>
+  <div id="gr-klaar" class="oef-done-wrap" style="display:none">
+    <svg class="oef-done-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
+    <div class="oef-done-titel">Je bent hier.</div>
+    <div class="oef-done-sub">Je bent veilig. Goed gedaan.</div>
+    <button class="actie-btn primary" style="margin-top:22px" onclick="goTo('oefeningen')">Terug naar oefeningen</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-koudwater-timer">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Koude water techniek</h2></div>
+  <div class="tm-wrap" id="tm-intro">
+    <div class="tm-intro-text">Ga naar de kraan of pak een ijsblokje. Houd je polsen onder koud stromend water en focus volledig op het koude gevoel. We nemen er 1 minuut voor.</div>
+    <button class="actie-btn primary" onclick="startTimerOefening()">Start</button>
+  </div>
+  <div class="tm-wrap" id="tm-actief" style="display:none">
+    <div class="tm-label">Focus op het koude gevoel</div>
+    <div class="tm-ring-wrap">
+      <svg width="180" height="180" viewBox="0 0 180 180">
+        <circle class="tm-ring-bg" cx="90" cy="90" r="80"/>
+        <circle class="tm-ring-fg" id="tm-ring-fg" cx="90" cy="90" r="80" stroke-dasharray="502.65" stroke-dashoffset="0"/>
+      </svg>
+      <div class="tm-count" id="tm-count">1:00</div>
+    </div>
+    <button class="nav-btn" onclick="stopTimerOefening()">Stoppen</button>
+  </div>
+  <div class="oef-done-wrap" id="tm-klaar" style="display:none">
+    <svg class="oef-done-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
+    <div class="oef-done-titel">Goed gedaan.</div>
+    <div class="oef-done-sub">Je lichaam kalmeert vanzelf.</div>
+    <button class="actie-btn primary" style="margin-top:22px" onclick="goTo('oefeningen')">Terug naar oefeningen</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-plan">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Mijn Plan</h2></div>
+  <div class="plan-intro">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/></svg>
+    <div><div class="plan-intro-title">Je eigen veiligheidsplan</div><div class="plan-intro-sub">Signalen, triggers en wat jou helpt — op één plek, voor jezelf en om te delen.</div></div>
+  </div>
+  <div class="plan-block">
+    <div class="plan-head"><svg class="plan-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 12h4l1.5-4L11 18l2.5-10L15 12h7"/></svg>Vroege signalen</div>
+    <div id="plan-signalen"></div>
+    <div class="add-row"><input class="text-input" id="plan-signalen-input" placeholder="Bijv. Slecht slapen"/><button class="add-icon-btn" onclick="addPlanItem('signalen')" aria-label="Signaal toevoegen">+</button></div>
+  </div>
+  <div class="plan-block">
+    <div class="plan-head"><svg class="plan-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4l9 15.5H3L12 4z"/><path d="M12 10.5v3.5"/><path d="M12 17h.01"/></svg>Mijn triggers</div>
+    <div id="plan-triggers"></div>
+    <div class="add-row"><input class="text-input" id="plan-triggers-input" placeholder="Bijv. Conflicten"/><button class="add-icon-btn" onclick="addPlanItem('triggers')" aria-label="Trigger toevoegen">+</button></div>
+  </div>
+  <div class="plan-block">
+    <div class="plan-head"><svg class="plan-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 21c8-1 13-6 14-14-8 1-13 6-14 14z"/><path d="M6 20c2-5 5-8 9-10"/></svg>Wat helpt mij</div>
+    <div id="plan-helpend"></div>
+    <div class="add-row"><input class="text-input" id="plan-helpend-input" placeholder="Bijv. Wandelen"/><button class="add-icon-btn" onclick="addPlanItem('helpend')" aria-label="Helpende actie toevoegen">+</button></div>
+  </div>
+  <div class="plan-block">
+    <div class="plan-head"><svg class="plan-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg>Mijn contacten</div>
+    <div id="plan-contacten"></div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+      <input class="text-input" id="plan-contact-naam-input" placeholder="Naam"/>
+      <div style="display:flex;gap:8px">
+        <input class="text-input" id="plan-contact-tel-input" placeholder="Telefoonnummer"/>
+        <button class="add-icon-btn" style="flex-shrink:0" onclick="addPlanContact()" aria-label="Contact toevoegen">+</button>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px">
+    <button class="actie-btn" onclick="exportNoodplanPDF()" style="display:flex;align-items:center;justify-content:center;gap:7px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v13M6 11l6 6 6-6"/><path d="M4 20h16"/></svg>
+      Downloaden
+    </button>
+    <button id="deel-pdf-btn" class="actie-btn primary" onclick="deelNoodplanPDF()" style="display:flex;align-items:center;justify-content:center;gap:7px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+      Delen
+    </button>
+  </div>
+  <div style="text-align:center;color:var(--ink-soft);font-size:12px;margin-top:8px;padding:0 12px">Handig om te delen met je behandelaar, huisarts of een naaste.</div>
+</div>
+
+<div class="screen" id="screen-weekoverzicht">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Weekoverzicht</h2></div>
+  <div style="padding:0 18px 32px">
+
+    <!-- Week navigatie -->
+    <div id="week-ovz-nav" style="display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:18px">
+      <button onclick="weekOvzPrev()" aria-label="Vorige week" style="width:30px;height:30px;border-radius:10px;border:1px solid var(--line);background:var(--cream);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--green-deep);font-family:inherit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div style="text-align:center">
+        <div style="font-size:13.5px;font-weight:600;color:var(--ink)" id="week-ovz-label">—</div>
+        <div style="font-size:11.5px;color:var(--ink-soft);margin-top:1px" id="week-ovz-sub">—</div>
+      </div>
+      <button id="week-ovz-next-btn" onclick="weekOvzNext()" aria-label="Volgende week" style="width:30px;height:30px;border-radius:10px;border:1px solid var(--line);background:var(--cream);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--green-deep);font-family:inherit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+
+    <!-- Stemming per dag -->
+    <div style="font-size:13px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Stemming per dag</div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:18px">
+      <div id="ovz-bars" style="display:flex;justify-content:space-between;align-items:flex-end;gap:4px;height:60px"></div>
+      <div id="ovz-gem-row" style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)">
+        <div>
+          <div style="font-size:12px;color:var(--ink-soft)">Gemiddelde stemming</div>
+          <div id="ovz-gem-label" style="font-size:13px;font-weight:600;color:var(--green-deep);margin-top:1px">—</div>
+        </div>
+        <div id="ovz-trend" style="font-size:11.5px;font-weight:600;color:var(--green)"></div>
+      </div>
+    </div>
+
+    <!-- Stat cards -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px">
+      <div style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 10px;text-align:center">
+        <div id="ovz-stat-checkins" style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:var(--green-deep);line-height:1">—</div>
+        <div style="font-size:11px;color:var(--ink-soft);margin-top:4px;line-height:1.3">check-ins gedaan</div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 10px;text-align:center">
+        <div id="ovz-stat-gem" style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:var(--green-deep);line-height:1">—</div>
+        <div style="font-size:11px;color:var(--ink-soft);margin-top:4px;line-height:1.3">gemiddelde stemming</div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 10px;text-align:center">
+        <div id="ovz-stat-streak" style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:var(--green-deep);line-height:1">—</div>
+        <div style="font-size:11px;color:var(--ink-soft);margin-top:4px;line-height:1.3">dagen op rij</div>
+      </div>
+    </div>
+
+    <!-- Check-in streak -->
+    <div style="font-size:13px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Dagelijkse check-ins</div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+      <div>
+        <div id="ovz-checkin-count" style="font-size:13px;font-weight:600;color:var(--green-deep)">—</div>
+        <div style="font-size:12px;color:var(--ink-soft)">ingevuld deze week</div>
+      </div>
+      <div id="ovz-checkin-dots" style="display:flex;gap:5px"></div>
+    </div>
+
+    <!-- Opvallend -->
+    <div id="ovz-opvallend-wrap">
+      <div style="font-size:13px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Opvallend deze week</div>
+      <div id="ovz-opvallend"></div>
+    </div>
+
+    <!-- Reflectie CTA -->
+    <div class="reflectie-cta" style="background:linear-gradient(135deg,var(--green) 0%,var(--green-deep) 100%);border-radius:18px;padding:20px;margin-top:4px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div>
+        <div style="font-size:11.5px;font-weight:600;color:rgba(255,255,255,0.75);margin-bottom:3px">Weekafsluiting</div>
+        <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#fff;line-height:1.3">Schrijf een korte reflectie</div>
+      </div>
+      <button onclick="goTo('dagboek')" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);border-radius:10px;padding:9px 14px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;white-space:nowrap">Begin →</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="screen" id="screen-acuut">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Acuut</h2></div>
+  <div class="acuut-banner">
+    <svg class="acuut-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.35-9.33-9.3C1.4 8.93 3 6 6 6c2 0 3.3 1.2 4 2.2.7-1 2-2.2 4-2.2 3 0 4.6 2.93 3.33 5.7C19 16.65 12 21 12 21z"/></svg>
+    <div class="acuut-titel">Je bent niet alleen</div>
+    <div class="acuut-sub">We helpen je erdoorheen</div>
+  </div>
+  <a href="tel:113" class="acuut-contact crisis">
+    <div><div class="name">Crisislijn 113</div><div class="num">113 · 24/7 bereikbaar, ook chatten via 113.nl</div></div>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warm)" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg>
+  </a>
+  <div id="acuut-contacten"></div>
+  <div id="acuut-leeg-hint" class="acuut-note" style="display:none">Voeg je eigen vertrouwde contacten toe via <a href="javascript:void(0)" onclick="goTo('plan')" style="color:var(--green-deep);font-weight:600;text-decoration:underline">Mijn Plan</a>.</div>
+</div>
+
+<div class="screen" id="screen-dagboek">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Dagboek</h2></div>
+  <div class="plan-tabs">
+    <button class="plan-tab active" id="dag-tab-invoer" onclick="switchDagTab('invoer')">Invoer</button>
+    <button class="plan-tab" id="dag-tab-lijst" onclick="switchDagTab('lijst')">Lijst</button>
+  </div>
+  <div id="dag-invoer">
+    <div class="plan-block">
+      <div class="plan-head">Hoe voel je je nu?</div>
+      <div class="mood-row" id="mood-row"></div>
+      <textarea id="dagboek-tekst" placeholder="Wat speelt er? (optioneel)"></textarea>
+      <button class="save-btn" onclick="saveDagboekEntry()"><span id="dagboek-save-label">Opslaan</span></button>
+      <button class="cancel-btn" id="dagboek-cancel-btn" onclick="cancelDagboekEdit()" style="display:none">Annuleren</button>
+    </div>
+  </div>
+  <div id="dag-lijst" style="display:none"></div>
+</div>
+
+<div class="screen" id="screen-agenda">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Agenda</h2></div>
+  <div class="plan-block">
+    <div class="plan-head">Nieuwe afspraak</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <input class="text-input" id="ag-titel" placeholder="Omschrijving"/>
+      <div style="display:flex;gap:8px">
+        <button class="text-input picker-btn" id="ag-datum-btn" onclick="openDatePicker()">
+          <span class="picker-label" id="ag-datum-label">Kies een datum</span>
+          <svg class="picker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+        </button>
+        <button class="text-input picker-btn" id="ag-tijd-btn" onclick="openTimePicker()">
+          <span class="picker-label" id="ag-tijd-label">Tijd</span>
+          <svg class="picker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        </button>
+      </div>
+      <button class="save-btn" style="margin-top:4px" onclick="saveAfspraak()">Opslaan</button>
+    </div>
+  </div>
+  <div id="agenda-lijst"></div>
+</div>
+
+<!-- Datumkiezer bottom sheet -->
+<div class="sheet-overlay" id="date-sheet" onclick="if(event.target===this)closeDatePicker()">
+  <div class="sheet-box">
+    <div class="sheet-handle"></div>
+    <div class="cal-header">
+      <button class="cal-nav-btn" onclick="calPrevMonth()" aria-label="Vorige maand"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="cal-title" id="cal-title">—</div>
+      <button class="cal-nav-btn" onclick="calNextMonth()" aria-label="Volgende maand"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+    <div class="cal-weekdays">
+      <div class="cal-weekday">ma</div><div class="cal-weekday">di</div><div class="cal-weekday">wo</div><div class="cal-weekday">do</div><div class="cal-weekday">vr</div><div class="cal-weekday">za</div><div class="cal-weekday">zo</div>
+    </div>
+    <div class="cal-days" id="cal-days"></div>
+  </div>
+</div>
+
+<!-- Tijdkiezer bottom sheet -->
+<div class="sheet-overlay" id="time-sheet" onclick="if(event.target===this)closeTimePicker()">
+  <div class="sheet-box">
+    <div class="sheet-handle"></div>
+    <div class="cal-title" style="margin-bottom:16px;text-align:center">Kies een tijd</div>
+    <div class="time-sheet-row">
+      <div style="flex:1">
+        <div class="time-col-label">Uur</div>
+        <div class="time-scroll" id="time-hours"></div>
+      </div>
+      <div style="flex:1">
+        <div class="time-col-label">Minuut</div>
+        <div class="time-scroll" id="time-minutes"></div>
+      </div>
+    </div>
+    <button class="save-btn" onclick="confirmTimePicker()">Gereed</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-weekplanning">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Weekplanning</h2></div>
+  <div class="week-nav"><button onclick="navigateWeek(-1)" aria-label="Vorige week">‹</button><span class="week-label" id="week-label"></span><button onclick="navigateWeek(1)" aria-label="Volgende week">›</button></div>
+  <div class="week-days" id="week-days"></div>
+  <div class="dag-sectie"><span class="dag-sectie-titel">Afspraken</span><div id="week-afspraken"></div></div>
+  <div class="dag-sectie">
+    <span class="dag-sectie-titel">Taken</span>
+    <div id="week-taken"></div>
+    <div id="week-taak-form" style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+      <input class="text-input" id="week-taak-input" placeholder="Nieuwe taak..."/>
+      <button class="save-btn" style="margin-top:0" onclick="addWeekTaak()">Toevoegen</button>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="screen-medicatie">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Medicatie</h2></div>
+  <div class="plan-tabs">
+    <button class="plan-tab active" id="med-tab-vandaag" onclick="switchMedTab('vandaag')">Vandaag</button>
+    <button class="plan-tab" id="med-tab-beheer" onclick="switchMedTab('beheer')">Mijn medicatie</button>
+  </div>
+  <div id="med-vandaag">
+    <div class="plan-block">
+      <div class="plan-head" id="med-datum-label"></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+        <span id="med-progress-label" style="font-size:12.5px;color:var(--ink-soft)"></span>
+      </div>
+      <div class="progress-bar"><div class="progress-bar-fill" id="med-progress-fill" style="width:0%"></div></div>
+      <div id="med-lijst"></div>
+    </div>
+  </div>
+  <div id="med-beheer" style="display:none">
+    <div class="plan-block">
+      <div class="plan-head">Nieuwe medicatie toevoegen</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <input class="text-input" id="med-naam-input" placeholder="Naam (bijv. Sertraline)"/>
+        <div style="display:flex;gap:8px">
+          <input class="text-input" id="med-dosering-input" placeholder="Dosering"/>
+          <input class="text-input" id="med-moment-input" placeholder="Moment"/>
+        </div>
+        <button class="save-btn" style="margin-top:4px" onclick="addMedicatie()">Toevoegen</button>
+      </div>
+    </div>
+    <div id="med-beheer-lijst"></div>
+  </div>
+</div>
+
+<div class="screen" id="screen-goedmoment">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Goed Moment</h2></div>
+  <p class="sub" style="margin-bottom:20px">Lees wat je jezelf in goede momenten hebt willen vertellen.</p>
+  <div id="goedmoment-lijst"></div>
+  <div class="plan-block" style="margin-top:14px">
+    <div class="plan-head">Nieuwe boodschap aan jezelf</div>
+    <textarea id="goedmoment-tekst" placeholder="Schrijf hier je boodschap aan jezelf..."></textarea>
+    <button class="save-btn" onclick="saveGoedMoment()">Opslaan</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-stemmingmeter">
+  <div class="topbar"><button class="back-btn" onclick="goBack()" aria-label="Terug"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><h2>Stemming Meter</h2></div>
+  <div class="plan-tabs">
+    <button class="plan-tab active" id="sm-tab-dag" onclick="switchStemmingTab('dag')">Per dag</button>
+    <button class="plan-tab" id="sm-tab-week" onclick="switchStemmingTab('week')">Per week</button>
+    <button class="plan-tab" id="sm-tab-maand" onclick="switchStemmingTab('maand')">Per maand</button>
+  </div>
+  <div class="plan-block" style="padding:18px 10px 14px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;padding:0 8px">
+      <span class="plan-head" id="sm-chart-title" style="margin-bottom:0">Vandaag</span>
+      <span id="sm-chart-avg" style="font-size:13px;color:var(--green-deep);font-weight:700"></span>
+    </div>
+    <div id="sm-chart-container" style="width:100%;height:230px;position:relative"></div>
+    <div id="sm-chart-single" class="sm-single-entry"></div>
+    <div id="sm-chart-empty" class="empty-state" style="display:none;padding-top:30px">
+      Nog geen stemmingen vastgelegd voor deze periode.<br>
+      <button class="nav-btn primary" style="margin-top:14px" onclick="goTo('checkin')">Start de check-in</button>
+    </div>
+  </div>
+  <div id="sm-entry-list"></div>
+</div>
+
+</div>
+
+<script src="./app.js"></script>
+</body>
+</html>
