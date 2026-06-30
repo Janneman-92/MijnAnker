@@ -1,4 +1,4 @@
-const CACHE='mijnAnker-v4';const ASSETS=['./index.html','./manifest.json'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));self.skipWaiting();});
+const CACHE='mijnAnker-v7';const ASSETS=['./index.html','./manifest.json','./icon-192.png','./icon-512.png','./style.css','./app.js','https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap'];
+self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>Promise.allSettled(ASSETS.map(a=>c.add(a)))));self.skipWaiting();});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim();});
 self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(cached=>{const fetchPromise=fetch(e.request).then(response=>{if(!response||response.status!==200)return response;const responseToCache=response.clone();caches.open(CACHE).then(cache=>{cache.put(e.request,responseToCache);});return response;});return cached||fetchPromise;}));});
